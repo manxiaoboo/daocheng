@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var LocalStrategy = require('passport-local').Strategy;
 const config = require('./config');
 const routerConfig = require('./route');
 const { passport, passport_config } = require('./passport');
