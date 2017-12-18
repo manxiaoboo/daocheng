@@ -1,7 +1,7 @@
-const users = require('./routes/user');
 
 const routerConfig = (app) => {
-    app.use('/users', users);
+    app.use('/users', require('./routes/user'));
+    app.use('/auth', require('./auth'));
 }
 
 module.exports = routerConfig;

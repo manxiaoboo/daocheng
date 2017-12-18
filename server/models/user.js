@@ -16,9 +16,9 @@ var User = sequelize.define('user', {
     }, password: {
         type: Sequelize.STRING,
         field: 'password'
-    }, loginName: {
+    }, userName: {
         type: Sequelize.STRING,
-        field: 'loginName'
+        field: 'userName'
     }, roleId: {
         type: Sequelize.UUID,
         field: 'roleId'
@@ -37,7 +37,11 @@ var User = sequelize.define('user', {
     }, openId: {
         type: Sequelize.STRING,
         field: 'openId'
-    }, createdAt: {
+    },salt: {
+        type: Sequelize.STRING,
+        field: 'salt'
+    },
+    createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'
     }, updatedAt: {
@@ -45,7 +49,7 @@ var User = sequelize.define('user', {
         field: 'updatedAt'
     },
 }, {
-        freezeTableName: true // Model 对应的表名将与model名相同
+        freezeTableName: true// Model 对应的表名将与model名相同
     });
 
 module.exports = User;
