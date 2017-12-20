@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const config = require('./config');
 const routerConfig = require('./route');
+require('./qcloud');
 
 
 var app = express();

@@ -1,0 +1,13 @@
+<view class="container">  
+    <image src="http://p0oy6nmva.bkt.clouddn.com/daocheng.png" class="logoimg"/>
+  <view class="usermotto">  
+    <text class="user-motto">{{motto}}</text>
+    <text class="label">用户名：</text>
+    <input type="text" bindinput="userNameInput" class="form-control"/>  
+    <text class="label">密码：</text>
+    <input type="text" bindinput="userPasswordInput" password="true" class="form-control"/>  
+    <navigator url="../dashboard/dashboard" class="foget">忘记密码？</navigator>
+    <button bindtap="logIn" class="loginbtn">登录</button>
+    <button bindtap="goRegister" class="registerbtn" url="../dashboard/dashboard">注册</button>  
+  </view>  
+</view>  

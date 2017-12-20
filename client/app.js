@@ -4,6 +4,9 @@ var config = require('./config')
 
 App({
     onLaunch: function () {
-        qcloud.setLoginUrl(config.service.loginUrl)
+        qcloud.setLoginUrl(config.service.loginUrl);
+        wx.redirectTo({
+            url: './pages/login/login'
+          })
     }
 })

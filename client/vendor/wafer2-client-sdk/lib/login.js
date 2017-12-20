@@ -103,10 +103,11 @@ var login = function login(options) {
             data: options.data,
             success: function (result) {
                 var data = result.data;
-
+                console.info("manxiaobo",data);
                 // 成功地响应会话信息
                 if (data && data.code === 0 && data.data.skey) {
                     var res = data.data
+                    
                     if (res.userinfo) {
                         Session.set(res.skey);
                         options.success(userInfo);

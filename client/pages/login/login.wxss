@@ -1,0 +1,53 @@
+.logoimg{
+    width:100px;
+    height:100px;
+    margin-top:15%;
+}
+
+.usermotto{
+    margin-top:20px;
+    width:80%;
+}
+
+.user-motto{
+    display:block;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size:22px;
+}
+
+.label{
+    font-size:14px;
+    color:gray;
+}
+
+.foget{
+    text-align:right;
+    display:block;
+    font-size:13px;
+}
+
+.form-control{
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    height: 28px;
+    background: none;
+    border: none;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-bottom: 1px solid #aaa;
+    margin-bottom:10px;
+}
+
+
+.loginbtn{
+    margin-top:20px;
+    background-color:#1989fa;
+    color:#fff;
+}
+
+.registerbtn{
+    margin-top:10px;
+    color:#1989fa;
+}
