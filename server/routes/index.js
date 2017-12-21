@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { auth: { authorization, validation } } = require("../qcloud");
+const { auth: { authorization, validation,authorizationMiddleware } } = require("../qcloud");
 
 
 /* GET home page. */
@@ -20,5 +20,7 @@ router.get('/login', async function (req, res, next) {
         res.json(result);
     }
 });
+
+
 
 module.exports = router;

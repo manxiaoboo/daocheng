@@ -71,12 +71,11 @@ var defaultOptions = {
  */
 var login = function login(options) {
     options = utils.extend({}, defaultOptions, options);
-
     if (!defaultOptions.loginUrl) {
         options.fail(new LoginError(constants.ERR_INVALID_PARAMS, '登录错误：缺少登录地址，请通过 setLoginUrl() 方法设置登录地址'));
         return;
     }
-
+    
     var doLogin = () => getWxLoginResult(function (wxLoginError, wxLoginResult) {
         if (wxLoginError) {
             options.fail(wxLoginError);
@@ -103,7 +102,6 @@ var login = function login(options) {
             data: options.data,
             success: function (result) {
                 var data = result.data;
-                console.info("manxiaobo",data);
                 // 成功地响应会话信息
                 if (data && data.code === 0 && data.data.skey) {
                     var res = data.data
@@ -137,6 +135,7 @@ var login = function login(options) {
         wx.checkSession({
             success: function () {
                 options.success(session.userInfo);
+                // options.success(session);
             },
 
             fail: function () {

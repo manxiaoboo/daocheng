@@ -3,20 +3,21 @@ const router = express.Router();
 const User = require('../models/user');
 const UUID = require('uuid');
 const { makeSalt, encryptPassword, isAuthenticated } = require('../auth/auth.service');
-const { auth: { authorization,validation } } = require("../qcloud");
+const { auth: { authorization, validation } } = require("../qcloud");
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
     let validate = await validation(req);
-    if(validate.loginState == 1){
+    if (validate.loginState == 1) {
         validate.skey = validate.userinfo.skey;
         let result = {
-            code:0,
-            data:validate
+            code: 0,
+            data: validate
         }
         res.json(result);
-    }else{
-        res.status(200).json({err:{message:"loginState is 0"}});
+    }
+    else {
+        res.status(500).json({err:{message:"loginState is 0"},code:-1});
     }
 });
 

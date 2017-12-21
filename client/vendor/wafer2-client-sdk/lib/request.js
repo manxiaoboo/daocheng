@@ -73,13 +73,11 @@ function request(options) {
     // 实际进行请求的方法
     function doRequest() {
         var authHeader = buildAuthHeader(Session.get());
-
         wx.request(utils.extend({}, options, {
             header: utils.extend({}, originHeader, authHeader),
 
             success: function (response) {
                 var data = response.data;
-
                 var error, message;
                 if (data && data.code === -1) {
                     Session.clear();

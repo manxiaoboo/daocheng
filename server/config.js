@@ -24,7 +24,6 @@ const CONF = {
         pass: 'BBBBBEFHHHNh1z',
         char: 'utf8mb4'
     },
-
     cos: {
         /**
          * 地区简称
