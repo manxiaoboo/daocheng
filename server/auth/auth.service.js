@@ -13,23 +13,23 @@ var validateJwt = expressJwt({
     secret: config.secrets.session
 });
 
-// exports.authenticate = (password, callback) => {
-//     if (!callback) {
-//         return this.password === this.encryptPassword(password);
-//     }
+exports.authenticate = (password, callback) => {
+    if (!callback) {
+        return this.password === this.encryptPassword(password);
+    }
 
-//     this.encryptPassword(password, (err, pwdGen) => {
-//         if (err) {
-//             return callback(err);
-//         }
+    this.encryptPassword(password, (err, pwdGen) => {
+        if (err) {
+            return callback(err);
+        }
 
-//         if (this.password === pwdGen) {
-//             callback(null, true);
-//         } else {
-//             callback(null, false);
-//         }
-//     });
-// }
+        if (this.password === pwdGen) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+        }
+    });
+}
 
 exports.encryptPassword = (password, salt_t, callback) => {
     if (!password || !salt_t) {

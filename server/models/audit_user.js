@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db/sequelize-service');
 
-var User = sequelize.define('user', {
+var AuditUser = sequelize.define('audit_user', {
     id: {
         type: Sequelize.UUID,
         field: 'id',
@@ -22,29 +22,25 @@ var User = sequelize.define('user', {
     }, roleId: {
         type: Sequelize.UUID,
         field: 'roleId'
-    },role: {
+    }, role: {
         type: Sequelize.UUID,
         field: 'role'
     }, phone: {
         type: Sequelize.STRING,
         field: 'phone'
-    }, isValidate: {
-        type: Sequelize.BOOLEAN,
-        field: 'isValidate'
     }, openId: {
         type: Sequelize.STRING,
         field: 'openId'
-    },province: {
+    }, province: {
         type: Sequelize.STRING,
         field: 'province'
-    },city: {
+    }, city: {
         type: Sequelize.STRING,
         field: 'city'
-    },area: {
+    }, area: {
         type: Sequelize.STRING,
         field: 'area'
-    },
-    salt: {
+    }, salt: {
         type: Sequelize.STRING,
         field: 'salt'
     },
@@ -59,4 +55,4 @@ var User = sequelize.define('user', {
         freezeTableName: true// Model 对应的表名将与model名相同
     });
 
-module.exports = User;
+module.exports = AuditUser;

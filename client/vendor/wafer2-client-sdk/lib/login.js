@@ -139,6 +139,7 @@ var login = function login(options) {
             },
 
             fail: function () {
+                console.info("session过期了");
                 Session.clear();
                 doLogin();
             },

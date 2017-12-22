@@ -43,11 +43,11 @@
  </view>
  <view class="weui-cells__title">选择身份</view>
         <view class="weui-cells weui-cells_after-title">
-            <radio-group bindchange="radioChange" name="role">
-                <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
-                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+            <radio-group bindchange="radioChange" name="roleId">
+                <label class="weui-cell weui-check__label" wx:for="{{roles}}" wx:key="id">
+                    <radio class="weui-check" value="{{item.id}}" checked="{{item.checked}}"/>
 
-                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__bd">{{item.cName}}</view>
                     <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
                         <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
                     </view>
@@ -88,6 +88,7 @@
                 </view>
             </view>
   </view>
-  <button class="weui-btn" type="primary" formType="submit">注册</button>
+  <button class="weui-btn" type="primary" formType="submit" wx:if="{{!successd}}">注册</button>
+  <button class="weui-btn" type="primary" formType="submit" wx:if="{{successd}}" disabled="disabled">{{successdTime}}秒后跳转</button>
   </form>
   </view>
