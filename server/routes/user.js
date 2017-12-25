@@ -7,7 +7,9 @@ const UUID = require('uuid');
 const { makeSalt, encryptPassword, isAuthenticated } = require('../auth/auth.service');
 const { auth: { authorization, validation } } = require("../qcloud");
 
-/* GET users listing. */
+/**
+ * 校验微信用户信息状态并返回
+ */
 router.get('/', async (req, res, next) => {
     let validate = await validation(req);
     if (validate.loginState == 1) {
@@ -23,6 +25,9 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+/**
+ * 获取当前登陆用户
+ */
 router.get('/me', isAuthenticated(), async (req, res, next) => {
     var userId = req.user.id;
       return User.findOne({ id: userId }, '-salt -password')
@@ -35,11 +40,17 @@ router.get('/me', isAuthenticated(), async (req, res, next) => {
         .catch(err => next(err));
 });
 
+/**
+ * 获取所有身份
+ */
 router.get('/roles', async (req, res, next) => {
     let roles = await Role.findAll();
     res.json(roles);
 });
 
+/**
+ * 获取账户的待审核信息
+ */
 router.post('/check-audit', (req, res, next) => {
     AuditUser.findOne({
         where: { "userName": req.body.userName }
@@ -50,7 +61,10 @@ router.post('/check-audit', (req, res, next) => {
 });
 
 
-router.post('/register', (req, res, next) => {
+/**
+ * 正式注册用户
+ */
+router.post('/register',isAuthenticated(), (req, res, next) => {
     User.findOne({
         where: { "userName": "admin@dc.com" }
     })
@@ -59,6 +73,9 @@ router.post('/register', (req, res, next) => {
         })
 });
 
+/**
+ * 创建待审核用户
+ */
 router.post('/audit-user', (req, res, next) => {
     let user = req.body;
     user.id = UUID.v1();
@@ -73,6 +90,14 @@ router.post('/audit-user', (req, res, next) => {
     });
 });
 
+
+router.get('/all-audit-user',isAuthenticated(),(req, res, next) => {
+   
+});
+
+/**
+ * 初始化一个管理员
+ */
 router.post('/initAdmin', (req, res, next) => {
     let user = {
         id: UUID.v1(),
