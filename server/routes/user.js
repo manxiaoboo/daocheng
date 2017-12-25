@@ -4,13 +4,22 @@ const User = require('../models/user');
 const AuditUser = require('../models/audit_user');
 const Role = require('../models/role');
 const UUID = require('uuid');
-const { makeSalt, encryptPassword, isAuthenticated } = require('../auth/auth.service');
-const { auth: { authorization, validation } } = require("../qcloud");
+const {
+    makeSalt,
+    encryptPassword,
+    isAuthenticated
+} = require('../auth/auth.service');
+const {
+    auth: {
+        authorization,
+        validation
+    }
+} = require("../qcloud");
 
 /**
  * 校验微信用户信息状态并返回
  */
-router.get('/', async (req, res, next) => {
+router.get('/', async(req, res, next) => {
     let validate = await validation(req);
     if (validate.loginState == 1) {
         validate.skey = validate.userinfo.skey;
@@ -19,23 +28,29 @@ router.get('/', async (req, res, next) => {
             data: validate
         }
         res.json(result);
-    }
-    else {
-        res.json({ err: { message: "loginState is 0" }, code: -1 });
+    } else {
+        res.json({
+            err: {
+                message: "loginState is 0"
+            },
+            code: -1
+        });
     }
 });
 
 /**
  * 获取当前登陆用户
  */
-router.get('/me', isAuthenticated(), async (req, res, next) => {
+router.get('/me', isAuthenticated(), async(req, res, next) => {
     var userId = req.user.id;
-      return User.findOne({ id: userId }, '-salt -password')
+    return User.findOne({
+            id: userId
+        }, '-salt -password')
         .then(user => { // don't ever give out the password or salt
-          if (!user) {
-            return res.status(401).end();
-          }
-          res.json(user);
+            if (!user) {
+                return res.status(401).end();
+            }
+            res.json(user);
         })
         .catch(err => next(err));
 });
@@ -43,7 +58,7 @@ router.get('/me', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取所有身份
  */
-router.get('/roles', async (req, res, next) => {
+router.get('/roles', async(req, res, next) => {
     let roles = await Role.findAll();
     res.json(roles);
 });
@@ -53,8 +68,10 @@ router.get('/roles', async (req, res, next) => {
  */
 router.post('/check-audit', (req, res, next) => {
     AuditUser.findOne({
-        where: { "userName": req.body.userName }
-    })
+            where: {
+                "userName": req.body.userName
+            }
+        })
         .then(user => {
             res.json(user);
         })
@@ -64,13 +81,29 @@ router.post('/check-audit', (req, res, next) => {
 /**
  * 正式注册用户
  */
-router.post('/register',isAuthenticated(), (req, res, next) => {
-    User.findOne({
-        where: { "userName": "admin@dc.com" }
-    })
-        .then(user => {
-            res.json(user);
-        })
+router.post('/register', isAuthenticated(), async(req, res, next) => {
+    let audit_user = req.body;
+    let user = {
+        id: UUID.v1(),
+        nickName: audit_user.nickName,
+        password: audit_user.password,
+        userName: audit_user.userName,
+        roleId: audit_user.roleId,
+        role: "local",
+        province: audit_user.province,
+        city: audit_user.city,
+        area: audit_user.area,
+        isValidate: 0,
+        picture: audit_user.picture,
+        phone: audit_user.phone,
+        openId: audit_user.openId,
+        salt: audit_user.salt,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    };
+    let newUser = await User.create(user);
+    await AuditUser.destroy({where:{id:audit_user.id}});
+    res.json(newUser);
 });
 
 /**
@@ -90,9 +123,12 @@ router.post('/audit-user', (req, res, next) => {
     });
 });
 
-
-router.get('/all-audit-user',isAuthenticated(),(req, res, next) => {
-   
+/**
+ * 获取所有待审核用户
+ */
+router.get('/all-audit-user', isAuthenticated(), async(req, res, next) => {
+    let audit_users = await AuditUser.findAll({order:[ ['updatedAt', 'DESC'] ]});
+    res.json(audit_users);
 });
 
 /**

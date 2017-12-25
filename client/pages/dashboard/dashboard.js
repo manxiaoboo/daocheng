@@ -14,6 +14,7 @@ Page({
     canShow:false
   },
   onLoad: function () {
+    console.info("我load了");
     var that = this;
     wx.getStorage({
       key: 'authToken',
@@ -35,6 +36,10 @@ Page({
                 canShow:true
               });
               var me = res.data;
+              wx.setStorage({
+                key:"user",
+                data:me
+              })
               console.info(me);
             }
           }
