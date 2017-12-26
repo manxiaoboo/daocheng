@@ -1,12 +1,17 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-var { encryptPassword } = require('../auth.service');
+var {
+  encryptPassword
+} = require('../auth.service');
 
 
 function localAuthenticate(User, userName, password, done) {
+  let query = {
+    userName: userName.toLowerCase()
+  }
   User.findOne({
-    where: { userName: userName.toLowerCase() }
-  })
+      where: query
+    })
     .then(user => {
       if (!user) {
         return done(null, false, {
@@ -14,10 +19,12 @@ function localAuthenticate(User, userName, password, done) {
         });
       }
       let user_t = user.dataValues;
-      encryptPassword(password,user_t.salt,(err, pwd)=>{
-        if(user_t == pwd){
-          return done(null, false, { message: 'This password is not correct.' });
-        }else{
+      encryptPassword(password, user_t.salt, (err, pwd) => {
+        if (user_t == pwd) {
+          return done(null, false, {
+            message: 'This password is not correct.'
+          });
+        } else {
           return done(null, user_t);
         }
       });
@@ -27,9 +34,10 @@ function localAuthenticate(User, userName, password, done) {
 
 exports.setup =
   (User) => {
+    console.log(User);
     passport.use(new LocalStrategy({
       usernameField: 'userName',
-      passwordField: 'password' // this is the virtual field on the model
+      passwordField: 'password',
     }, (loginName, password, done) => {
       return localAuthenticate(User, loginName, password, done);
     }));

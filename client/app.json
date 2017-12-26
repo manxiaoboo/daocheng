@@ -32,7 +32,7 @@
       "selectedIconPath": "images/wifi-hover.png",  
       "iconPath": "images/wifi-default.png",  
       "pagePath": "pages/dashboard/dashboard",
-      "text": "硬件关联"  
+      "text": "工作台"  
     }, {  
       "selectedIconPath": "images/me-hover.png",  
       "iconPath": "images/me-default.png",  

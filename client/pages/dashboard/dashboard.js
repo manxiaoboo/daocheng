@@ -11,7 +11,7 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    canShow:false
+    canShow: false
   },
   onLoad: function () {
     console.info("我load了");
@@ -21,27 +21,32 @@ Page({
       success: function (res) {
         let token = res.data;
         wx.request({
-          url: config.service.host + '/users/me',
+          url: config.service.host + '/users/me?roleId=other',
           header: {
             'content-type': 'application/json',
             'Authorization': 'Bearer ' + token
           },
           success: function (res) {
-            if(res.statusCode == 401){
+            if (res.statusCode == 401) {
               wx.redirectTo({
                 url: '../login/login'
               })
-            }else{
+            } else {
               that.setData({
-                canShow:true
+                canShow: true
               });
               var me = res.data;
               wx.setStorage({
-                key:"user",
-                data:me
+                key: "user",
+                data: me
               })
               console.info(me);
             }
+          },
+          fail: function (err) {
+            wx.redirectTo({
+              url: '../login/login'
+            })
           }
         })
       },

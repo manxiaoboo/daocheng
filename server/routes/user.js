@@ -42,9 +42,15 @@ router.get('/', async(req, res, next) => {
  * 获取当前登陆用户
  */
 router.get('/me', isAuthenticated(), async(req, res, next) => {
-    var userId = req.user.id;
+    let userId = req.user.id;
+    let query = {
+        id: userId
+    }
+    let roleId = req.query.roleId;
+    if(roleId && roleId!='other')query.roleId = roleId;
+    if(roleId == 'other')query.roleId = {$ne:'2cf27ea0-e6c4-11e7-b42e-060400ef5315'};
     return User.findOne({
-            id: userId
+            where: query
         }, '-salt -password')
         .then(user => { // don't ever give out the password or salt
             if (!user) {
@@ -102,7 +108,11 @@ router.post('/register', isAuthenticated(), async(req, res, next) => {
         updatedAt: new Date()
     };
     let newUser = await User.create(user);
-    await AuditUser.destroy({where:{id:audit_user.id}});
+    await AuditUser.destroy({
+        where: {
+            id: audit_user.id
+        }
+    });
     res.json(newUser);
 });
 
@@ -127,7 +137,11 @@ router.post('/audit-user', (req, res, next) => {
  * 获取所有待审核用户
  */
 router.get('/all-audit-user', isAuthenticated(), async(req, res, next) => {
-    let audit_users = await AuditUser.findAll({order:[ ['updatedAt', 'DESC'] ]});
+    let audit_users = await AuditUser.findAll({
+        order: [
+            ['updatedAt', 'DESC']
+        ]
+    });
     res.json(audit_users);
 });
 
