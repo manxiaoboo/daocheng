@@ -16,8 +16,8 @@
   },
   "tabBar": {  
     "color": "#a9b7b7",  
-    "selectedColor": "#D81E06",  
-    "borderStyle":"white",  
+    "selectedColor": "#D81E06",
+    "borderStyle":"white",
     "list": [{  
       "selectedIconPath": "images/home-hover.png",  
       "iconPath": "images/home-default.png",  

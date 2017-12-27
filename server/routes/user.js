@@ -161,11 +161,24 @@ router.post('/audit-user', (req, res, next) => {
     user.updatedAt = new Date();
     user.role = 'local';
     user.salt = makeSalt();
-    encryptPassword(user.password, user.salt, (err, pwd) => {
+    encryptPassword(user.password, user.salt, async (err, pwd) => {
         user.password = pwd;
-        AuditUser.create(user);
+        await AuditUser.create(user);
         res.json(user);
     });
+});
+
+/**
+ * 拒绝审核申请
+ */
+router.post('/audit-user-reject',isAuthenticated(), async (req, res, next) => {
+    let audit_user = req.body;
+    await AuditUser.destroy({
+        where: {
+            id: audit_user.id
+        }
+    });
+    res.json({});
 });
 
 /**
