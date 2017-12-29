@@ -44,6 +44,10 @@ var User = sequelize.define('user', {
         type: Sequelize.STRING,
         field: 'area'
     },
+    deviceId:{
+        type: Sequelize.STRING,
+        field: 'deviceId'
+    },
     salt: {
         type: Sequelize.STRING,
         field: 'salt'

@@ -41,3 +41,21 @@ page{
     text-align: left;
     font-size: 14px;
 }
+
+.weui-cells:before{
+    transform:scaleY(.5);
+    border-top:1rpx solid #e5e5e5;
+
+}
+
+weui-cells:after{
+    transform:scaleY(.5);
+    border-bottom:1rpx solid #e5e5e5;
+
+}
+
+.weui-cell:before {
+    transform:scaleY(.5);
+    border-top:1rpx solid #e5e5e5;
+
+}

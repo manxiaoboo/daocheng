@@ -14,7 +14,7 @@ Page({
     canShow: false
   },
   onLoad: function () {
-    console.info("我load了");
+    console.info("首页 => load");
     var that = this;
     wx.getStorage({
       key: 'authToken',
@@ -32,15 +32,33 @@ Page({
                 url: '../login/login'
               })
             } else {
-              that.setData({
-                canShow: true
-              });
-              var me = res.data;
+              let me = res.data;
               wx.setStorage({
                 key: "user",
                 data: me
               })
-              console.info(me);
+              wx.request({
+                url: config.service.host + '/users/roles',
+                header: {
+                  'content-type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                success: function (res_roles) {
+                  let roles = res_roles.data;
+                  wx.setStorage({
+                    key: "roles",
+                    data: roles
+                  })
+                  that.setData({
+                    canShow: true
+                  });
+                },
+                fail: function (err) {
+                  wx.redirectTo({
+                    url: '../login/login'
+                  })
+                }
+              })
             }
           },
           fail: function (err) {

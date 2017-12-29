@@ -4,7 +4,8 @@
     "pages/addCgi/addCgi",
     "pages/index/index",
     "pages/login/login",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/person-center/person-center"
  
   ],
   "window":{
@@ -14,29 +15,29 @@
     "navigationBarTitleText": "稻成",
     "navigationBarTextStyle":"#fff"
   },
-  "tabBar": {  
+  "tabBar": {
     "color": "#a9b7b7",  
     "selectedColor": "#D81E06",
     "borderStyle":"white",
-    "list": [{  
-      "selectedIconPath": "images/home-hover.png",  
-      "iconPath": "images/home-default.png",  
-      "pagePath": "pages/dashboard/dashboard",  
-      "text": "首页"  
-    }, {  
-      "selectedIconPath": "images/ask-hover.png",  
-      "iconPath": "images/ask-default.png",  
-      "pagePath": "pages/dashboard/dashboard", 
-      "text": "知识问答"  
+    "list": [{
+      "selectedIconPath": "images/home-hover.png",
+      "iconPath": "images/home-default.png",
+      "pagePath": "pages/dashboard/dashboard",
+      "text": "首页"
     }, {  
       "selectedIconPath": "images/wifi-hover.png",  
       "iconPath": "images/wifi-default.png",  
       "pagePath": "pages/dashboard/dashboard",
       "text": "工作台"  
     }, {  
+      "selectedIconPath": "images/ask-hover.png",  
+      "iconPath": "images/ask-default.png",  
+      "pagePath": "pages/dashboard/dashboard", 
+      "text": "知识问答"  
+    }, {  
       "selectedIconPath": "images/me-hover.png",  
       "iconPath": "images/me-default.png",  
-      "pagePath": "pages/index/index",
+      "pagePath": "pages/person-center/person-center",
       "text": "我的"  
     }]  
   }

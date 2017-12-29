@@ -1,0 +1,41 @@
+<view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{me.nickName}}</view>
+                    <view style="font-size: 13px;color: #888888;">{{me.userName}}</view>
+                </view>
+            </view>
+</view>
+<view class="weui-cells__title">我的信息</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">账户状态</view>
+                <view class="weui-cell__ft">{{me.isValidate?'已开通':'未开通'}}</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">电话</view>
+                <view class="weui-cell__ft">{{me.phone}}</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">所在省</view>
+                <view class="weui-cell__ft">{{me.province}}</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">所在市/区</view>
+                <view class="weui-cell__ft">{{me.city}} / {{me.area}}</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">身份</view>
+                <view class="weui-cell__ft">{{me.roleName}}</view>
+            </view>
+        </view>
+<view class="weui-cells__title">设备信息</view>
+<view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">是否绑定设备</view>
+                <view class="weui-cell__ft">{{me.deviceId?'已绑定设备':'未绑定设备'}}</view>
+            </view>
+        </view>
