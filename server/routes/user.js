@@ -96,8 +96,18 @@ router.post('/check-audit', (req, res, next) => {
         })
 });
 
-
-
+/**
+ * 修改用户信息
+ */
+router.post('/user-edit',isAuthenticated(), (req, res, next) => {
+    User.update(req.body,{
+        where:{
+            id:req.body.id
+        }
+    }).then((result)=>{
+        res.json(result);
+    });
+});
 
 /**
  * 正式注册用户
