@@ -43,16 +43,9 @@
  </view>
  <view class="weui-cells__title">选择身份</view>
         <view class="weui-cells weui-cells_after-title">
-            <radio-group bindchange="radioChange" name="roleId">
-                <label class="weui-cell weui-check__label" wx:for="{{roles}}" wx:key="id">
-                    <radio class="weui-check" value="{{item.id}}" checked="{{item.checked}}"/>
-
-                    <view class="weui-cell__bd">{{item.cName}}</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
-                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                    </view>
-                </label>
-            </radio-group>
+            <picker bindchange="roleChange" value="{{roleIndex}}" range="{{pickerRoles}}" name="roleId">
+                        <view class="weui-select">{{pickerRoles[roleIndex]}}</view>
+                    </picker>
         </view>
         <view class="weui-cells__title">密码</view>
  <view class="weui-cells weui-cells_after-title">

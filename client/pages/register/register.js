@@ -8,35 +8,37 @@ Page({
         logged: false,
         region: ['黑龙江省', '哈尔滨市', '松北区'],
         customItem: '全部',
-        roles: [{
-            name: '农户',
-            value: '1',
-            checked: true
-        },
-        {
-            name: '专家',
-            value: '0'
-        }
-        ],
+        roles: [],
+        pickerRoles: [],
         timmer: {},
         time: 60,
         isSendding: false,
+        roleIndex: 0,
         input_phone: '',
         input_userName: '',
         input_validateCode: '',
         input_password: '',
         input_confirm: '',
-        successd:false,
-        successdTime:5
+        input_roleId: '',
+        successd: false,
+        successdTime: 5
     },
-    radioChange: function (e) {
-        var roles = this.data.roles;
-        for (var i = 0, len = roles.length; i < len; ++i) {
-            roles[i].checked = roles[i].id == e.detail.value;
-        }
-        this.setData({
-            roles: roles
+    roleChange: function (e) {
+        // var roles = this.data.roles;
+        // for (var i = 0, len = roles.length; i < len; ++i) {
+        //     roles[i].checked = roles[i].id == e.detail.value;
+        // }
+        let name = this.data.pickerRoles[e.detail.value];
+        this.data.roles.forEach(r => {
+            if (r.cName == name) {
+                this.setData({
+                    input_roleId: r.id
+                })
+            }
         });
+        this.setData({
+            roleIndex: e.detail.value
+        })
     },
     sendValidateCode: function (e) {
         var that = this;
@@ -69,6 +71,7 @@ Page({
         audit_user.city = this.data.region[1];
         audit_user.area = this.data.region[2];
         audit_user.isValidate = 0;
+        audit_user.roleId = this.data.input_roleId;
         if (this.data.input_validateCode != '1234') {
             util.showModel("提示", "验证码输入错误");
             return;
@@ -89,32 +92,44 @@ Page({
             util.showModel("提示", "密码填写不一致");
             return;
         }
-        util.showBusy("正在注册用户，请稍等");
-        wx.request({
-            url: config.service.host + '/users/audit-user',
-            method: 'POST',
-            data: audit_user,
-            header: {
-                'content-type': 'application/json'
-            },
+        wx.showModal({
+            title: '注册确认',
+            content: '您确定已经检查信息并注册吗？',
+            confirmText: "注册",
+            cancelText: "取消",
             success: function (res) {
-                util.showModel("提示", "注册成功，5秒后自动跳转到登陆页面");
-                that.setData({
-                    successd:true
-                });
-                let timmer = setInterval(function(){
-                    that.setData({
-                        successdTime:that.data.successdTime - 1
-                    });
-                    if(that.data.successdTime <= 0){
-                        clearInterval(timmer);
-                        wx.redirectTo({
-                            url: '../login/login'
-                        })
-                    }
-                },1000);
+                console.log(res);
+                if (res.confirm) {
+                    util.showBusy("正在注册用户，请稍等");
+                    wx.request({
+                        url: config.service.host + '/users/audit-user',
+                        method: 'POST',
+                        data: audit_user,
+                        header: {
+                            'content-type': 'application/json'
+                        },
+                        success: function (res) {
+                            util.showModel("提示", "注册成功，5秒后自动跳转到登陆页面");
+                            that.setData({
+                                successd: true
+                            });
+                            let timmer = setInterval(function () {
+                                that.setData({
+                                    successdTime: that.data.successdTime - 1
+                                });
+                                if (that.data.successdTime <= 0) {
+                                    clearInterval(timmer);
+                                    wx.redirectTo({
+                                        url: '../login/login'
+                                    })
+                                }
+                            }, 1000);
+                        }
+                    })
+                }
             }
-        })
+        });
+
     },
     onLoad: function () {
         var that = this;
@@ -159,11 +174,18 @@ Page({
             },
             success: function (res) {
                 var roles = res.data;
+                let pickerRoles = [];
+                roles.forEach((r) => {
+                    if (r.name != 'admin' && r.name != 'operator') {
+                        pickerRoles.push(r.cName);
+                    }
+                })
                 that.setData({
                     roles: roles.filter((r) => {
                         if (r.name == 'farmer') r.checked = true;
                         return r.name != 'admin' && r.name != 'operator';
-                    })
+                    }),
+                    pickerRoles: pickerRoles
                 });
             }
         })
@@ -204,4 +226,3 @@ Page({
         })
     }
 })
-

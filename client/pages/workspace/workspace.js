@@ -2,10 +2,11 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 Page({
     data: {
-        me: ''
+        me: '',
+        grids: [0, 1, 2, 3, 4, 5, 6, 7, 8]
     },
     onLoad: function () {
-        console.info("我的 => load");
+        console.info("工作台 => load");
         var that = this;
         wx.getStorage({
             key: 'user',
@@ -28,27 +29,5 @@ Page({
                 })
             }
         })
-    },
-    logout:function(){
-        var that = this;
-        wx.showModal({
-            title: '退出确认',
-            content: '您确定要安全退出系统吗？',
-            confirmText: "退出",
-            cancelText: "取消",
-            success: function (res) {
-                console.log(res);
-                if (res.confirm) {
-                    wx.removeStorage({
-                        key: 'authToken',
-                        success: function(res) {
-                          wx.navigateTo({
-                            url: '../login/login'
-                          })
-                        } 
-                      })
-                }
-            }
-        });
     }
 })

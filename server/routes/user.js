@@ -78,7 +78,11 @@ router.get('/me', isAuthenticated(), async (req, res, next) => {
  * 获取所有身份
  */
 router.get('/roles', async (req, res, next) => {
-    let roles = await Role.findAll();
+    let roles = await Role.findAll({
+        'order': [
+            ['position', 'ASC']
+        ]
+    });
     res.json(roles);
 });
 

@@ -5,7 +5,8 @@
     "pages/index/index",
     "pages/login/login",
     "pages/register/register",
-    "pages/person-center/person-center"
+    "pages/person-center/person-center",
+    "pages/workspace/workspace"
  
   ],
   "window":{
@@ -27,7 +28,7 @@
     }, {  
       "selectedIconPath": "images/wifi-hover.png",  
       "iconPath": "images/wifi-default.png",  
-      "pagePath": "pages/dashboard/dashboard",
+      "pagePath": "pages/workspace/workspace",
       "text": "工作台"  
     }, {  
       "selectedIconPath": "images/ask-hover.png",  

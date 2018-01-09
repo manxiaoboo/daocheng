@@ -1,0 +1,19 @@
+.empty_block{
+    text-align: center;
+}
+
+.empty_img{
+    margin-top:35%;
+    width:210px;
+    height:110px;
+}
+
+.func_block{
+    position: absolute;
+    bottom:0px;
+    width:100%;
+}
+
+.p{
+    display: block;
+}

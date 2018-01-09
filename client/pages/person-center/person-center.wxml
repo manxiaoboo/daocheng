@@ -38,4 +38,5 @@
                 <view class="weui-cell__bd">是否绑定设备</view>
                 <view class="weui-cell__ft">{{me.deviceId?'已绑定设备':'未绑定设备'}}</view>
             </view>
-        </view>
+</view>
+<button class="weui-btn" type="warn" plain="true" bindtap="logout">退出登录</button>

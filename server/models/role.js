@@ -13,7 +13,11 @@ var Role = sequelize.define('role', {
     }, cName: {
         type: Sequelize.STRING,
         field: 'cName'
-    }, createdAt: {
+    },position: {
+        type: Sequelize.INTEGER,
+        field: 'position'
+    },
+    createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'
     }, updatedAt: {
