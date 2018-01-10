@@ -1,4 +1,4 @@
-<view  wx:if="{{me.isValidate && me.deviceId}}">
+<view  wx:if="{{me.isValidate && me.deviceId && me.roleName == '农户'}}">
 <view class="func_block">
         <view class="weui-grids">
             <block>
@@ -44,7 +44,7 @@
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">抱歉，您的账户可能尚未激活</text>
 </view>
-<view wx:if="{{me.isValidate && !me.deviceId}}" class="empty_block">
+<view wx:if="{{me.isValidate && !me.deviceId && me.roleName == '农户'}}" class="empty_block">
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">抱歉，未检查到您的设备</text>
 </view>

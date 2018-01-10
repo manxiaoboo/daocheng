@@ -4,6 +4,7 @@ const User = require('../models/user');
 const AuditUser = require('../models/audit_user');
 const AuditUserDone = require('../models/audit_user_done');
 const Role = require('../models/role');
+const ExpertUser = require('../models/expertUser');
 const UUID = require('uuid');
 const {
     makeSalt,
@@ -103,12 +104,12 @@ router.post('/check-audit', (req, res, next) => {
 /**
  * 修改用户信息
  */
-router.post('/user-edit',isAuthenticated(), (req, res, next) => {
-    User.update(req.body,{
-        where:{
-            id:req.body.id
+router.post('/user-edit', isAuthenticated(), (req, res, next) => {
+    User.update(req.body, {
+        where: {
+            id: req.body.id
         }
-    }).then((result)=>{
+    }).then((result) => {
         res.json(result);
     });
 });
@@ -162,6 +163,22 @@ router.post('/register', isAuthenticated(), async (req, res, next) => {
             id: audit_user.id
         }
     });
+    //如果是专家 为其创建专属身份
+    if (audit_user.roleId == '33aba88e-e6c4-11e7-b42e-060400ef5315') {
+        let expert = {
+            id: UUID.v1(),
+            userId: newUser.id,
+            name: '',
+            score: 0,
+            level: 1,
+            domain: '',
+            intro: '',
+            accept: 0,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+        await ExpertUser.create(expert);
+    }
     res.json(newUser);
 });
 
@@ -185,7 +202,7 @@ router.post('/audit-user', (req, res, next) => {
 /**
  * 拒绝审核申请
  */
-router.post('/audit-user-reject',isAuthenticated(), async (req, res, next) => {
+router.post('/audit-user-reject', isAuthenticated(), async (req, res, next) => {
     let audit_user = req.body;
     await AuditUser.destroy({
         where: {
@@ -235,6 +252,30 @@ router.get('/all-audit-user-done', isAuthenticated(), async (req, res, next) => 
     res.json(audit_users_done);
 });
 
+/**
+ * 根据userId获取专家信息
+ */
+router.get('/expertByUserId', isAuthenticated(), async (req, res, next) => {
+    let expert = await ExpertUser.findOne({
+        where: {
+            userId: req.query.userId
+        }
+    });
+    res.json(expert);
+});
+
+/**
+ * 修改专家信息
+ */
+router.post('/expert-edit', isAuthenticated(), (req, res, next) => {
+    ExpertUser.update(req.body, {
+        where: {
+            id: req.body.id
+        }
+    }).then((result) => {
+        res.json(result);
+    });
+});
 
 
 /**
