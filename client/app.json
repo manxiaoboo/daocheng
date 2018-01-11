@@ -6,7 +6,8 @@
     "pages/login/login",
     "pages/register/register",
     "pages/person-center/person-center",
-    "pages/workspace/workspace"
+    "pages/workspace/workspace",
+    "pages/edit-expert/edit-expert"
  
   ],
   "window":{

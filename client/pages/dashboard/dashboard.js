@@ -33,10 +33,6 @@ Page({
               })
             } else {
               let me = res.data;
-              wx.setStorage({
-                key: "user",
-                data: me
-              })
               wx.request({
                 url: config.service.host + '/users/roles',
                 header: {
@@ -45,13 +41,71 @@ Page({
                 },
                 success: function (res_roles) {
                   let roles = res_roles.data;
-                  wx.setStorage({
-                    key: "roles",
-                    data: roles
-                  })
-                  that.setData({
-                    canShow: true
+                  roles.forEach(r => {
+                    if (r.id == me.roleId) {
+                      me.roleName = r.cName;
+                    }
                   });
+                  if (me.roleName == '专家') {
+                    wx.request({
+                      url: config.service.host + '/users/expertByUserId?userId=' + me.id,
+                      header: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                      },
+                      success: function (res_expert) {
+                        let expert = res_expert.data;
+                        wx.request({
+                          url: config.service.host + '/users/all-domain',
+                          header: {
+                            'content-type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                          },
+                          success: function (res_domains) {
+                            let domains = res_domains.data;
+                            me.expert = expert;
+                            wx.setStorage({
+                              key: "user",
+                              data: me
+                            })
+                            wx.setStorage({
+                              key: "roles",
+                              data: roles
+                            })
+                            wx.setStorage({
+                              key: "domains",
+                              data: domains
+                            })
+                            that.setData({
+                              canShow: true
+                            });
+                          },
+                          fail: function (err) {
+                            wx.redirectTo({
+                              url: '../login/login'
+                            })
+                          }
+                        })
+                      },
+                      fail: function (err) {
+                        wx.redirectTo({
+                          url: '../login/login'
+                        })
+                      }
+                    })
+                  } else {
+                    wx.setStorage({
+                      key: "user",
+                      data: me
+                    })
+                    wx.setStorage({
+                      key: "roles",
+                      data: roles
+                    })
+                    that.setData({
+                      canShow: true
+                    });
+                  }
                 },
                 fail: function (err) {
                   wx.redirectTo({

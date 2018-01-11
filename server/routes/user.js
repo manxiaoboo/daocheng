@@ -5,6 +5,7 @@ const AuditUser = require('../models/audit_user');
 const AuditUserDone = require('../models/audit_user_done');
 const Role = require('../models/role');
 const ExpertUser = require('../models/expertUser');
+const Domain = require('../models/domain');
 const UUID = require('uuid');
 const {
     makeSalt,
@@ -250,6 +251,56 @@ router.get('/all-audit-user-done', isAuthenticated(), async (req, res, next) => 
         ]
     });
     res.json(audit_users_done);
+});
+
+/**
+ * 获取所有专业领域信息
+ */
+router.get('/all-domain', isAuthenticated(), async (req, res, next) => {
+    let domains = await Domain.findAll({
+        order: [
+            ['updatedAt', 'DESC']
+        ]
+    });
+    res.json(domains);
+});
+
+/**
+ * 新建专业领域信息
+ */
+router.post('/create-domain', isAuthenticated(), async (req, res, next) => {
+    let domain = req.body;
+    domain.id = UUID.v1();
+    domain.createdAt = new Date();
+    domain.updatedAt = new Date();
+    await Domain.create(domain);
+    res.json({});
+});
+
+/**
+ * 修改专业领域信息
+ */
+router.post('/edit-domain', isAuthenticated(), async (req, res, next) => {
+    let domain = req.body;
+    await Domain.update(domain,{
+        where:{
+            id:domain.id
+        }
+    });
+    res.json({});
+});
+
+/**
+ * 修改专业领域信息
+ */
+router.post('/delete-domain', isAuthenticated(), async (req, res, next) => {
+    let domain = req.body;
+    await Domain.destroy({
+        where:{
+            id:domain.id
+        }
+    });
+    res.json({});
 });
 
 /**

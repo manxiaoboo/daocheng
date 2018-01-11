@@ -1,0 +1,39 @@
+<view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{me.nickName}}({{me.userName}})</view>
+                    <view style="font-size: 13px;color: #888888;"> 级别：高级 / 积分：{{me.expert.score}}</view>
+                </view>
+            </view>
+</view>
+<form bindsubmit="editExpert">
+<view class="weui-cells__title">我的专业信息</view>
+<view class="weui-cells weui-cells_after-title">
+<view class="weui-cell weui-cell_input {{input_name?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">真实姓名</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputName" value="{{input_name}}" name="name" placeholder="请输入真实姓名"/>
+                </view>
+            </view>
+            </view>
+<view class="weui-cells__title">选择专业领域</view>
+        <view class="weui-cells weui-cells_after-title">
+            <picker bindchange="domainChange" value="{{domainIndex}}" range="{{pickerDomains}}" name="domain">
+                        <view class="weui-select">{{pickerDomains[domainIndex]}}</view>
+                    </picker>
+        </view>
+<view class="weui-cells__title">自我简介</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入简介" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro"/>
+                </view>
+            </view>
+        </view>
+  <button class="weui-btn" type="primary" formType="submit">确认修改</button>
+</form>

@@ -40,6 +40,11 @@
         </view>
     </view>
 </view>
+<view wx:if="{{me.isValidate && me.roleName == '专家' && (!me.expert.domain || !me.expert.name)}}" class="empty_block">
+<image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
+<text class="p">您尚未填写专业信息，请前往填写</text>
+<button class="weui-btn" type="primary" plain="true" bindtap="goEditExpert">填写专业信息</button>
+</view>
 <view wx:if="{{!me.isValidate}}" class="empty_block">
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">抱歉，您的账户可能尚未激活</text>

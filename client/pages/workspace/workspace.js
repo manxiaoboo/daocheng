@@ -24,10 +24,14 @@ Page({
                         that.setData({
                             me: me
                         });
-                        console.info(that.data.me);
                     }
                 })
             }
+        })
+    },
+    goEditExpert:function(){
+        wx.navigateTo({
+            url: '../edit-expert/edit-expert'
         })
     }
 })
