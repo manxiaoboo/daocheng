@@ -1,40 +1,102 @@
 <view  wx:if="{{me.isValidate && me.deviceId && me.roleName == '农户'}}">
+<view class="status">
+    <view class="status-block">
+        <view class="top-md">
+        <view class="smgleft">
+            26
+        </view>
+        <view class="smgright">
+            <text class="p">℃</text>
+            <text>当前温度</text>
+        </view>
+        <view class="top-sm">
+        <view class="p label"><text>喷淋强制启动</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>喷淋自动启动</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>加热强制启动</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>加热自动启动</text><view class="open_status"></view></view>
+        <view class="clear"></view>
+        </view>
+        </view>
+    </view>
+    <view class="status-block">
+        <view class="top-md">
+        <view class="p label"><text>浸种</text><view class="open_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>催芽</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>喷淋</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>加热</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>供氧</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>杀菌</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>温度故障</text><view class="close_status"></view></view>
+        <view class="clear"></view>
+        <view class="p label"><text>加热故障</text><view class="warn_status"></view></view>
+        <view class="clear"></view>
+        </view>
+    </view>
+    <view class="clear"></view>
+</view>
 <view class="func_block">
         <view class="weui-grids">
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">查看</view>
                 </navigator>
             </block>
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">浸种</view>
                 </navigator>
             </block>
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">催芽</view>
                 </navigator>
             </block>
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">供氧</view>
                 </navigator>
             </block>
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">杀菌</view>
                 </navigator>
             </block>
             <block>
                 <navigator class="weui-grid" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/wifi-default.png" />
-                    <view class="weui-grid__label">功能</view>
+                    <view class="weui-grid__label">自动加热</view>
+                </navigator>
+            </block>
+            <block>
+                <navigator class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                    <view class="weui-grid__label">手动加热</view>
+                </navigator>
+            </block>
+            <block>
+                <navigator class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                    <view class="weui-grid__label">自动循环</view>
+                </navigator>
+            </block>
+            <block>
+                <navigator class="weui-grid" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                    <view class="weui-grid__label">手动循环</view>
                 </navigator>
             </block>
         </view>

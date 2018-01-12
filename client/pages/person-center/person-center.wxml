@@ -51,10 +51,10 @@
             </view>
 </view>
 <view class="weui-cells__title" wx:if="{{me.roleName == '专家'}}">专家信息</view>
-<view class="weui-cells weui-cells_after-title">
+<view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '专家'}}">
             <navigator url="../edit-expert/edit-expert" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">我的专业信息</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
             </navigator>
 </view>
-<button class="weui-btn" type="warn" plain="true" bindtap="logout">退出登录</button>
+<button class="weui-btn" type="warn" bindtap="logout">退出登录</button>
