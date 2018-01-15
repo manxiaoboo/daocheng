@@ -6,6 +6,7 @@ const AuditUserDone = require('../models/audit_user_done');
 const Role = require('../models/role');
 const ExpertUser = require('../models/expertUser');
 const Domain = require('../models/domain');
+const DistributorUser = require('../models/distributorUser');
 const UUID = require('uuid');
 const {
     makeSalt,
@@ -180,6 +181,22 @@ router.post('/register', isAuthenticated(), async (req, res, next) => {
         }
         await ExpertUser.create(expert);
     }
+
+    //如果是经销商 为其创建专属身份
+    if(audit_user.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315'){
+        let distributor = {
+            id: UUID.v1(),
+            userId: newUser.id,
+            address: '',
+            intro: '',
+            contact:'',
+            contactPhone:'',
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+        await DistributorUser.create(distributor);
+    }
+
     res.json(newUser);
 });
 
@@ -320,6 +337,31 @@ router.get('/expertByUserId', isAuthenticated(), async (req, res, next) => {
  */
 router.post('/expert-edit', isAuthenticated(), (req, res, next) => {
     ExpertUser.update(req.body, {
+        where: {
+            id: req.body.id
+        }
+    }).then((result) => {
+        res.json(result);
+    });
+});
+
+/**
+ * 根据userId获取经销商信息
+ */
+router.get('/distributorByUserId', isAuthenticated(), async (req, res, next) => {
+    let distributor = await DistributorUser.findOne({
+        where: {
+            userId: req.query.userId
+        }
+    });
+    res.json(distributor);
+});
+
+/**
+ * 修改经销商信息
+ */
+router.post('/distributor-edit', isAuthenticated(), (req, res, next) => {
+    DistributorUser.update(req.body, {
         where: {
             id: req.body.id
         }
