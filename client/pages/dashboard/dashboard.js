@@ -93,15 +93,44 @@ Page({
                         })
                       }
                     })
+                  } else if (me.roleName == '农户') {
+                    if (me.deviceId && me.isValidate) {
+                      wx.request({
+                        url: config.service.host + '/devices/getDeviceById?deviceId=' + me.deviceId,
+                        header: {
+                          'Authorization': 'Bearer ' + token
+                        },
+                        success: function (res_device) {
+                          let device = res_device.data;
+                          me.device = device;
+                          wx.request({
+                            url: config.service.host + '/devices/jzy-login',
+                            method: 'POST',
+                            header: {
+                              'Authorization': 'Bearer ' + token
+                            },
+                            data: { appid: device.appid, username: me.id, password: me.id },
+                            success: function (res_login) {
+                              wx.setStorageSync('jzyUserToken', res_login.data);
+                              wx.setStorageSync('user', me);
+                              wx.setStorageSync('roles', roles);
+                              that.setData({
+                                canShow: true
+                              });
+                            },
+                            fail: function (err) {
+
+                            }
+                          })
+                        },
+                        fail: function (err) {
+
+                        }
+                      })
+                    }
                   } else {
-                    wx.setStorage({
-                      key: "user",
-                      data: me
-                    })
-                    wx.setStorage({
-                      key: "roles",
-                      data: roles
-                    })
+                    wx.setStorageSync('user', me);
+                    wx.setStorageSync('roles', roles);
                     that.setData({
                       canShow: true
                     });

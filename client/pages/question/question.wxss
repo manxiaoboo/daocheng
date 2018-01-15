@@ -1,0 +1,13 @@
+.empty_block{
+    text-align: center;
+}
+
+.empty_img{
+    margin-top:35%;
+    width:210px;
+    height:110px;
+}
+
+.p{
+    display: block;
+} 

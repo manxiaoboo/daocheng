@@ -3,41 +3,41 @@
     <view class="status-block">
         <view class="top-md">
         <view class="smgleft">
-            26
+            {{deviceData.smg_led}}
         </view>
         <view class="smgright">
             <text class="p">℃</text>
             <text>当前温度</text>
         </view>
         <view class="top-sm">
-        <view class="p label"><text>喷淋强制启动</text><view class="close_status"></view></view>
+        <view class="p label"><text>喷淋强制启动</text><view class="{{deviceData.qdpl_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>喷淋自动启动</text><view class="close_status"></view></view>
+        <view class="p label"><text>喷淋自动启动</text><view class="{{deviceData.zdpl_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>加热强制启动</text><view class="close_status"></view></view>
+        <view class="p label"><text>加热强制启动</text><view class="{{deviceData.qdjr_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>加热自动启动</text><view class="open_status"></view></view>
+        <view class="p label"><text>加热自动启动</text><view class="{{deviceData.zdjr_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
         </view>
         </view>
     </view>
     <view class="status-block">
         <view class="top-md">
-        <view class="p label"><text>浸种</text><view class="open_status"></view></view>
+        <view class="p label"><text>浸种</text><view class="{{deviceData.jz_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>催芽</text><view class="close_status"></view></view>
+        <view class="p label"><text>催芽</text><view class="{{deviceData.cy_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>喷淋</text><view class="close_status"></view></view>
+        <view class="p label"><text>喷淋</text><view class="{{deviceData.pl_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>加热</text><view class="close_status"></view></view>
+        <view class="p label"><text>加热</text><view class="{{deviceData.jr_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>供氧</text><view class="close_status"></view></view>
+        <view class="p label"><text>供氧</text><view class="{{deviceData.gy_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>杀菌</text><view class="close_status"></view></view>
+        <view class="p label"><text>杀菌</text><view class="{{deviceData.sj_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>温度故障</text><view class="close_status"></view></view>
+        <view class="p label"><text>温度故障</text><view class="{{deviceData.gzwd_led?'warn_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>加热故障</text><view class="warn_status"></view></view>
+        <view class="p label"><text>加热故障</text><view class="{{deviceData.gzjr_led?'warn_status':'close_status'}}"></view></view>
         <view class="clear"></view>
         </view>
     </view>
@@ -46,58 +46,58 @@
 <view class="func_block">
         <view class="weui-grids">
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid active_key" hover-class="weui-grid_active">
+                    <image class="weui-grid__icon" src="../../images/search-o.png" />
                     <view class="weui-grid__label">查看</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.jz_key?'active_key':''}}" hover-class="weui-grid_active" data-type="jz_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.jz_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">浸种</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.cy_key?'active_key':''}}" hover-class="weui-grid_active" data-type="cy_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.cy_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">催芽</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.gy_key?'active_key':''}}" hover-class="weui-grid_active" data-type="gy_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.gy_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">供氧</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.sj_key?'active_key':''}}" hover-class="weui-grid_active" data-type="sj_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.sj_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">杀菌</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.zdjr_key?'active_key':''}}" hover-class="weui-grid_active" data-type="zdjr_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.zdjr_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">自动加热</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.sdjr_key?'active_key':''}}" hover-class="weui-grid_active" data-type="sdjr_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.sdjr_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">手动加热</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.zdxh_key?'active_key':''}}" hover-class="weui-grid_active" data-type="zdxh_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.zdxh_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">自动循环</view>
-                </navigator>
+                </view>
             </block>
             <block>
-                <navigator class="weui-grid" hover-class="weui-grid_active">
-                    <image class="weui-grid__icon" src="../../images/wifi-default.png" />
+                <view class="weui-grid {{deviceData.sdxh_key?'active_key':''}}" hover-class="weui-grid_active" data-type="sdxh_key" bindtap="controlDevice">
+                    <image class="weui-grid__icon" src="{{deviceData.sdxh_key?'../../images/play.png':'../../images/suspend.png'}}" />
                     <view class="weui-grid__label">手动循环</view>
-                </navigator>
+                </view>
             </block>
         </view>
     </view>

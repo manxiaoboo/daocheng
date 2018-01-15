@@ -7,7 +7,8 @@
     "pages/register/register",
     "pages/person-center/person-center",
     "pages/workspace/workspace",
-    "pages/edit-expert/edit-expert"
+    "pages/edit-expert/edit-expert",
+    "pages/question/question"
  
   ],
   "window":{
@@ -34,7 +35,7 @@
     }, {  
       "selectedIconPath": "images/ask-hover.png",  
       "iconPath": "images/ask-default.png",  
-      "pagePath": "pages/dashboard/dashboard", 
+      "pagePath": "pages/question/question", 
       "text": "知识问答"  
     }, {  
       "selectedIconPath": "images/me-hover.png",  
