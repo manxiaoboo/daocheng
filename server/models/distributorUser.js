@@ -6,30 +6,45 @@ var DistributorUser = sequelize.define('distributorUser', {
         type: Sequelize.UUID,
         field: 'id',
         primaryKey: true
-    }, userId: {
+    },
+    userId: {
         type: Sequelize.UUID,
         field: 'userId'
-    }, address: {
+    },
+    name: {
+        type: Sequelize.STRING,
+        field: 'name'
+    },
+    head: {
+        type: Sequelize.STRING,
+        field: 'head'
+    },
+    address: {
         type: Sequelize.STRING,
         field: 'address'
-    },intro: {
+    },
+    intro: {
         type: Sequelize.STRING,
         field: 'intro'
-    }, contact: {
+    },
+    contact: {
         type: Sequelize.INTEGER,
         field: 'contact'
-    }, contactPhone: {
+    },
+    contactPhone: {
         type: Sequelize.STRING,
         field: 'contactPhone'
-    }, createdAt: {
+    },
+    createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'
-    }, updatedAt: {
+    },
+    updatedAt: {
         type: Sequelize.DATE,
         field: 'updatedAt'
     },
 }, {
-        freezeTableName: true// Model 对应的表名将与model名相同
-    });
+    freezeTableName: true // Model 对应的表名将与model名相同
+});
 
 module.exports = DistributorUser;

@@ -8,7 +8,8 @@
     "pages/person-center/person-center",
     "pages/workspace/workspace",
     "pages/edit-expert/edit-expert",
-    "pages/question/question"
+    "pages/question/question",
+    "pages/edit-distributor/edit-distributor"
  
   ],
   "window":{
