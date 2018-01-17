@@ -1,0 +1,54 @@
+<form bindsubmit="createGoods">
+<view class="weui-cells__title">上架商品信息</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input {{input_name?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">商品名称</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputName" value="{{input_name}}" name="name" placeholder="请输入商品名称"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_unit?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">商品单位</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputUnit" value="{{input_unit}}" name="unit" placeholder="请输入商品单位"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_priceStart?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">最低报价</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputPriceStart" value="{{input_priceStart}}" name="priceStart" placeholder="请输入最低报价"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_priceEnd?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">最高报价</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputPriceEnd" value="{{input_priceEnd}}" name="priceEnd" placeholder="请输入最高报价"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_Type?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">产品类别</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputType" value="{{input_Type}}" name="type" placeholder="请输入产品类别"/>
+        </view>
+    </view>
+</view>
+<view class="weui-cells__title">商品介绍</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入商品介绍" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro"/>
+                </view>
+            </view>
+        </view>
+  <button class="weui-btn" type="primary" formType="submit">下一步，上传图片</button>
+</form>

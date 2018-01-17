@@ -1,0 +1,12 @@
+<view wx:if="{{goods}}">
+    <view class="weui-cells__title">图片预览</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view wx:for="{{goods.photos}}" wx:for-item="url"  wx:for-index="id">
+                <image src="{{'http://' + url}}" style="width: 80px; height: 80px;margin-right:8px"/>
+            </view>
+        </view>
+    </view>
+    <button class="weui-btn" type="primary" bindtap="uploadImage" class="p" plain="true">上传店铺图片</button>
+    <button class="weui-btn" type="primary" bindtap="finish">完成上传</button>
+</view>

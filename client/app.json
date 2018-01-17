@@ -9,7 +9,10 @@
     "pages/workspace/workspace",
     "pages/edit-expert/edit-expert",
     "pages/question/question",
-    "pages/edit-distributor/edit-distributor"
+    "pages/edit-distributor/edit-distributor",
+    "pages/distributor-goods-list/distributor-goods-list",
+    "pages/distributor-goods-add/distributor-goods-add",
+    "pages/distributor-goods-upload/distributor-goods-upload"
  
   ],
   "window":{
