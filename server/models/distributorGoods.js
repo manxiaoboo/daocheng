@@ -55,6 +55,10 @@ var DistributorGoods = sequelize.define('distributorGoods', {
         type: Sequelize.BOOLEAN,
         field: 'isAd'
     },
+    isAudit: {
+        type: Sequelize.BOOLEAN,
+        field: 'isAudit'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'

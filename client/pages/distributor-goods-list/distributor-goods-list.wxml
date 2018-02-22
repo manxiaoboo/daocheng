@@ -1,5 +1,39 @@
-<view wx:if="{{!goods || (goods && goods.length <= 0)}}" class="empty_block">
+<view wx:if="{{canShow}}">
+<view wx:if="{{(!goods_audit && !goods_unAudit) || ((goods_audit && goods_audit.length <= 0) && (goods_unAudit && goods_unAudit.length <= 0))}}" class="empty_block">
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">您尚未创建商品</text>
 <button class="weui-btn" type="primary" plain="true" bindtap="goCreate">创建一个商品</button>
+</view>
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">审核中商品</view>
+            <view class="weui-panel__bd" wx:if="{{goods_unAudit && goods_unAudit.length > 0}}">
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_unAudit}}" wx:for-item="g"  wx:for-index="id">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length>0}}" src="{{'http://' + g.photos_arr[0]}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{g.name}}({{g.type}})</view>
+                        <view class="weui-media-box__desc">{{g.intro}}</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">已上架商品</view>
+            <view class="weui-panel__bd" wx:if="{{goods_audit && goods_audit.length > 0}}">
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_audit}}" wx:for-item="g"  wx:for-index="id">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length>0}}" src="{{'http://' + g.photos_arr[0]}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{g.name}}({{g.type}})</view>
+                        <view class="weui-media-box__desc">{{g.intro}}</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
 </view>

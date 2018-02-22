@@ -2,8 +2,10 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 Page({
     data: {
+        canShow: false,
         me: '',
-        goods: []
+        goods_audit: [],
+        goods_unAudit: []
     },
     onLoad: function () {},
     onShow: function () {
@@ -19,7 +21,6 @@ Page({
         that.setData({
             me: me
         });
-        console.info(that.data.me);
         let token = wx.getStorageSync('authToken');
         wx.request({
             url: config.service.host + '/distributor?distributorId=' + me.distributor.id,
@@ -27,9 +28,26 @@ Page({
                 'Authorization': 'Bearer ' + token
             },
             success: (res_distributor) => {
+                let goods_audit = res_distributor.data.filter(rd => {return rd.isAudit})
+                let goods_unAudit = res_distributor.data.filter(rd => {return !rd.isAudit})
+                goods_audit.forEach(ga => {
+                    if(ga.photos){
+                        ga.photos_arr = ga.photos.split(',')
+                    }
+                })
+                goods_unAudit.forEach(gu => {
+                    if(gu.photos){
+                        gu.photos_arr = gu.photos.split(',')
+                    }
+                })
                 this.setData({
-                    goods: res_distributor.data
+                    goods_audit: goods_audit,
+                    goods_unAudit: goods_unAudit
                 });
+                console.info(res_distributor.data)
+                this.setData({
+                    canShow:true
+                })
             },
             fail: function (err) {
 

@@ -7,6 +7,6 @@
             </view>
         </view>
     </view>
-    <button class="weui-btn" type="primary" bindtap="uploadImage" class="p" plain="true">上传店铺图片</button>
+    <button class="weui-btn" type="primary" bindtap="uploadImage" class="p" plain="true">上传商品图片</button>
     <button class="weui-btn" type="primary" bindtap="finish">完成上传</button>
 </view>
