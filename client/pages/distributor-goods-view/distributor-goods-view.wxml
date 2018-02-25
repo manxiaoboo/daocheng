@@ -1,0 +1,29 @@
+<swiper indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color="#ffffff">
+  <block wx:for="{{goods.photos_arr}}">
+    <swiper-item>
+      <image src="http://{{item}}" class="slide-image" mode="scaleToFill"/>
+    </swiper-item>
+  </block>
+</swiper>
+<view class="page__bd">
+    <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__bd name_panel">
+            <view class="p">
+                <view class="weui-badge" style="margin-left: 5px;margin-right:5px;">{{goods.type}}</view>
+                    {{goods.name}}（{{goods.unit}}）
+            </view>
+            <view class="p">
+                <text class="intro">{{goods.intro}}</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="page__bd">
+    <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__hd">经销商信息</view>
+        <view class="weui-panel__bd">
+            经销商
+        </view>
+    </view>
+</view>

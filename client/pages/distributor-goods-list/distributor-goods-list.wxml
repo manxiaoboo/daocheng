@@ -8,9 +8,10 @@
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__hd">审核中商品</view>
             <view class="weui-panel__bd" wx:if="{{goods_unAudit && goods_unAudit.length > 0}}">
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_unAudit}}" wx:for-item="g"  wx:for-index="id">
+                <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_unAudit}}" wx:for-item="g"  wx:for-index="id">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                         <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length>0}}" src="{{'http://' + g.photos_arr[0]}}" />
+                        <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length<=0}}" src="../../images/pic_160.png" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{g.name}}({{g.type}})</view>
@@ -27,6 +28,7 @@
                 <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_audit}}" wx:for-item="g"  wx:for-index="id">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                         <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length>0}}" src="{{'http://' + g.photos_arr[0]}}" />
+                        <image class="weui-media-box__thumb" wx:if="{{g.photos_arr && g.photos_arr.length<=0}}" src="../../images/pic_160.png" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{g.name}}({{g.type}})</view>
