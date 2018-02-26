@@ -16,14 +16,86 @@
             <view class="p">
                 <text class="intro">{{goods.intro}}</text>
             </view>
+            <view class="p">
+                <text class="price_label">￥</text><text class="price">{{goods.priceStart}}</text>
+                <text class="price_label"> ~ </text>
+                <text class="price">{{goods.priceEnd}}</text>
+                <text class="price_label">（价格随地区变化）</text>
+            </view>
         </view>
     </view>
 </view>
 <view class="page__bd">
     <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__hd">经销商信息</view>
-        <view class="weui-panel__bd">
-            经销商
+        <view class="weui-panel__hd">经销商 - {{goods.distributor.name}}</view>
+        <view class="weui-panel__bd dis_panel">
+            <view class="p margin-top-mini">
+                <text class="dis_label">地址 </text><text>{{goods.distributor.address}}</text>
+            </view>
+            <view class="p margin-top-mini">
+                <text class="dis_label">联系人 </text><text>{{goods.distributor.contact}}</text>
+            </view>
+            <view class="p margin-top-mini">
+                <text class="dis_label">电话 </text><text class="phone" bindtap="call">{{goods.distributor.contactPhone}}</text>
+            </view>
+             <view class="p margin-top-mini">
+                <text class="dis_label">简介 </text><text>{{goods.distributor.intro}}</text>
+            </view>
+            <view class="p margin-top-mini">
+                <button class="weui-btn" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '农户'}}">立即下单</button>
+            </view>
         </view>
     </view>
 </view>
+
+<view class="page__bd bg_white">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                    <view class="weui-panel weui-panel_access">
+                        <view class="weui-panel__bd dis_panel">
+                            <view class="p margin-top-mini" wx:for="{{goods.specDesc}}">
+                               <text>{{item}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}" style="text-align:center">
+                    <view wx:for="{{goods.photos_arr}}">
+                        <image src="http://{{item}}" style="height:500px;" bindtap="preview" data-current-image="{{item}}"/>
+                    </view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+                    <view class="weui-panel weui-panel_access">
+                        <view class="weui-panel__bd dis_panel">
+                            <view class="p margin-top-mini">
+                                <text class="p">购买流程</text>
+                                <text class="dis_label">1、选择商品，参考定价。
+                                2、拨打联系电话，联系供应商并商谈价格。
+                                3、与供应商达成一致后，确认下单，并等待供应商修改价格。
+                                4、供应商确认价格后，用户需要回到此订单页面，进行确认订单操作。
+                                5、线下交易，本站不提供任何交易和金钱相关操作。
+                                </text>
+                            </view>
+                            <view class="p margin-top-mini">
+                                <text class="p">购买须知</text>
+                                <text class="dis_label">本站（稻成）所展示的商品详情信息及规格参数信息均由供应商自行设计、制作并通过稻成开放的接口进行展示，其真实性、准确性和合法性由供应商负责。如需购买，请认真核对商品信息且主动联系商家进行线下交易，本站不承担任何交易责任以及商品担保。</text>
+                            </view>
+                            <view class="p margin-top-mini">
+                                <text class="p">价格说明</text>
+                                <text class="dis_label">由于不同地区的物价以及物流成本的原因，价格会有所浮动，具体成交价以及成交量请主动与供应商联系，商品所示的价格区间仅供范围参考，不做实际成交价格使用。</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>

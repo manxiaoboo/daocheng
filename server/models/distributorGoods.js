@@ -39,6 +39,10 @@ var DistributorGoods = sequelize.define('distributorGoods', {
         type: Sequelize.UUID,
         field: 'type'
     },
+    specDesc: {
+        type: Sequelize.STRING,
+        field: 'specDesc'
+    },
     totalDeal: {
         type: Sequelize.INTEGER,
         field: 'totalDeal'

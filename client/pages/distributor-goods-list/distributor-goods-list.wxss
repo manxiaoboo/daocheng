@@ -11,3 +11,7 @@
 .p{
     display: block;
 } 
+
+.page__bd {
+    padding-bottom: 10px;
+} 

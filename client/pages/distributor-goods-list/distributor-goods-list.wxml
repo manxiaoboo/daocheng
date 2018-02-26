@@ -5,6 +5,7 @@
 <button class="weui-btn" type="primary" plain="true" bindtap="goCreate">创建一个商品</button>
 </view>
     <view class="page__bd">
+    <button class="weui-btn" type="primary" bindtap="goCreate" style="margin-top:10px;">创建一个商品</button>
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__hd">审核中商品</view>
             <view class="weui-panel__bd" wx:if="{{goods_unAudit && goods_unAudit.length > 0}}">

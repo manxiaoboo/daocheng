@@ -8,7 +8,8 @@ Page({
         input_priceStart: '',
         input_priceEnd: '',
         input_Type: '',
-        input_intro: ''
+        input_intro: '',
+        input_specDesc: ''
     },
     onLoad: function () {},
     onShow: function () {
@@ -69,6 +70,10 @@ Page({
     },doInputIntro: function (e) {
         this.setData({
             input_intro: e.detail.value
+        })
+    },doInputSpecDesc: function (e) {
+        this.setData({
+            input_specDesc: e.detail.value
         })
     }
 })

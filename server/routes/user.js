@@ -358,6 +358,18 @@ router.get('/distributorByUserId', isAuthenticated(), async (req, res, next) => 
 });
 
 /**
+ * 根据id获取经销商信息
+ */
+router.get('/distributorById', isAuthenticated(), async (req, res, next) => {
+    let distributor = await DistributorUser.findOne({
+        where: {
+            id: req.query.distributorId
+        }
+    });
+    res.json(distributor);
+});
+
+/**
  * 修改经销商信息
  */
 router.post('/distributor-edit', isAuthenticated(), (req, res, next) => {

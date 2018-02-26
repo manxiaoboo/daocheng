@@ -42,13 +42,22 @@
         </view>
     </view>
 </view>
-<view class="weui-cells__title">商品介绍</view>
+<view class="weui-cells__title">商品简介</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入商品介绍" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro"/>
+                    <textarea class="weui-textarea" placeholder="请输入商品简介" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro"/>
                 </view>
             </view>
-        </view>
+</view>
+
+<view class="weui-cells__title">规格参数</view>
+<view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入规格参数（每两条参数之间以分号隔开，例=> 品牌:稻成;类别:其他;）" style="height: 3.3em" name="specDesc" value="{{input_specDesc}}" bindinput="doInputSpecDesc"/>
+                </view>
+            </view>
+</view>
   <button class="weui-btn" type="primary" formType="submit">下一步，上传图片</button>
 </form>
