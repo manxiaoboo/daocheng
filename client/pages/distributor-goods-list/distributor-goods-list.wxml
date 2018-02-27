@@ -7,7 +7,7 @@
     <view class="page__bd">
     <button class="weui-btn" type="default" bindtap="goCreate" style="margin-top:10px;">添加新商品</button>
         <view class="weui-panel weui-panel_access">
-            <view class="weui-panel__hd">审核中商品</view>
+            <view class="weui-panel__hd">草稿及审核中商品</view>
             <view class="weui-panel__bd" wx:if="{{goods_unAudit && goods_unAudit.length > 0}}">
                 <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods_unAudit}}" wx:for-item="g"  wx:for-index="id">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">

@@ -63,6 +63,10 @@ var DistributorGoods = sequelize.define('distributorGoods', {
         type: Sequelize.BOOLEAN,
         field: 'isAudit'
     },
+    rejectReason: {
+        type: Sequelize.STRING,
+        field: 'rejectReason'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'

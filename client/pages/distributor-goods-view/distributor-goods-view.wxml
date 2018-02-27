@@ -43,6 +43,8 @@
             </view>
             <view class="p margin-top-mini">
                 <button class="weui-btn" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '农户'}}">立即下单</button>
+                <button class="weui-btn" bindtap="doAudit" plain="true" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing}}">提交审核</button>
+                <button class="weui-btn" bindtap="doAudit" disabled="disabled" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && isAuditing}}">审核中请耐心等待</button>
             </view>
         </view>
     </view>

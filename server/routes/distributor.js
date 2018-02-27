@@ -4,6 +4,7 @@ const UUID = require('uuid');
 const DistributorUser = require('../models/distributorUser');
 const DistributorGoods = require('../models/distributorGoods');
 const DistributorGoodsType = require('../models/distributorGoodsType');
+const AuditGoods = require('../models/audit_goods');
 
 const {
     isAuthenticated
@@ -115,6 +116,32 @@ router.post('/deleteType', isAuthenticated(), async(req, res, next) => {
     });
     res.json({});
 });
+
+/**
+ * 根据goodsId查找audit_goods
+ */
+router.get('/auditGoodsByGoodsId', isAuthenticated(), async(req, res, next) => {
+    let audit_goods = await AuditGoods.findAll({
+        where: {
+            distributorGoodsId: req.query.id
+        }
+    });
+    res.json(audit_goods);
+});
+
+/**
+ * 添加商品审核
+ */
+router.get('/createAuditGoods', isAuthenticated(), async(req, res, next) => {
+    let audit_goods = {};
+    audit_goods.id = UUID.v1();
+    audit_goods.createdAt = new Date();
+    audit_goods.updatedAt = new Date();
+    audit_goods.distributorGoodsId = req.query.id;
+    let new_audit_goods = await AuditGoods.create(audit_goods);
+    res.json(new_audit_goods);
+});
+
 
 
 module.exports = router;

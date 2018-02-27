@@ -14,7 +14,8 @@ Page({
         tabs: ["规格参数","图文详情", "购买流程"],
         activeIndex: 0,
         sliderOffset: 0,
-        sliderLeft: 0
+        sliderLeft: 0,
+        isAuditing: false
     },
     onLoad: function (option) {
         var that = this;
@@ -62,12 +63,25 @@ Page({
                     },
                     success: (res_distributor) => {
                         res_goods.data.distributor = res_distributor.data;
-                        that.setData({
-                            me: me,
-                            goods: res_goods.data
-                        });
-                        console.info(res_goods.data)
-                        console.info(that.data.goodsId)
+                        wx.request({
+                            url: config.service.host + '/distributor/auditGoodsByGoodsId?id=' + res_goods.data.id,
+                            header: {
+                                'Authorization': 'Bearer ' + token
+                            },
+                            success: (res_audit_goods) => {
+                                let audit_goods = res_audit_goods.data;
+                                that.setData({
+                                    me: me,
+                                    goods: res_goods.data,
+                                    isAuditing: audit_goods.length > 0? true:false
+                                });
+                                console.info(res_goods.data)
+                                console.info(that.data.goodsId)
+                            },
+                            fail: function (err) {
+        
+                            }
+                        })
                     },
                     fail: function (err) {
 
@@ -78,6 +92,34 @@ Page({
 
             }
         })
+    },
+    doAudit: function(){
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '提交确认',
+            content: '您确定要将此商品提交审核吗？',
+            confirmText: "提交",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在处理");
+                    wx.request({
+                        url: config.service.host + '/distributor/createAuditGoods?id=' + that.data.goodsId,
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: (res) => {
+                            that.onShow();
+                            util.showSuccess("处理成功");
+                        },
+                        fail: function (err) {
+    
+                        }
+                    })
+                }
+            }
+        });
     },
     tabClick: function (e) {
         this.setData({
