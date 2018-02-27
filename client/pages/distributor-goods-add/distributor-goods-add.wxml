@@ -38,7 +38,9 @@
             <view class="weui-label">产品类别</view>
         </view>
         <view class="weui-cell__bd">
-            <input class="weui-input" bindinput="doInputType" value="{{input_Type}}" name="type" placeholder="请输入产品类别"/>
+            <picker bindchange="typeChange" value="{{typeIndex}}" range="{{pickerTypes}}" name="type">
+                        <view class="weui-select">{{pickerTypes[typeIndex]}}</view>
+                    </picker>
         </view>
     </view>
 </view>

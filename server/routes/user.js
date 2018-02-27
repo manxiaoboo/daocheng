@@ -308,7 +308,7 @@ router.post('/edit-domain', isAuthenticated(), async (req, res, next) => {
 });
 
 /**
- * 修改专业领域信息
+ * 删除专业领域信息
  */
 router.post('/delete-domain', isAuthenticated(), async (req, res, next) => {
     let domain = req.body;

@@ -3,6 +3,7 @@ const router = express.Router();
 const UUID = require('uuid');
 const DistributorUser = require('../models/distributorUser');
 const DistributorGoods = require('../models/distributorGoods');
+const DistributorGoodsType = require('../models/distributorGoodsType');
 
 const {
     isAuthenticated
@@ -68,5 +69,52 @@ router.get('/delete', isAuthenticated(), async(req, res, next) => {
     });
     res.json({});
 });
+
+/**
+ * 获取所有商品类型
+ */
+router.get('/types', isAuthenticated(), async(req, res, next) => {
+    let types = await DistributorGoodsType.findAll();
+    res.json(types);
+});
+
+/**
+ * 创建商品类型
+ */
+router.post('/createType', isAuthenticated(), async(req, res, next) => {
+    let types = req.body;
+    types.id = UUID.v1();
+    types.createdAt = new Date();
+    types.updatedAt = new Date();
+    let newtypes = await DistributorGoodsType.create(types);
+    res.json(newtypes);
+});
+
+/**
+ * 修改商品类型
+ */
+router.post('/updateType', isAuthenticated(), async(req, res, next) => {
+    let types = req.body;
+    let newtypes = await DistributorGoodsType.update(types, {
+        where: {
+            id: types.id
+        }
+    });
+    res.json(newtypes);
+});
+
+/**
+ * 删除商品类型
+ */
+router.post('/deleteType', isAuthenticated(), async(req, res, next) => {
+    let type = req.body;
+    await DistributorGoodsType.destroy({
+        where: {
+            id: type.id
+        }
+    });
+    res.json({});
+});
+
 
 module.exports = router;

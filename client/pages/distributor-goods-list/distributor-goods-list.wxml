@@ -2,10 +2,10 @@
 <view wx:if="{{(!goods_audit && !goods_unAudit) || ((goods_audit && goods_audit.length <= 0) && (goods_unAudit && goods_unAudit.length <= 0))}}" class="empty_block">
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">您尚未创建商品</text>
-<button class="weui-btn" type="primary" plain="true" bindtap="goCreate">创建一个商品</button>
+<button class="weui-btn" type="primary" plain="true" bindtap="goCreate">添加新商品</button>
 </view>
     <view class="page__bd">
-    <button class="weui-btn" type="primary" bindtap="goCreate" style="margin-top:10px;">创建一个商品</button>
+    <button class="weui-btn" type="default" bindtap="goCreate" style="margin-top:10px;">添加新商品</button>
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__hd">审核中商品</view>
             <view class="weui-panel__bd" wx:if="{{goods_unAudit && goods_unAudit.length > 0}}">
