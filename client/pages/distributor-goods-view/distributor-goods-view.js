@@ -104,14 +104,67 @@ Page({
             success: function (res) {
                 if (res.confirm) {
                     util.showBusy("正在处理");
+                    const audit_goods = {
+                        distributorGoodsId: that.data.goodsId,
+                        type: 'create'
+                    }
                     wx.request({
-                        url: config.service.host + '/distributor/createAuditGoods?id=' + that.data.goodsId,
+                        url: config.service.host + '/distributor/createAuditGoods',
                         header: {
                             'Authorization': 'Bearer ' + token
                         },
+                        method: 'POST',
+                        data: audit_goods,
                         success: (res) => {
                             that.onShow();
                             util.showSuccess("处理成功");
+                        },
+                        fail: function (err) {
+    
+                        }
+                    })
+                }
+            }
+        });
+    },
+    deleteGoods: function(e){
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '删除确认',
+            content: '您确定要将此商品删除吗？',
+            confirmText: "删除",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在处理");
+                    let files = [];
+                    that.data.goods.photos_arr.forEach(pa => {
+                        files.push(pa.split('/')[1]);
+                    })
+                    wx.request({
+                        url: config.service.host + '/qiniu/deleteBatch',
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        method: 'POST',
+                        data: files,
+                        success: (res) => {
+                            wx.request({
+                                url: config.service.host + '/distributor/delete?id='+that.data.goods.id,
+                                header: {
+                                    'Authorization': 'Bearer ' + token
+                                },
+                                success: (res) => {
+                                    util.showSuccess("处理成功");
+                                    wx.navigateBack({
+                                        delta: 1
+                                      })
+                                },
+                                fail: function (err) {
+            
+                                }
+                            })
                         },
                         fail: function (err) {
     

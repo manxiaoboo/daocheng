@@ -10,7 +10,7 @@
     <view class="weui-panel weui-panel_access">
         <view class="weui-panel__bd name_panel">
             <view class="p">
-                <view class="weui-badge" style="margin-left: 5px;margin-right:5px;">{{goods.type}}</view>
+                <view class="weui-badge" style="margin-left: 5px;margin-right:5px;">{{goods.type_ele.name}}</view>
                     {{goods.name}}（{{goods.unit}}）
             </view>
             <view class="p">
@@ -21,6 +21,9 @@
                 <text class="price_label"> ~ </text>
                 <text class="price">{{goods.priceEnd}}</text>
                 <text class="price_label">（价格随地区变化）</text>
+            </view>
+            <view class="p" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing && goods.rejectReason}}">
+                <text class="reject_text">审核失败：{{goods.rejectReason}}</text>
             </view>
         </view>
     </view>
@@ -44,6 +47,7 @@
             <view class="p margin-top-mini">
                 <button class="weui-btn" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '农户'}}">立即下单</button>
                 <button class="weui-btn" bindtap="doAudit" plain="true" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing}}">提交审核</button>
+                <button class="weui-btn" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing}}">删除商品</button>
                 <button class="weui-btn" bindtap="doAudit" disabled="disabled" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && isAuditing}}">审核中请耐心等待</button>
             </view>
         </view>

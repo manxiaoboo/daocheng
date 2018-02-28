@@ -31,6 +31,11 @@ router.get('/getGoodsById', isAuthenticated(), async(req, res, next) => {
             id: req.query.id
         }
     });
+    goods.dataValues.type_ele = await DistributorGoodsType.findOne({
+        where: {
+            id: goods.dataValues.type
+        }
+    })
     res.json(goods);
 });
 
@@ -130,18 +135,74 @@ router.get('/auditGoodsByGoodsId', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 查找所有audit_goods
+ */
+router.get('/auditGoods', isAuthenticated(), async(req, res, next) => {
+    let audit_goods = await AuditGoods.findAll();
+    for (const ag of audit_goods) {
+        agd = ag.dataValues
+        agd.goods = await DistributorGoods.findOne({
+            where: {
+                id: agd.distributorGoodsId
+            }
+        })
+        agd.goods.dataValues.distributor = await DistributorUser.findOne({
+            where: {
+                id: agd.goods.dataValues.distributorId
+            }
+        })
+        agd.goods.dataValues.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: agd.goods.dataValues.type
+            }
+        })
+    }
+    res.json(audit_goods);
+});
+
+/**
+ * 通过商品审核
+ */
+router.get('/auditGoodsPass', isAuthenticated(), async(req, res, next) => {
+    await AuditGoods.destroy({where:{id:req.query.auditId}})
+    let goods = await DistributorGoods.findOne({where:{id: req.query.goodsId}})
+    let goods_r = goods.dataValues;
+    goods_r.isAudit = true;
+    goods_r.rejectReason = null;
+    let newGoods = await DistributorGoods.update(goods_r,{
+        where: {
+            id: goods_r.id
+        }
+    })
+    res.json(newGoods);
+});
+
+/**
+ * 拒绝商品审核
+ */
+router.post('/auditGoodsReject', isAuthenticated(), async(req, res, next) => {
+    await AuditGoods.destroy({where:{id:req.body.auditId}})
+    let goods = await DistributorGoods.findOne({where:{id: req.body.goodsId}})
+    let goods_r = goods.dataValues;
+    goods_r.rejectReason = req.body.reason;
+    let newGoods = await DistributorGoods.update(goods_r,{
+        where: {
+            id: goods_r.id
+        }
+    })
+    res.json(newGoods);
+});
+
+/**
  * 添加商品审核
  */
-router.get('/createAuditGoods', isAuthenticated(), async(req, res, next) => {
-    let audit_goods = {};
+router.post('/createAuditGoods', isAuthenticated(), async(req, res, next) => {
+    let audit_goods = req.body;
     audit_goods.id = UUID.v1();
     audit_goods.createdAt = new Date();
     audit_goods.updatedAt = new Date();
-    audit_goods.distributorGoodsId = req.query.id;
     let new_audit_goods = await AuditGoods.create(audit_goods);
     res.json(new_audit_goods);
 });
-
-
 
 module.exports = router;

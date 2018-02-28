@@ -11,6 +11,14 @@ var AuditGoods = sequelize.define('audit_goods', {
         type: Sequelize.UUID,
         field: 'distributorGoodsId'
     },
+    type: {
+        type: Sequelize.STRING,
+        field: 'type'
+    },
+    data: {
+        type: Sequelize.STRING,
+        field: 'data'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'

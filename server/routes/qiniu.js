@@ -44,5 +44,30 @@ router.get('/delete', isAuthenticated(), async(req, res, next) => {
       });
 });
 
+/**
+ * 批量删除七牛文件
+ */
+router.post('/deleteBatch', isAuthenticated(), async(req, res, next) => {
+    let bucket = 'daocheng-images'
+    let accessKey = '8vfLR9ldMXbIUUlDm39FjKuAtCrbeLjl9GZeBufQ';
+    let secretKey = '42beooQFa_D9yjZPNr3YYJMzLXHQOqzJYJQnryk5';
+    let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+    let config = new qiniu.conf.Config();
+    let bucketManager = new qiniu.rs.BucketManager(mac, config);
+    let deleteOperations = [];
+    let files = req.body;
+    files.forEach(f => {
+        deleteOperations.push(qiniu.rs.deleteOp(bucket, f))
+    })
+    bucketManager.batch(deleteOperations, function(err, respBody, respInfo) {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error");
+        } else {
+         res.json("ok");
+        }
+      });
+});
+
 
 module.exports = router;

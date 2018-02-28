@@ -44,6 +44,11 @@ swiper {
     color: #2d64b3;
 }
 
+.reject_text{
+    font-size:22px;
+    color:red;
+}
+
 .p{
     display: block;
 } 
