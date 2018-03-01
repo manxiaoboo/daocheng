@@ -11,7 +11,7 @@ Page({
         interval: 5000,
         duration: 1000,
         canShow: false,
-        tabs: ["规格参数","图文详情", "购买流程"],
+        tabs: ["规格参数", "图文详情", "购买流程"],
         activeIndex: 0,
         sliderOffset: 0,
         sliderLeft: 0,
@@ -73,13 +73,13 @@ Page({
                                 that.setData({
                                     me: me,
                                     goods: res_goods.data,
-                                    isAuditing: audit_goods.length > 0? true:false
+                                    isAuditing: audit_goods.length > 0 ? true : false
                                 });
                                 console.info(res_goods.data)
                                 console.info(that.data.goodsId)
                             },
                             fail: function (err) {
-        
+
                             }
                         })
                     },
@@ -93,7 +93,7 @@ Page({
             }
         })
     },
-    doAudit: function(){
+    doAudit: function () {
         let that = this;
         let token = wx.getStorageSync('authToken');
         wx.showModal({
@@ -120,14 +120,14 @@ Page({
                             util.showSuccess("处理成功");
                         },
                         fail: function (err) {
-    
+
                         }
                     })
                 }
             }
         });
     },
-    deleteGoods: function(e){
+    deleteGoods: function (e) {
         let that = this;
         let token = wx.getStorageSync('authToken');
         wx.showModal({
@@ -151,7 +151,7 @@ Page({
                         data: files,
                         success: (res) => {
                             wx.request({
-                                url: config.service.host + '/distributor/delete?id='+that.data.goods.id,
+                                url: config.service.host + '/distributor/delete?id=' + that.data.goods.id,
                                 header: {
                                     'Authorization': 'Bearer ' + token
                                 },
@@ -159,20 +159,85 @@ Page({
                                     util.showSuccess("处理成功");
                                     wx.navigateBack({
                                         delta: 1
-                                      })
+                                    })
                                 },
                                 fail: function (err) {
-            
+
                                 }
                             })
                         },
                         fail: function (err) {
-    
+
                         }
                     })
                 }
             }
         });
+    },
+    closeGoods: function (e) {
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '下架确认',
+            content: '您确定要将此商品下架吗（下架后可以重新上架）？',
+            confirmText: "下架",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在处理");
+                    wx.request({
+                        url: config.service.host + '/distributor/close?id=' + that.data.goodsId,
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: (res) => {
+                            util.showSuccess("处理成功");
+                            wx.navigateBack({
+                                delta: 1
+                            })
+                        },
+                        fail: function (err) {
+
+                        }
+                    })
+                }
+            }
+        });
+    },
+    openGoods: function (e) {
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '上架确认',
+            content: '您确定要将此重新商品上架吗？',
+            confirmText: "上架",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在处理");
+                    wx.request({
+                        url: config.service.host + '/distributor/open?id=' + that.data.goodsId,
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: (res) => {
+                            util.showSuccess("处理成功");
+                            wx.navigateBack({
+                                delta: 1
+                            })
+                        },
+                        fail: function (err) {
+
+                        }
+                    })
+                }
+            }
+        });
+    },
+    goEdit: function(){
+        wx.navigateTo({
+            url: '../distributor-goods-edit/distributor-goods-edit?id='+this.data.goodsId
+          })
     },
     tabClick: function (e) {
         this.setData({

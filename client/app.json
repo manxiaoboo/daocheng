@@ -13,7 +13,8 @@
     "pages/distributor-goods-list/distributor-goods-list",
     "pages/distributor-goods-add/distributor-goods-add",
     "pages/distributor-goods-upload/distributor-goods-upload",
-    "pages/distributor-goods-view/distributor-goods-view"
+    "pages/distributor-goods-view/distributor-goods-view",
+    "pages/distributor-goods-edit/distributor-goods-edit"
  
   ],
   "window":{

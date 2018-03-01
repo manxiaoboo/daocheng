@@ -65,6 +65,67 @@ router.post('/update', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 更改商品图片字段
+ */
+router.post('/updateImage', isAuthenticated(), async(req, res, next) => {
+    let images = req.body.images;
+    let goodsId = req.body.id;
+    let goods = await DistributorGoods.findOne({
+        where:{
+            id: goodsId
+        }
+    })
+    let goods_r = goods.dataValues;
+    goods_r.photos = images;
+    let newgoods = await DistributorGoods.update(goods_r, {
+        where: {
+            id: goods_r.id
+        }
+    });
+    res.json(newgoods);
+});
+
+/**
+ * 商品下架
+ */
+router.get('/close', isAuthenticated(), async(req, res, next) => {
+    let goodsId = req.query.id;
+    let goods = await DistributorGoods.findOne({
+        where:{
+            id: goodsId
+        }
+    })
+    let goods_r = goods.dataValues;
+    goods_r.isRunning = false;
+    let newgoods = await DistributorGoods.update(goods_r, {
+        where: {
+            id: goods_r.id
+        }
+    });
+    res.json(newgoods);
+});
+
+/**
+ * 商品上架
+ */
+router.get('/open', isAuthenticated(), async(req, res, next) => {
+    let goodsId = req.query.id;
+    let goods = await DistributorGoods.findOne({
+        where:{
+            id: goodsId
+        }
+    })
+    let goods_r = goods.dataValues;
+    goods_r.isRunning = true;
+    let newgoods = await DistributorGoods.update(goods_r, {
+        where: {
+            id: goods_r.id
+        }
+    });
+    res.json(newgoods);
+});
+
+/**
  * 删除商品
  */
 router.get('/delete', isAuthenticated(), async(req, res, next) => {

@@ -11,7 +11,7 @@ Page({
         input_contact: '',
         input_contactPhone: ''
     },
-    onLoad: function () {},
+    onLoad: function () { },
     onShow: function () {
         console.info("修改经销商信息 => load");
         let that = this;
@@ -102,14 +102,14 @@ Page({
                             util.showSuccess("图片上传成功");
                             if (oldhead) {
                                 wx.request({
-                                    url: config.service.host + '/qiniu/delete?entry='+oldhead.split('/')[1],
+                                    url: config.service.host + '/qiniu/delete?entry=' + oldhead.split('/')[1],
                                     header: {
                                         'content-type': 'application/json',
                                         'Authorization': 'Bearer ' + token
                                     },
-                                success: function (res) {},
-                                fail: function (err) {}
-                            })
+                                    success: function (res) { },
+                                    fail: function (err) { }
+                                })
                             }
                         },
                         fail: function (err) {
@@ -119,40 +119,40 @@ Page({
                 }, (error) => {
                     console.log('error: ' + error);
                 }, {
-                    region: 'ECN',
-                    uploadURL: 'https://up.qbox.me',
-                    domain: 'p2nrs4i3e.bkt.clouddn.com',
-                    uptoken: uploadToken,
-                    shouldUseQiniuFileName: true
-                })
+                        region: 'ECN',
+                        uploadURL: 'https://up.qbox.me',
+                        domain: 'p2nrs4i3e.bkt.clouddn.com',
+                        uptoken: uploadToken,
+                        shouldUseQiniuFileName: true
+                    })
             }
         });
-        
-},
-doInputName: function (e) {
-    this.setData({
-        input_name: e.detail.value
-    })
-},
-doInputIntro: function (e) {
-    this.setData({
-        input_intro: e.detail.value
-    })
-},
-doInputAddress: function (e) {
-    this.setData({
-        input_address: e.detail.value
-    })
-},
-doInputContact: function (e) {
-    this.setData({
-        input_contact: e.detail.value
-    })
-},
-doInputContactPhone: function (e) {
-    this.setData({
-        input_contactPhone: e.detail.value
-    })
-},
+
+    },
+    doInputName: function (e) {
+        this.setData({
+            input_name: e.detail.value
+        })
+    },
+    doInputIntro: function (e) {
+        this.setData({
+            input_intro: e.detail.value
+        })
+    },
+    doInputAddress: function (e) {
+        this.setData({
+            input_address: e.detail.value
+        })
+    },
+    doInputContact: function (e) {
+        this.setData({
+            input_contact: e.detail.value
+        })
+    },
+    doInputContactPhone: function (e) {
+        this.setData({
+            input_contactPhone: e.detail.value
+        })
+    },
 
 })
