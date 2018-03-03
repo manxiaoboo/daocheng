@@ -46,7 +46,7 @@
 <view class="func_block">
         <view class="weui-grids">
             <block>
-                <view class="weui-grid active_key" hover-class="weui-grid_active">
+                <view class="weui-grid {{deviceData.ck_key?'active_key':''}}" hover-class="weui-grid_active">
                     <image class="weui-grid__icon" src="../../images/search-o.png" />
                     <view class="weui-grid__label">查看</view>
                 </view>

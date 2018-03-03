@@ -46,6 +46,7 @@ Page({
                       me.roleName = r.cName;
                     }
                   });
+                  console.info(me)
                   wx.request({
                     url: config.service.host + '/qiniu',
                     header: {
@@ -112,13 +113,18 @@ Page({
                             success: function (res_device) {
                               let device = res_device.data;
                               me.device = device;
+                              console.info(me)
                               wx.request({
                                 url: config.service.host + '/devices/jzy-login',
                                 method: 'POST',
                                 header: {
                                   'Authorization': 'Bearer ' + token
                                 },
-                                data: { appid: device.appid, username: me.id, password: me.id },
+                                data: {
+                                  appid: device.appid,
+                                  username: me.id,
+                                  password: me.id
+                                },
                                 success: function (res_login) {
                                   wx.setStorageSync('jzyUserToken', res_login.data);
                                   wx.setStorageSync('user', me);
@@ -128,16 +134,22 @@ Page({
                                   });
                                 },
                                 fail: function (err) {
-    
+
                                 }
                               })
                             },
                             fail: function (err) {
-    
+
                             }
                           })
+                        } else {
+                          wx.setStorageSync('user', me);
+                          wx.setStorageSync('roles', roles);
+                          that.setData({
+                            canShow: true
+                          });
                         }
-                      } else if( me.roleName == '经销商' ){
+                      } else if (me.roleName == '经销商') {
                         wx.request({
                           url: config.service.host + '/users/distributorByUserId?userId=' + me.id,
                           header: {

@@ -31,8 +31,7 @@ Page({
         },
         timmer: null
     },
-    onLoad: function () {
-    },
+    onLoad: function () {},
     onShow: function () {
         console.info("工作台 => load");
         let that = this;
@@ -67,7 +66,13 @@ Page({
             header: {
                 'Authorization': 'Bearer ' + token
             },
-            data: { userToken: this.data.jzyUserToken, did: this.data.me.device.did, appid: this.data.me.device.appid, username: this.data.me.id, password: this.data.me.id },
+            data: {
+                userToken: this.data.jzyUserToken,
+                did: this.data.me.device.did,
+                appid: this.data.me.device.appid,
+                username: this.data.me.id,
+                password: this.data.me.id
+            },
             success: (res_latest) => {
                 let attr = JSON.parse(res_latest.data);
                 if (JSON.stringify(attr.attr) != "{}") {
@@ -86,19 +91,19 @@ Page({
         let type = e.currentTarget.dataset.type;
         let attrs;
         if (type == 'jz_key') {
+            if(this.data.deviceData.jz_key == 1)return;
             let jz_key = this.data.deviceData.jz_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'jz_key': jz_key,
-                    'cy_key': jz_key == 1 ? 0 : this.data.deviceData.cy_key
+                    'jz_key': jz_key
                 }
             };
         } else if (type == 'cy_key') {
+            if(this.data.deviceData.cy_key == 1)return;
             let cy_key = this.data.deviceData.cy_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'cy_key': cy_key,
-                    'jz_key': cy_key == 1 ? 0 : this.data.deviceData.jz_key
+                    'cy_key': cy_key
                 }
             };
         } else if (type == 'gy_key') {
@@ -149,22 +154,120 @@ Page({
             };
         }
         let token = wx.getStorageSync('authToken');
-        wx.request({
-            url: config.service.host + '/devices/jzy-control',
-            method: 'POST',
-            header: {
-                'Authorization': 'Bearer ' + token
-            },
-            data: { attrs: attrs, userToken: this.data.jzyUserToken, did: this.data.me.device.did, appid: this.data.me.device.appid, username: this.data.me.id, password: this.data.me.id },
-            success: (res_latest) => {
-                setTimeout(() => {
-                    this.refreshDeviceData();
-                }, 1000);
-            },
-            fail: function (err) {
-
+        if (type == 'jz_key' || type == 'cy_key') {
+            let close_key = null;
+            if (type == 'jz_key' && this.data.deviceData.jz_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'cy_key': 0
+                    }
+                }
             }
-        })
+            if (type == 'cy_key' && this.data.deviceData.cy_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'jz_key': 0
+                    }
+                }
+            }
+            if (close_key) {
+                wx.request({
+                    url: config.service.host + '/devices/jzy-control',
+                    method: 'POST',
+                    header: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    data: {
+                        attrs: close_key,
+                        userToken: this.data.jzyUserToken,
+                        did: this.data.me.device.did,
+                        appid: this.data.me.device.appid,
+                        username: this.data.me.id,
+                        password: this.data.me.id
+                    },
+                    success: (res_latest) => {
+                        setTimeout(() => {
+                            wx.request({
+                                url: config.service.host + '/devices/jzy-control',
+                                method: 'POST',
+                                header: {
+                                    'Authorization': 'Bearer ' + token
+                                },
+                                data: {
+                                    attrs: attrs,
+                                    userToken: this.data.jzyUserToken,
+                                    did: this.data.me.device.did,
+                                    appid: this.data.me.device.appid,
+                                    username: this.data.me.id,
+                                    password: this.data.me.id
+                                },
+                                success: (res_latest) => {
+                                    setTimeout(() => {
+                                        this.refreshDeviceData();
+                                    }, 1000);
+                                },
+                                fail: function (err) {
+
+                                }
+                            })
+                        }, 500);
+                    },
+                    fail: function (err) {
+
+                    }
+                })
+            } else {
+                wx.request({
+                    url: config.service.host + '/devices/jzy-control',
+                    method: 'POST',
+                    header: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    data: {
+                        attrs: attrs,
+                        userToken: this.data.jzyUserToken,
+                        did: this.data.me.device.did,
+                        appid: this.data.me.device.appid,
+                        username: this.data.me.id,
+                        password: this.data.me.id
+                    },
+                    success: (res_latest) => {
+                        setTimeout(() => {
+                            this.refreshDeviceData();
+                        }, 1000);
+                    },
+                    fail: function (err) {
+
+                    }
+                })
+            }
+
+        } else {
+            wx.request({
+                url: config.service.host + '/devices/jzy-control',
+                method: 'POST',
+                header: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: {
+                    attrs: attrs,
+                    userToken: this.data.jzyUserToken,
+                    did: this.data.me.device.did,
+                    appid: this.data.me.device.appid,
+                    username: this.data.me.id,
+                    password: this.data.me.id
+                },
+                success: (res_latest) => {
+                    setTimeout(() => {
+                        this.refreshDeviceData();
+                    }, 1000);
+                },
+                fail: function (err) {
+
+                }
+            })
+
+        }
 
     },
     goEditExpert: function () {
@@ -172,16 +275,16 @@ Page({
             url: '../edit-expert/edit-expert'
         })
     },
-    uploadImage:function(){
+    uploadImage: function () {
         wx.chooseImage({
             count: 9,
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
-              var tempFilePaths = res.tempFilePaths
-              console.info(tempFilePaths);
+                var tempFilePaths = res.tempFilePaths
+                console.info(tempFilePaths);
             }
-          })
+        })
     },
     onHide: function () {
         clearInterval(this.data.timmer);
