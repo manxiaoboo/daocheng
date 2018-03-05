@@ -23,6 +23,32 @@ router.get('/', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 获取所有通过审核并且上架的商品
+ */
+router.get('/allAuditedGoods', isAuthenticated(), async(req, res, next) => {
+    let goods = await DistributorGoods.findAll({
+        where: {
+            isAudit: 1,
+            isRunning: 1
+        }
+    });
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.distributor = await DistributorUser.findOne({
+            where: {
+                id: ag.distributorId
+            }
+        })
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
+});
+
+/**
  * 获取商品
  */
 router.get('/getGoodsById', isAuthenticated(), async(req, res, next) => {
@@ -222,6 +248,18 @@ router.get('/auditGoods', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 检查商品是否在审核状态
+ */
+router.get('/checkAuditGoods', isAuthenticated(), async(req, res, next) => {
+    let audit_goods = await AuditGoods.findAll({
+        where:{
+            distributorGoodsId: req.query.id
+        }
+    });
+    res.json(audit_goods);
+});
+
+/**
  * 通过商品审核
  */
 router.get('/auditGoodsPass', isAuthenticated(), async(req, res, next) => {
@@ -237,6 +275,24 @@ router.get('/auditGoodsPass', isAuthenticated(), async(req, res, next) => {
     })
     res.json(newGoods);
 });
+
+/**
+ * 通过商品修改审核
+ */
+router.post('/auditGoodsEditPass', isAuthenticated(), async(req, res, next) => {
+    await AuditGoods.destroy({where:{id:req.body.auditId}})
+    let goods = req.body.goods;
+    goods.isAudit = true;
+    goods.rejectReason = null;
+    let newGoods = await DistributorGoods.update(goods,{
+        where: {
+            id: goods.id
+        }
+    })
+    res.json(newGoods);
+});
+
+
 
 /**
  * 拒绝商品审核
@@ -259,6 +315,7 @@ router.post('/auditGoodsReject', isAuthenticated(), async(req, res, next) => {
  */
 router.post('/createAuditGoods', isAuthenticated(), async(req, res, next) => {
     let audit_goods = req.body;
+    if(audit_goods.data)audit_goods.data = JSON.stringify(audit_goods.data);
     audit_goods.id = UUID.v1();
     audit_goods.createdAt = new Date();
     audit_goods.updatedAt = new Date();

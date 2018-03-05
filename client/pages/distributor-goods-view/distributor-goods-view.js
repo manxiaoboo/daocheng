@@ -216,15 +216,30 @@ Page({
                 if (res.confirm) {
                     util.showBusy("正在处理");
                     wx.request({
-                        url: config.service.host + '/distributor/open?id=' + that.data.goodsId,
+                        url: config.service.host + '/distributor/checkAuditGoods?id=' + that.data.goodsId,
                         header: {
                             'Authorization': 'Bearer ' + token
                         },
-                        success: (res) => {
-                            util.showSuccess("处理成功");
-                            wx.navigateBack({
-                                delta: 1
-                            })
+                        success: (res_check) => {
+                            if (res_check.data && res_check.data.length > 0) {
+                                util.showModel("处理失败","该商品可能正在被审核")
+                            } else {
+                                wx.request({
+                                    url: config.service.host + '/distributor/open?id=' + that.data.goodsId,
+                                    header: {
+                                        'Authorization': 'Bearer ' + token
+                                    },
+                                    success: (res) => {
+                                        util.showSuccess("处理成功");
+                                        wx.navigateBack({
+                                            delta: 1
+                                        })
+                                    },
+                                    fail: function (err) {
+
+                                    }
+                                })
+                            }
                         },
                         fail: function (err) {
 
@@ -234,10 +249,10 @@ Page({
             }
         });
     },
-    goEdit: function(){
+    goEdit: function () {
         wx.navigateTo({
-            url: '../distributor-goods-edit/distributor-goods-edit?id='+this.data.goodsId
-          })
+            url: '../distributor-goods-edit/distributor-goods-edit?id=' + this.data.goodsId
+        })
     },
     tabClick: function (e) {
         this.setData({

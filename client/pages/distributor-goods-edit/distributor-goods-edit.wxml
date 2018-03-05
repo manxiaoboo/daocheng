@@ -1,4 +1,4 @@
-<form bindsubmit="createGoods">
+<form bindsubmit="editGoods">
 <view class="weui-cells__title">修改商品信息</view>
 <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input {{input_name?'':'weui-cell_warn'}}">

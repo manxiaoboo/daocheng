@@ -31,7 +31,7 @@ Page({
         },
         timmer: null
     },
-    onLoad: function () {},
+    onLoad: function () { },
     onShow: function () {
         console.info("工作台 => load");
         let that = this;
@@ -91,7 +91,7 @@ Page({
         let type = e.currentTarget.dataset.type;
         let attrs;
         if (type == 'jz_key') {
-            if(this.data.deviceData.jz_key == 1)return;
+            if (this.data.deviceData.jz_key == 1) return;
             let jz_key = this.data.deviceData.jz_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -99,7 +99,7 @@ Page({
                 }
             };
         } else if (type == 'cy_key') {
-            if(this.data.deviceData.cy_key == 1)return;
+            if (this.data.deviceData.cy_key == 1) return;
             let cy_key = this.data.deviceData.cy_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -121,35 +121,35 @@ Page({
                 }
             };
         } else if (type == 'zdjr_key') {
+            if (this.data.deviceData.zdjr_key == 1) return;
             let zdjr_key = this.data.deviceData.zdjr_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'zdjr_key': zdjr_key,
-                    'sdjr_key': zdjr_key == 1 ? 0 : this.data.deviceData.sdjr_key
+                    'zdjr_key': zdjr_key
                 }
             };
         } else if (type == 'sdjr_key') {
+            if (this.data.deviceData.sdjr_key == 1) return;
             let sdjr_key = this.data.deviceData.sdjr_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'sdjr_key': sdjr_key,
-                    'zdjr_key': sdjr_key == 1 ? 0 : this.data.deviceData.zdjr_key
+                    'sdjr_key': sdjr_key
                 }
             };
         } else if (type == 'zdxh_key') {
+            if (this.data.deviceData.zdxh_key == 1) return;
             let zdxh_key = this.data.deviceData.zdxh_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'zdxh_key': zdxh_key,
-                    'sdxh_key': zdxh_key == 1 ? 0 : this.data.deviceData.sdxh_key
+                    'zdxh_key': zdxh_key
                 }
             };
         } else if (type == 'sdxh_key') {
+            if (this.data.deviceData.sdxh_key == 1) return;
             let sdxh_key = this.data.deviceData.sdxh_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
-                    'sdxh_key': sdxh_key,
-                    'zdxh_key': sdxh_key == 1 ? 0 : this.data.deviceData.zdxh_key
+                    'sdxh_key': sdxh_key
                 }
             };
         }
@@ -171,104 +171,107 @@ Page({
                 }
             }
             if (close_key) {
-                wx.request({
-                    url: config.service.host + '/devices/jzy-control',
-                    method: 'POST',
-                    header: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    data: {
-                        attrs: close_key,
-                        userToken: this.data.jzyUserToken,
-                        did: this.data.me.device.did,
-                        appid: this.data.me.device.appid,
-                        username: this.data.me.id,
-                        password: this.data.me.id
-                    },
-                    success: (res_latest) => {
-                        setTimeout(() => {
-                            wx.request({
-                                url: config.service.host + '/devices/jzy-control',
-                                method: 'POST',
-                                header: {
-                                    'Authorization': 'Bearer ' + token
-                                },
-                                data: {
-                                    attrs: attrs,
-                                    userToken: this.data.jzyUserToken,
-                                    did: this.data.me.device.did,
-                                    appid: this.data.me.device.appid,
-                                    username: this.data.me.id,
-                                    password: this.data.me.id
-                                },
-                                success: (res_latest) => {
-                                    setTimeout(() => {
-                                        this.refreshDeviceData();
-                                    }, 1000);
-                                },
-                                fail: function (err) {
-
-                                }
-                            })
-                        }, 500);
-                    },
-                    fail: function (err) {
-
-                    }
-                })
+                this.preControl(close_key, attrs, token)
             } else {
-                wx.request({
-                    url: config.service.host + '/devices/jzy-control',
-                    method: 'POST',
-                    header: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    data: {
-                        attrs: attrs,
-                        userToken: this.data.jzyUserToken,
-                        did: this.data.me.device.did,
-                        appid: this.data.me.device.appid,
-                        username: this.data.me.id,
-                        password: this.data.me.id
-                    },
-                    success: (res_latest) => {
-                        setTimeout(() => {
-                            this.refreshDeviceData();
-                        }, 1000);
-                    },
-                    fail: function (err) {
-
+                this.control(attrs, token);
+            }
+        } else if (type == 'zdjr_key' || type == 'sdjr_key') {
+            let close_key = null;
+            if (type == 'zdjr_key' && this.data.deviceData.zdjr_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'sdjr_key': 0
                     }
-                })
+                }
+            }
+            if (type == 'sdjr_key' && this.data.deviceData.sdjr_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'zdjr_key': 0
+                    }
+                }
+            }
+            if (close_key) {
+                this.preControl(close_key, attrs, token)
+            } else {
+                this.control(attrs, token);
+            }
+
+        } else if (type == 'zdxh_key' || type == 'sdxh_key') {
+            let close_key = null;
+            if (type == 'zdxh_key' && this.data.deviceData.zdxh_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'sdxh_key': 0
+                    }
+                }
+            }
+            if (type == 'sdxh_key' && this.data.deviceData.sdxh_key == 0) {
+                close_key = {
+                    'attrs': {
+                        'zdxh_key': 0
+                    }
+                }
+            }
+            if (close_key) {
+                this.preControl(close_key, attrs, token)
+            } else {
+                this.control(attrs, token);
             }
 
         } else {
-            wx.request({
-                url: config.service.host + '/devices/jzy-control',
-                method: 'POST',
-                header: {
-                    'Authorization': 'Bearer ' + token
-                },
-                data: {
-                    attrs: attrs,
-                    userToken: this.data.jzyUserToken,
-                    did: this.data.me.device.did,
-                    appid: this.data.me.device.appid,
-                    username: this.data.me.id,
-                    password: this.data.me.id
-                },
-                success: (res_latest) => {
-                    setTimeout(() => {
-                        this.refreshDeviceData();
-                    }, 1000);
-                },
-                fail: function (err) {
-
-                }
-            })
-
+            this.control(attrs, token);
         }
+    },
+    preControl: function (close_key, attrs, token) {
+        wx.request({
+            url: config.service.host + '/devices/jzy-control',
+            method: 'POST',
+            header: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: {
+                attrs: close_key,
+                userToken: this.data.jzyUserToken,
+                did: this.data.me.device.did,
+                appid: this.data.me.device.appid,
+                username: this.data.me.id,
+                password: this.data.me.id
+            },
+            success: (res_latest) => {
+                setTimeout(() => {
+                    this.control(attrs, token);
+                }, 500);
+            },
+            fail: function (err) {
 
+            }
+        })
+    },
+    control: function (attrs, token) {
+        wx.request({
+            url: config.service.host + '/devices/jzy-control',
+            method: 'POST',
+            header: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: {
+                attrs: attrs,
+                userToken: this.data.jzyUserToken,
+                did: this.data.me.device.did,
+                appid: this.data.me.device.appid,
+                username: this.data.me.id,
+                password: this.data.me.id
+            },
+            success: (res_latest) => {
+                setTimeout(() => {
+                    this.refreshDeviceData();
+                }, 1000);
+            },
+            fail: function (err) {
+
+            }
+        })
     },
     goEditExpert: function () {
         wx.navigateTo({

@@ -22,6 +22,15 @@ var Device = sequelize.define('device', {
     }, passcode: {
         type: Sequelize.STRING,
         field: 'passcode'
+    },mac: {
+        type: Sequelize.STRING,
+        field: 'mac'
+    },productKey: {
+        type: Sequelize.STRING,
+        field: 'productKey'
+    },productSecret: {
+        type: Sequelize.STRING,
+        field: 'productSecret'
     }, productName: {
         type: Sequelize.STRING,
         field: 'productName'

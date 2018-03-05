@@ -55,7 +55,7 @@ Page({
                     success: (res_goods) => {
                         if (res_goods.data.photos) {
                             res_goods.data.photos_arr = res_goods.data.photos.split(',')
-                        }else{
+                        } else {
                             res_goods.data.photos_arr = [];
                         }
                         if (res_goods.data.specDesc) {
@@ -136,7 +136,7 @@ Page({
                             let goods = that.data.goods;
                             let photos = goods.photos_arr;
                             for (let i = 0; i <= photos.length; i++) {
-                                if(photos[i] == e.currentTarget.id){
+                                if (photos[i] == e.currentTarget.id) {
                                     photos.splice(i, 1);
                                 }
                             }
@@ -147,15 +147,15 @@ Page({
                                     'Authorization': 'Bearer ' + token
                                 },
                                 method: 'POST',
-                                data: {images:result,id:that.data.goodsId},
+                                data: { images: result, id: that.data.goodsId },
                                 success: (res) => {
                                     util.showSuccess("处理成功");
                                     that.setData({
-                                        goods:goods
+                                        goods: goods
                                     })
                                 },
                                 fail: function (err) {
-        
+
                                 }
                             })
                         },
@@ -165,9 +165,9 @@ Page({
             }
         });
     },
-    uploadImage:function(){
-        if(this.data.goods.photos_arr && this.data.goods.photos_arr.length >= 4){
-            util.showModel("提示","最多只能上传4张图片");
+    uploadImage: function () {
+        if (this.data.goods.photos_arr && this.data.goods.photos_arr.length >= 4) {
+            util.showModel("提示", "最多只能上传4张图片");
             return;
         }
         let that = this;
@@ -188,7 +188,7 @@ Page({
                             'Authorization': 'Bearer ' + token
                         },
                         method: 'POST',
-                        data: {images:result,id:that.data.goodsId},
+                        data: { images: result, id: that.data.goodsId },
                         success: (res) => {
                             util.showSuccess("处理成功");
                             goods.photos = res.data.photos;
@@ -196,24 +196,24 @@ Page({
                                 goods.photos_arr = goods.photos.split(',')
                             }
                             that.setData({
-                                goods:goods
+                                goods: goods
                             })
                         },
                         fail: function (err) {
 
                         }
                     })
-                    
+
                 }, (error) => {
                     console.log('error: ' + error);
                 }, {
-                    region: 'ECN',
-                    uploadURL: 'https://up.qbox.me',
-                    domain: 'p2nrs4i3e.bkt.clouddn.com',
-                    uptoken: uploadToken,
-                    fileHead: 'image',
-                    imgName:new Date().getTime()
-                })
+                        region: 'ECN',
+                        uploadURL: 'https://up.qbox.me',
+                        domain: 'p2nrs4i3e.bkt.clouddn.com',
+                        uptoken: uploadToken,
+                        fileHead: 'image',
+                        imgName: new Date().getTime()
+                    })
             }
         });
     },
@@ -230,11 +230,13 @@ Page({
             typeIndex: e.detail.value
         })
     },
-    createGoods: function (e) {
+    editGoods: function (e) {
+        let that = this;
         let goods = e.detail.value;
         goods.distributorId = this.data.me.distributor.id;
         let token = wx.getStorageSync('authToken');
         goods.type = this.data.input_Type;
+        console.info(goods)
         if (!goods.name) {
             util.showModel("提示", "请填写商品名称");
             return;
@@ -255,21 +257,76 @@ Page({
             util.showModel("提示", "请选择商品类型");
             return;
         }
-        wx.request({
-            url: config.service.host + '/distributor/create',
-            header: {
-                'content-type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            method: 'POST',
-            data: goods,
-            success: function (res_distributor) {
-                let newGoods = res_distributor.data;
-                wx.navigateTo({
-                    url: '../distributor-goods-upload/distributor-goods-upload?id=' + newGoods.id
-                })
-            }
-        })
+        let old_goods = this.data.goods;
+        old_goods.name = goods.name;
+        old_goods.unit = goods.unit;
+        old_goods.priceStart = goods.priceStart;
+        old_goods.priceEnd = goods.priceEnd;
+        old_goods.type = goods.type;
+        old_goods.specDesc = goods.specDesc;
+        old_goods.intro = goods.intro;
+        if (!old_goods.isAudit && (this.data.me && this.data.me.roleName) == '经销商' && !this.data.isAuditing) {
+            wx.showModal({
+                title: '修改确认',
+                content: '您确定要修改商品信息吗？',
+                confirmText: "修改",
+                cancelText: "取消",
+                success: function (res) {
+                    if (res.confirm) {
+                        util.showBusy("正在处理");
+                        wx.request({
+                            url: config.service.host + '/distributor/update',
+                            header: {
+                                'content-type': 'application/json',
+                                'Authorization': 'Bearer ' + token
+                            },
+                            method: 'POST',
+                            data: old_goods,
+                            success: function (res) {
+                                wx.navigateTo({
+                                    url: '../distributor-goods-list/distributor-goods-list'
+                                })
+                            }
+                        })
+                    }
+                }
+            });
+        } else {
+            wx.showModal({
+                title: '提交确认',
+                content: '您确定要将此商品的修改提交审核吗？',
+                confirmText: "提交",
+                cancelText: "取消",
+                success: function (res) {
+                    if (res.confirm) {
+                        util.showBusy("正在处理");
+                        const audit_goods = {
+                            distributorGoodsId: that.data.goodsId,
+                            type: 'update',
+                            data: old_goods
+                        }
+                        wx.request({
+                            url: config.service.host + '/distributor/createAuditGoods',
+                            header: {
+                                'Authorization': 'Bearer ' + token
+                            },
+                            method: 'POST',
+                            data: audit_goods,
+                            success: (res) => {
+                                that.onShow();
+                                util.showSuccess("处理成功");
+                                wx.navigateTo({
+                                    url: '../distributor-goods-list/distributor-goods-list'
+                                })
+                            },
+                            fail: function (err) {
+
+                            }
+                        })
+                    }
+                }
+            });
+        }
     },
     doInputName: function (e) {
         this.setData({

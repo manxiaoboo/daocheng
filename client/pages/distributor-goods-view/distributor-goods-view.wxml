@@ -22,8 +22,11 @@
                 <text class="price">{{goods.priceEnd}}</text>
                 <text class="price_label">（价格随地区变化）</text>
             </view>
-            <view class="p" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing && goods.rejectReason}}">
+            <view class="p" wx:if="{{(me && me.roleName) == '经销商' && !isAuditing && goods.rejectReason}}">
                 <text class="reject_text">审核失败：{{goods.rejectReason}}</text>
+            </view>
+            <view class="p" wx:if="{{ me && me.roleName == '经销商' && isAuditing}}">
+                <text class="reject_text">审核中请耐心等待</text>
             </view>
         </view>
     </view>
