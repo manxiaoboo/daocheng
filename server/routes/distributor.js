@@ -49,6 +49,34 @@ router.get('/allAuditedGoods', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 获取所有通过审核并且上架并且是广告的商品
+ */
+router.get('/allAdGoods', isAuthenticated(), async(req, res, next) => {
+    let goods = await DistributorGoods.findAll({
+        where: {
+            isAudit: 1,
+            isRunning: 1,
+            isAd: 1
+        }
+    });
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.distributor = await DistributorUser.findOne({
+            where: {
+                id: ag.distributorId
+            }
+        })
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
+});
+
+
+/**
  * 获取商品
  */
 router.get('/getGoodsById', isAuthenticated(), async(req, res, next) => {
