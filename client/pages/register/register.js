@@ -176,7 +176,7 @@ Page({
                 var roles = res.data;
                 let pickerRoles = [];
                 roles.forEach((r) => {
-                    if (r.name != 'admin' && r.name != 'operator') {
+                    if (r.name != 'admin' && r.name != 'operator' && r.name != 'manufacturer') {
                         pickerRoles.push(r.cName);
                     }
                 })
