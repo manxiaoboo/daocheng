@@ -19,7 +19,7 @@ Page({
         input_validateCode: '',
         input_password: '',
         input_confirm: '',
-        input_roleId: '',
+        input_roleId: '27ea4974-e6c4-11e7-b42e-060400ef5315',
         successd: false,
         successdTime: 5
     },
