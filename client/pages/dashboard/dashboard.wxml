@@ -3,125 +3,63 @@
   autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
   <block wx:for="{{imgUrls}}">
     <swiper-item>
-      <image src="{{item}}" class="slide-image" width="375" height="150"/>
+      <image src="{{item}}" class="slide-image" width="375" height="250"/>
     </swiper-item>
   </block>
 </swiper>
-<view class="page__bd">
+<view class="page__bd" style="padding-bottom:5px;">
         <view class="weui-panel weui-panel_access">
-            <view class="weui-panel__hd">品种列表</view>
-            <view class="weui-panel__bd">
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/品种1.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">绥粳3号</view>
-                        <view class="weui-media-box__desc">这个水稻品种它主茎的是11片，生育日期大概是120天到130天左右，每一株的株高品就是80厘米，穗长16厘米，给每一岁的颗粒数达到97例左右，千粒重27克，这种水稻抗伏倒能力是非常强的，需要的活动基本是2350℃左右，对于这种植物的栽培一般是出现在我国南方的中上等土壤的肥力稻种栽培。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/品种2.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">绥粳4号</view>
-                        <view class="weui-media-box__desc">这个水稻品种的主茎是12片，生育期是128天到133天。在幼苗的时候，他的描色是绿色的。而且在生长期间只猪一直都会有想法，株高97厘米，最长28厘米，每穗的颗粒是95粒左右，而且千粒重是27.7克，谷稻椭圆形的。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/品种3.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">绥粳9号</view>
-                        <view class="weui-media-box__desc">这个水稻主茎是13片，它的株高可以达到92厘米，穗长19厘米，每穗当中还有粒数是135粒左右，千粒重27.5克，长宽的比例是1:9。这个品种的水稻结果效率是非常高的，而且品质优良，抗病，能力非常的强，可以抗倒伏。</view>
-                    </view>
-                </navigator>
-            </view>
-            <view class="weui-panel__ft">
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                    <view class="weui-cell__bd">查看更多</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            <view class="weui-panel__bd" style="text-align:center;">
+                <view class="fun_btn">
+                    <navigator url="../goods-type-list/goods-type-list">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/fenlei.png" />
+                        <text>商品分类</text>
+                    </navigator>
                 </view>
-            </view>
-        </view>
-         <view class="weui-panel weui-panel_access">
-            <view class="weui-panel__hd">商家农药列表</view>
-            <view class="weui-panel__bd">
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/pesticide1.jpeg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">敌敌畏</view>
-                        <view class="weui-media-box__desc">敌敌畏又名DDVP，学名O,O-二甲基-O-(2,2-二氯乙烯基)磷酸酯，有机磷杀虫剂的一种，分子式C4H7Cl2O4P。一种有机磷杀虫剂，工业产品均为无色至浅棕色液体，纯品沸点74℃（在133.322Pa下）挥发性大，室温下在水中溶解度1%，煤油中溶解度2%～3%，能溶于有机溶剂，易水解，遇碱分解更快。毒性大，急性毒性LD50值：对大白鼠经口为56～80mg/kg，经皮为75～210mg/kg。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/pesticide2.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">洁绿素</view>
-                        <view class="weui-media-box__desc">洁绿素是去农残常用四种方法的结合体，它也是真正的“五无”产品，无色、无味、无毒、无泡、无残留。由于洁绿素全部采用无毒无害的植物原料，其表面活性物成份由茶籽、绿豆的提取物，以及降解酶、食用碱和水构成，没有添加任何色素、香精及防腐剂，它才成为了“五无”产品，使用起来也更加方便更加安心。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/pesticide3.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">壮多收</view>
-                        <view class="weui-media-box__desc">超强活力壮多收是由中国科协委员、着名育种专家蔡景学研究员最新研制，专门针对不同气候条件和土壤特点，特别添加了国际最先进的高能量天然植物促进剂-SPV超强活力因子，强力渗透，采用国际先进的纳米螯合技术研发而成的，集“增根促长、抑菌防病、解害增产”多效合一的高科技精品植物促进剂。一喷见效，持效期长。</view>
-                    </view>
-                </navigator>
-            </view>
-            <view class="weui-panel__ft">
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                    <view class="weui-cell__bd">查看更多</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="fun_btn">
+                    <navigator url="../goods-hot-list/goods-hot-list">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/remen.png" />
+                        <text>热门商品</text>
+                    </navigator>
                 </view>
-            </view>
-        </view>
-        <view class="weui-panel weui-panel_access">
-            <view class="weui-panel__hd">农机列表</view>
-            <view class="weui-panel__bd">
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/machine1.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">大型拖拉机</view>
-                        <view class="weui-media-box__desc">拖拉机（tractor）用于牵引和驱动作业机械完成各项移动式作业的自走式动力机。也可做固定作业动力。由发动机、传动、行走、转向、液压悬挂、动力输出、电器仪表、驾驶操纵及牵引等系统或装置组成。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/machine2.jpg" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">平整土地机</view>
-                        <view class="weui-media-box__desc">在中国，包括浅耕灭茬、耕翻、深松耕、耙地、耢地、镇压、平整土地、起垄、作畦等。目的在于形成良好的土壤耕层构造和表面状态，协调土壤中水、肥、气、热等因素，为播种和作物生长、田间管理提供合适的基础条件。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/machine3.png" />
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">耕耘机</view>
-                        <view class="weui-media-box__desc">微型耕耘机，也称为耕耘机、管理机、微耕机等，按照JB/T10266.1-2001《微型耕耘机技术条件》的要求，凡功率不大于7.5kW、可以直接用驱动轮轴驱动旋转工作部件(如旋耕)，主要用于水、旱田整地、田园管理及设施农业等耕耘作业为主的机器，可称之为耕耘机(或微型耕耘机、微耕机、管理机等)。</view>
-                    </view>
-                </navigator>
-            </view>
-            <view class="weui-panel__ft">
-                <view class="weui-cell weui-cell_access weui-cell_link">
-                    <view class="weui-cell__bd">查看更多</view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="fun_btn">
+                    <navigator url="../goods-ad-list/goods-ad-list">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/guanggao.png" />
+                        <text>优质商品</text>
+                    </navigator>
+                </view>
+                <view class="fun_btn">
+                    <navigator>
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/dingdan.png" />
+                        <text>我的订单</text>
+                    </navigator>
                 </view>
             </view>
         </view>
 </view>
+    <view class="page__bd">
+            <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
+                <view class="weui-panel__bd">
+                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods}}" wx:for-item="g"  wx:for-index="id">
+                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                            <image class="weui-media-box__thumb" src="{{'http://' + g.photos_arr[0]}}" />
+                        </view>
+                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                            <view class="weui-media-box__title">{{g.name}}</view>
+                            <view class="weui-media-box__desc">{{g.intro}}</view>
+                        </view>
+                    </navigator>
+                </view>
+                <view class="weui-panel__ft">
+                    <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
+                        <view class="weui-cell__bd">查看更多</view>
+                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                    </navigator>
+                </view>
+            </view>
+            <view wx:if="{{goods.length<=0}}" class="empty_block">
+                <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
+                <text class="p">暂时没有商品上架哦</text>
+            </view>
+    </view>
 </view>
-        

@@ -3,10 +3,14 @@ var util = require('../../utils/util.js')
 Page({
   data: {
     imgUrls: [
-      'http://p0oy6nmva.bkt.clouddn.com/banner1.jpg',
-      'http://p0oy6nmva.bkt.clouddn.com/banner2.jpg',
-      'http://p0oy6nmva.bkt.clouddn.com/banner3.jpg'
+      'http://p0oy6nmva.bkt.clouddn.com/1.jpg',
+      'http://p0oy6nmva.bkt.clouddn.com/2.jpg',
+      'http://p0oy6nmva.bkt.clouddn.com/3.jpg',
+      'http://p0oy6nmva.bkt.clouddn.com/4.jpg',
+      'http://p0oy6nmva.bkt.clouddn.com/5.jpg',
+      'http://p0oy6nmva.bkt.clouddn.com/6.jpg'
     ],
+    goods: [],
     indicatorDots: false,
     autoplay: true,
     interval: 5000,
@@ -33,6 +37,28 @@ Page({
               })
             } else {
               let me = res.data;
+
+              
+              wx.request({
+                url: config.service.host + '/distributor/goodsSortByHot?page=1',
+                header: {
+                  'content-type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                success: function (res_goods) {
+                  let goods = res_goods.data;
+                  goods.forEach(g => {
+                    if(g.photos){
+                      g.photos_arr = g.photos.split(',')
+                    }
+                  })
+                  that.setData({
+                    goods:goods
+                  })
+                  console.info(goods)
+                }
+              })
+
               wx.request({
                 url: config.service.host + '/users/roles',
                 header: {

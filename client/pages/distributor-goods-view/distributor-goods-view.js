@@ -41,7 +41,9 @@ Page({
                 me.roleName = r.cName;
             }
         });
+        console.info(me)
         let token = wx.getStorageSync('authToken');
+        util.showBusy("读取信息");
         wx.request({
             url: config.service.host + '/distributor/getGoodsById?id=' + that.data.goodsId,
             header: {
@@ -77,6 +79,7 @@ Page({
                                 });
                                 console.info(res_goods.data)
                                 console.info(that.data.goodsId)
+                                wx.hideToast();
                             },
                             fail: function (err) {
 
@@ -222,7 +225,7 @@ Page({
                         },
                         success: (res_check) => {
                             if (res_check.data && res_check.data.length > 0) {
-                                util.showModel("处理失败","该商品可能正在被审核")
+                                util.showModel("处理失败", "该商品可能正在被审核")
                             } else {
                                 wx.request({
                                     url: config.service.host + '/distributor/open?id=' + that.data.goodsId,
@@ -280,5 +283,42 @@ Page({
             current: "http://" + e.currentTarget.dataset.currentImage,
             urls: urls
         })
+    },
+    createOrder: function (e) {
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '订单确认',
+            content: '您确定要为此商品创建订单吗？',
+            confirmText: "确认",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("生成订单");
+                    let order = {
+                        data: that.data.goods,
+                        distributorId: that.data.goods.distributorId,
+                        farmerId: that.data.me.id
+                    }
+                    wx.request({
+                        url: config.service.host + '/order/create',
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        method: 'POST',
+                        data: order,
+                        success: (res_check) => {
+                            util.showSuccess('处理成功')
+                            wx.redirectTo({
+                                url: '../order-farmer-detail/order-farmer-detail?id=' + res_check.data.id
+                            })
+                        },
+                        fail: function (err) {
+                            util.showModal("处理失败", "创建订单失败");
+                        }
+                    })
+                }
+            }
+        });
     }
 })

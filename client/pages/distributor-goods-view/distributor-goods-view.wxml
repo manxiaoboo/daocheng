@@ -48,13 +48,13 @@
                 <text class="dis_label">简介 </text><text>{{goods.distributor.intro}}</text>
             </view>
             <view class="p margin-top-mini">
-                <button class="weui-btn" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '农户'}}">立即下单</button>
-                <button class="weui-btn" bindtap="doAudit" plain="true" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing}}">提交审核</button>
-                <button class="weui-btn" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing}}">删除商品</button>
-                <button class="weui-btn" bindtap="doAudit" disabled="disabled" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && isAuditing}}">审核中请耐心等待</button>
-                <button class="weui-btn" bindtap="closeGoods" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing && goods.isRunning}}">商品下架</button>
-                <button class="weui-btn" bindtap="openGoods" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '经销商' && !isAuditing && !goods.isRunning}}">商品上架</button>
-                <button class="weui-btn" bindtap="goEdit" plain="true" type="primary" wx:if="{{(me && me.roleName) == '经销商' && ((!goods.isAudit && !isAuditing ) || (goods.isAudit && !isAuditing && !goods.isRunning))}}">修改商品信息</button>
+                <button class="weui-btn" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '农户'}}" bindtap="createOrder">立即下单</button>
+                <button class="weui-btn" bindtap="doAudit" plain="true" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && !isAuditing}}">提交审核</button>
+                <button class="weui-btn" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && !isAuditing}}">删除商品</button>
+                <button class="weui-btn" bindtap="doAudit" disabled="disabled" type="primary" wx:if="{{!goods.isAudit && (me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && isAuditing}}">审核中请耐心等待</button>
+                <button class="weui-btn" bindtap="closeGoods" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && !isAuditing && goods.isRunning}}">商品下架</button>
+                <button class="weui-btn" bindtap="openGoods" plain="true" type="primary" wx:if="{{goods.isAudit && (me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && !isAuditing && !goods.isRunning}}">商品上架</button>
+                <button class="weui-btn" bindtap="goEdit" plain="true" type="primary" wx:if="{{(me && me.roleName) == '经销商' && goods.distributorId == me.distributor.id && ((!goods.isAudit && !isAuditing ) || (goods.isAudit && !isAuditing && !goods.isRunning))}}">修改商品信息</button>
             </view>
         </view>
     </view>

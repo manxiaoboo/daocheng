@@ -14,7 +14,12 @@
     "pages/distributor-goods-add/distributor-goods-add",
     "pages/distributor-goods-upload/distributor-goods-upload",
     "pages/distributor-goods-view/distributor-goods-view",
-    "pages/distributor-goods-edit/distributor-goods-edit"
+    "pages/distributor-goods-edit/distributor-goods-edit",
+    "pages/goods-hot-list/goods-hot-list",
+    "pages/goods-ad-list/goods-ad-list",
+    "pages/goods-type-list/goods-type-list",
+    "pages/goods-type-info-list/goods-type-info-list",
+    "pages/order-farmer-detail/order-farmer-detail"
  
   ],
   "window":{

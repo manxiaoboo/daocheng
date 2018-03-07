@@ -23,6 +23,107 @@ router.get('/', isAuthenticated(), async(req, res, next) => {
 });
 
 /**
+ * 获取所有上架商品 按热度排序
+ */
+router.get('/goodsSortByHot', isAuthenticated(), async(req, res, next) => {
+    let page = req.query.page;
+    let goods;
+    goods = await DistributorGoods.findAll({
+        where: {
+            isAudit: 1,
+            isRunning: 1
+        },
+        order: [
+            ['hot', 'DESC']
+        ],
+        limit:10,
+        offset: 10 * (page -1)
+    });
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.distributor = await DistributorUser.findOne({
+            where: {
+                id: ag.distributorId
+            }
+        })
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
+});
+
+/**
+ * 获取所有广告商品 按热度排序
+ */
+router.get('/goodsSortByAd', isAuthenticated(), async(req, res, next) => {
+    let page = req.query.page;
+    let goods;
+    goods = await DistributorGoods.findAll({
+        where: {
+            isAudit: 1,
+            isRunning: 1,
+            isAd: 1
+        },
+        order: [
+            ['hot', 'DESC']
+        ],
+        limit:10,
+        offset: 10 * (page -1)
+    });
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.distributor = await DistributorUser.findOne({
+            where: {
+                id: ag.distributorId
+            }
+        })
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
+});
+
+/**
+ * 获取所有类型商品 按热度排序
+ */
+router.get('/goodsSortByType', isAuthenticated(), async(req, res, next) => {
+    let page = req.query.page;
+    let goods;
+    goods = await DistributorGoods.findAll({
+        where: {
+            isAudit: 1,
+            isRunning: 1,
+            type:req.query.type
+        },
+        order: [
+            ['hot', 'DESC']
+        ],
+        limit:10,
+        offset: 10 * (page -1)
+    });
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.distributor = await DistributorUser.findOne({
+            where: {
+                id: ag.distributorId
+            }
+        })
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
+});
+
+/**
  * 获取所有通过审核并且上架的商品
  */
 router.get('/allAuditedGoods', isAuthenticated(), async(req, res, next) => {

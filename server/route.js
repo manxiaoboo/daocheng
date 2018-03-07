@@ -5,6 +5,7 @@ const routerConfig = (app) => {
     app.use('/devices', require('./routes/device'));
     app.use('/qiniu', require('./routes/qiniu'));
     app.use('/distributor', require('./routes/distributor'));
+    app.use('/order', require('./routes/order'));
     app.use('/auth', require('./auth'));
 }
 

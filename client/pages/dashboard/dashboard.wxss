@@ -1,4 +1,39 @@
 image {
     width:100%;
-    height:150px;
+    height:250px;
 }
+
+swiper {
+    height:250px;
+}
+
+.fun_btn{
+    width:25%;
+    float:left;
+}
+
+.fun_btn image{
+    width:80px;
+    height:80px;
+}
+
+.fun_btn text{
+    font-size: 13px;
+    color:#999;
+    position: relative;
+    bottom: 10px;
+}
+
+.empty_block{
+    text-align: center;
+}
+
+.empty_img{
+    margin-top:20%;
+    width:210px;
+    height:110px;
+}
+
+.p{
+    display: block;
+} 
