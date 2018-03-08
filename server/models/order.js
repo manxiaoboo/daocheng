@@ -6,6 +6,9 @@ var Order = sequelize.define('order', {
         type: Sequelize.UUID,
         field: 'id',
         primaryKey: true
+    }, no: {
+        type: Sequelize.STRING,
+        field: 'no'
     }, data: {
         type: Sequelize.STRING,
         field: 'data'

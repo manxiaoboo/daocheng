@@ -1,0 +1,47 @@
+<view class="classify">  
+  <scroll-view class='left-navbar' scroll-y="true">  
+    <view wx:for="{{screenArray}}" class="{{ currentTab == index ? 'active' : '' }}" wx:key="id" bindtap="{{ currentTab != index ? 'navbarTap':'' }}" id="{{index}}" data-screenId="{{item.id}}">{{item.name}}  
+    </view>
+  </scroll-view>  
+  <scroll-view id="right" scroll-y="true" scroll-top="{{scrollTop}}">  
+    <view class="page__bd">
+            <view class="weui-panel weui-panel_access" wx:if="{{orders.length>0}}">
+                <view class="weui-panel__bd">
+                    <view class="weui-form-preview" wx:for="{{orders}}" wx:for-item="o"  wx:for-index="id">
+                        <view class="weui-form-preview__hd">
+                            <view class="weui-form-preview__item">
+                                <view class="weui-form-preview__label">卖家：{{o.distributor.name}}</view>
+                                <view class="weui-form-preview__value_in-hd">
+                                <view class="weui-badge">{{screenArray[currentTab].name}}</view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="weui-form-preview__bd">
+                            <navigator url="../distributor-goods-view/distributor-goods-view?id={{o.data.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                                <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                    <image class="weui-media-box__thumb" src="{{'http://' + o.data.photos_arr[0]}}" />
+                                </view>
+                                <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                    <view class="weui-media-box__title">{{o.data.name}}</view>
+                                    <view class="weui-media-box__desc">{{o.data.type_ele.name}}</view>
+                                </view>
+                            </navigator>
+                            <view class="weui-form-preview__item">
+                                <view class="weui-form-preview__label">订单编号</view>
+                                <view class="weui-form-preview__value">{{o.no}}</view>
+                            </view>
+                        </view>
+                        <view class="weui-form-preview__ft">
+                            <navigator url="../order-farmer-detail/order-farmer-detail" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">查看详情</navigator>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{orders.length<=0}}" class="empty_block">
+                <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
+                <text class="p">该状态下没有订单</text>
+            </view>
+    </view>
+    <button class="weui-btn" type="primary" bindtap="loadMore" class="p" plain="true">加载更多</button>
+  </scroll-view>  
+</view>  

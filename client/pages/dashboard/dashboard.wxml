@@ -29,7 +29,7 @@
                     </navigator>
                 </view>
                 <view class="fun_btn">
-                    <navigator>
+                    <navigator url="../order-farmer-list/order-farmer-list" wx:if="me.roleName == '农户'">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/dingdan.png" />
                         <text>我的订单</text>
                     </navigator>

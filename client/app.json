@@ -19,7 +19,8 @@
     "pages/goods-ad-list/goods-ad-list",
     "pages/goods-type-list/goods-type-list",
     "pages/goods-type-info-list/goods-type-info-list",
-    "pages/order-farmer-detail/order-farmer-detail"
+    "pages/order-farmer-detail/order-farmer-detail",
+    "pages/order-farmer-list/order-farmer-list"
  
   ],
   "window":{
