@@ -35,7 +35,7 @@
         <view class="clear"></view>
         <view class="p label"><text>杀菌</text><view class="{{deviceData.sj_led?'open_status':'close_status'}}"></view></view>
         <view class="clear"></view>
-        <view class="p label"><text>温度故障</text><view class="{{deviceData.gzwd_led?'warn_status':'close_status'}}"></view></view>
+        <view class="p label"><text>温度故障</text><view class="{{deviceData.wd_led?'warn_status':'close_status'}}"></view></view>
         <view class="clear"></view>
         <view class="p label"><text>加热故障</text><view class="{{deviceData.gzjr_led?'warn_status':'close_status'}}"></view></view>
         <view class="clear"></view>

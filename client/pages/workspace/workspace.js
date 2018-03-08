@@ -121,7 +121,6 @@ Page({
                 }
             };
         } else if (type == 'zdjr_key') {
-            if (this.data.deviceData.zdjr_key == 1) return;
             let zdjr_key = this.data.deviceData.zdjr_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -129,7 +128,6 @@ Page({
                 }
             };
         } else if (type == 'sdjr_key') {
-            if (this.data.deviceData.sdjr_key == 1) return;
             let sdjr_key = this.data.deviceData.sdjr_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -137,7 +135,6 @@ Page({
                 }
             };
         } else if (type == 'zdxh_key') {
-            if (this.data.deviceData.zdxh_key == 1) return;
             let zdxh_key = this.data.deviceData.zdxh_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -145,7 +142,6 @@ Page({
                 }
             };
         } else if (type == 'sdxh_key') {
-            if (this.data.deviceData.sdxh_key == 1) return;
             let sdxh_key = this.data.deviceData.sdxh_key == 0 ? 1 : 0;
             attrs = {
                 'attrs': {
@@ -241,7 +237,7 @@ Page({
             success: (res_latest) => {
                 setTimeout(() => {
                     this.control(attrs, token);
-                }, 500);
+                }, 10000);
             },
             fail: function (err) {
 
