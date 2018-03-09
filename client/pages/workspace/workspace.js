@@ -29,7 +29,8 @@ Page({
             "zdjr_key": 0,
             "gy_key": 0
         },
-        timmer: null
+        timmer: null,
+        lock:false
     },
     onLoad: function () { },
     onShow: function () {
@@ -75,6 +76,18 @@ Page({
             },
             success: (res_latest) => {
                 let attr = JSON.parse(res_latest.data);
+                let flag = false;
+                for(let a in attr){
+                    if(that.data.deviceData[a] != attr[a]){
+                        flag = true;
+                    }
+                }
+                if(flag){
+                    that.setData({
+                        lock: false
+                    })
+                    wx.hideToast();
+                }
                 if (JSON.stringify(attr.attr) != "{}") {
                     this.setData({
                         deviceData: attr.attr
@@ -220,6 +233,12 @@ Page({
         }
     },
     preControl: function (close_key, attrs, token) {
+        let that = this
+        if(this.data.lock)return;
+        util.showBusy('正在发送指令')
+        that.setData({
+            lock: true
+        })
         wx.request({
             url: config.service.host + '/devices/jzy-control',
             method: 'POST',
@@ -235,9 +254,13 @@ Page({
                 password: this.data.me.id
             },
             success: (res_latest) => {
-                setTimeout(() => {
-                    this.control(attrs, token);
-                }, 10000);
+                let inter = setInterval(()=>{
+                    if(!that.data.lock){
+                        that.control(attrs, token);
+                        clearInterval(inter)
+                    }
+                },200)
+                
             },
             fail: function (err) {
 
@@ -245,6 +268,12 @@ Page({
         })
     },
     control: function (attrs, token) {
+        let that = this
+        if(this.data.lock)return;
+        util.showBusy('正在发送指令')
+        that.setData({
+            lock: true
+        })
         wx.request({
             url: config.service.host + '/devices/jzy-control',
             method: 'POST',

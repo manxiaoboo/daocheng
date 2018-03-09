@@ -452,4 +452,44 @@ router.post('/createAuditGoods', isAuthenticated(), async(req, res, next) => {
     res.json(new_audit_goods);
 });
 
+/**
+ * 增加商品浏览量
+ */
+router.get('/farmerlook', isAuthenticated(), async(req, res, next) => {
+    let goods = await DistributorGoods.findOne({
+        where:{
+            id: req.query.id
+        }
+    })
+    let goods_r = goods.dataValues;
+    goods_r.totalView = goods_r.totalView + 1;
+    goods_r.hot = goods_r.totalView + (goods_r.totalDeal * 200);
+    let newgoods = await DistributorGoods.update(goods_r, {
+        where: {
+            id: goods_r.id
+        }
+    });
+    res.json(newgoods);
+});
+
+/**
+ * 增加商品成交量
+ */
+router.get('/farmerDeal', isAuthenticated(), async(req, res, next) => {
+    let goods = await DistributorGoods.findOne({
+        where:{
+            id: req.query.id
+        }
+    })
+    let goods_r = goods.dataValues;
+    goods_r.totalDeal = goods_r.totalDeal + 1;
+    goods_r.hot = goods_r.totalView + (goods_r.totalDeal * 200);
+    let newgoods = await DistributorGoods.update(goods_r, {
+        where: {
+            id: goods_r.id
+        }
+    });
+    res.json(newgoods);
+});
+
 module.exports = router;

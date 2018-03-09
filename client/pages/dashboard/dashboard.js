@@ -15,7 +15,8 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    canShow: false
+    canShow: false,
+    me:''
   },
   onLoad: function () {
     console.info("首页 => load");
@@ -72,7 +73,9 @@ Page({
                       me.roleName = r.cName;
                     }
                   });
-                  console.info(me)
+                  that.setData({
+                    me:me
+                  })
                   wx.request({
                     url: config.service.host + '/qiniu',
                     header: {
@@ -139,7 +142,6 @@ Page({
                             success: function (res_device) {
                               let device = res_device.data;
                               me.device = device;
-                              console.info(me)
                               wx.request({
                                 url: config.service.host + '/devices/jzy-login',
                                 method: 'POST',

@@ -10,8 +10,8 @@ Page({
         loading: false,
         currentTab: 0, 
         scrollTop: 0,  
-        screenArray: [{ id: 'new', name: '新建' }, { id: 'sent', name: '已发送' }, { id: 'return', name: '待确认' }, { id: 'done', name: '已完成' }], //左侧导航栏内容  
-        screenId: "new", 
+        screenArray: [{ id: 'sent', name: '未处理' }, { id: 'return', name: '已处理' }, { id: 'done', name: '已完成' }], //左侧导航栏内容  
+        screenId: "sent", 
     },
     onLoad: function () { },
     onShow: function () {
@@ -24,8 +24,8 @@ Page({
             loading: false,
             currentTab: 0, 
             scrollTop: 0, 
-            screenArray: [{ id: 'new', name: '新建' }, { id: 'sent', name: '已发送' }, { id: 'return', name: '待确认' }, { id: 'done', name: '已完成' }], //左侧导航栏内容  
-            screenId: "new",
+            screenArray: [{ id: 'sent', name: '未处理' }, { id: 'return', name: '已处理' }, { id: 'done', name: '已完成' }], //左侧导航栏内容  
+            screenId: "sent", 
         })
         console.info("订单导航 => load");
         let that = this;
@@ -42,7 +42,7 @@ Page({
         let token = wx.getStorageSync('authToken');
         util.showBusy("读取订单");
         wx.request({
-            url: config.service.host + '/order/getFarmerOrders?id=' + me.id + '&status=new&page=' + that.data.page,
+            url: config.service.host + '/order/getDistributorOrders?id=' + me.distributor.id + '&status=sent&page=' + that.data.page,
             header: {
                 'Authorization': 'Bearer ' + token
             },
@@ -77,12 +77,11 @@ Page({
         let token = wx.getStorageSync('authToken');
         util.showBusy("读取订单");
         wx.request({
-            url: config.service.host + '/order/getFarmerOrders?id=' + that.data.me.id + '&status=' + screenId + '&page=' + that.data.page,
+            url: config.service.host + '/order/getDistributorOrders?id=' + that.data.me.distributor.id + '&status=' + screenId + '&page=' + that.data.page,
             header: {
                 'Authorization': 'Bearer ' + token
             },
             success: (res_orders) => {
-                console.info(res_orders.data)
                 let orders = res_orders.data;
                 orders.forEach(o => {
                     o.createdDate = util.formatTime(new Date(o.createdAt));
@@ -109,7 +108,7 @@ Page({
         })
         util.showBusy("读取订单");
         wx.request({
-            url: config.service.host + '/order/getFarmerOrders?id=' + that.data.me.id + '&status=' + that.data.screenId + '&page=' + that.data.page,
+            url: config.service.host + '/order/getDistributorOrders?id=' + that.data.me.distributor.id + '&status=' + that.data.screenId + '&page=' + that.data.page,
             header: {
                 'content-type': 'application/json',
                 'Authorization': 'Bearer ' + token

@@ -6,7 +6,8 @@ Page({
         order: '',
         orderId: '',
         me: '',
-        input_address: ''
+        input_price: '',
+        input_count:''
     },
     onLoad: function (option) {
         this.setData({
@@ -38,9 +39,8 @@ Page({
                 console.info(res_orders.data)
                 let order = res_orders.data;
                 switch (order.status) {
-                    case 'new': order.statusName = '新建'; break;
-                    case 'sent': order.statusName = '已发送'; break;
-                    case 'return': order.statusName = '待确认'; break;
+                    case 'sent': order.statusName = '未处理'; break;
+                    case 'return': order.statusName = '已处理'; break;
                     case 'done': order.statusName = '已完成'; break;
                 }
                 order.createdDate = util.formatTime(new Date(order.createdAt));
@@ -57,7 +57,7 @@ Page({
     },
     call: function () {
         wx.makePhoneCall({
-            phoneNumber: this.data.order.distributor.contactPhone,
+            phoneNumber: this.data.order.farmer.phone,
             success: function () {
                 console.log("拨打电话成功！")
             },
@@ -66,70 +66,44 @@ Page({
             }
         })
     },
-    doInputAddress: function (e) {
+    doInputCount: function (e) {
         this.setData({
-            input_address: e.detail.value
+            input_count: e.detail.value
         })
     },
-    doSent: function () {
+    doInputPrice: function (e) {
+        this.setData({
+            input_price: e.detail.value
+        })
+    },
+    doReturn: function () {
         let that = this;
-        if (!this.data.input_address) {
-            util.showModel("提示", "尚未填写详细地址");
+        if (!this.data.input_count) {
+            util.showModel("提示", "尚未填写数量");
+            return;
+        }
+        if (!this.data.input_price) {
+            util.showModel("提示", "尚未填写成交价");
             return;
         }
         let token = wx.getStorageSync('authToken');
         wx.showModal({
             title: '提交确认',
-            content: '您确定要将此订单提交给供应商吗？',
+            content: '您确定要将此订单提交回农户吗？',
             confirmText: "提交",
             cancelText: "取消",
             success: function (res) {
                 if (res.confirm) {
                     util.showBusy("提交订单");
                     wx.request({
-                        url: config.service.host + '/order/sentOrder',
+                        url: config.service.host + '/order/returnOrder',
                         header: {
                             'Authorization': 'Bearer ' + token
                         },
                         method: 'POST',
-                        data: { id: that.data.order.id, address: that.data.input_address },
+                        data: { id: that.data.order.id, price: that.data.input_price, count:that.data.input_count },
                         success: (res_orders) => {
-                            that.onShow()
-                        },
-                        fail: function (err) {
-
-                        }
-                    })
-                }
-            }
-        });
-    },
-    doDone: function () {
-        let that = this;
-        let token = wx.getStorageSync('authToken');
-        wx.showModal({
-            title: '提交确认',
-            content: '您确定要将此订单确认完成吗？',
-            confirmText: "确认",
-            cancelText: "取消",
-            success: function (res) {
-                if (res.confirm) {
-                    util.showBusy("提交订单");
-                    wx.request({
-                        url: config.service.host + '/order/doneOrder',
-                        header: {
-                            'Authorization': 'Bearer ' + token
-                        },
-                        method: 'POST',
-                        data: { id: that.data.order.id },
-                        success: (res_orders) => {
-                            wx.request({
-                                url: config.service.host + '/distributor/farmerDeal?id=' + that.data.order.data.id,
-                                header: {
-                                    'Authorization': 'Bearer ' + token
-                                }
-                            })
-                            that.onShow()
+                           that.onShow()
                         },
                         fail: function (err) {
 

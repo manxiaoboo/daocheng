@@ -10,7 +10,7 @@
                     <view class="weui-form-preview" wx:for="{{orders}}" wx:for-item="o"  wx:for-index="id">
                         <view class="weui-form-preview__hd">
                             <view class="weui-form-preview__item">
-                                <view class="weui-form-preview__label">卖家：{{o.distributor.name}}</view>
+                                <view class="weui-form-preview__label">买家：{{o.farmer.nickName}}</view>
                                 <view class="weui-form-preview__value_in-hd">
                                 <view class="weui-badge">{{screenArray[currentTab].name}}</view>
                                 </view>
@@ -40,7 +40,7 @@
                             </view>
                         </view>
                         <view class="weui-form-preview__ft">
-                            <navigator url="../order-farmer-detail/order-farmer-detail?id={{o.id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">查看详情</navigator>
+                            <navigator url="../order-distributor-detail/order-distributor-detail?id={{o.id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">查看详情</navigator>
                         </view>
                     </view>
                 </view>

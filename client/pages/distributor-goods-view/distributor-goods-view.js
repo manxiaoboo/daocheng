@@ -41,7 +41,6 @@ Page({
                 me.roleName = r.cName;
             }
         });
-        console.info(me)
         let token = wx.getStorageSync('authToken');
         util.showBusy("读取信息");
         wx.request({
@@ -95,6 +94,16 @@ Page({
 
             }
         })
+        setTimeout(()=>{
+            if(that.data.me.roleName == '农户'){
+                wx.request({
+                    url: config.service.host + '/distributor/farmerlook?id='+that.data.goodsId,
+                    header: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+            }
+        },20000)
     },
     doAudit: function () {
         let that = this;
