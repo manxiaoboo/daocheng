@@ -175,4 +175,35 @@ router.post('/create', isAuthenticated(), async (req, res, next) => {
     res.json(neworder);
 });
 
+/**
+ * 删除订单
+ */
+router.get('/deleteOrder', isAuthenticated(), async (req, res, next) => {
+    let order = await Order.findOne({
+        where: {
+            id: req.query.id
+        }
+    });
+    let od = order.dataValues
+    if(od.status == 'new'){
+        await Order.destroy({
+            where: {
+                id: od.id
+            }
+        });
+        res.json();
+    } else {
+        od.preStatus = od.status;
+        od.status = 'deleted';
+        od.deletedBy = req.query.userId;
+        od.deletedAt = new Date();
+        let neworder = await Order.update(od,{
+            where: {
+                id: od.id
+            }
+        });
+        res.json(neworder);
+    }
+});
+
 module.exports = router;

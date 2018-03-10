@@ -138,5 +138,34 @@ Page({
                 }
             }
         });
+    },
+    cancle: function(){
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '删除确认',
+            content: '您确定要将此订单删除吗？',
+            confirmText: "删除",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("删除订单");
+                    wx.request({
+                        url: config.service.host + '/order/deleteOrder?id='+that.data.order.id,
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: (res_orders) => {
+                            wx.navigateBack({
+                                delta: 1
+                              })
+                        },
+                        fail: function (err) {
+
+                        }
+                    })
+                }
+            }
+        });
     }
 })

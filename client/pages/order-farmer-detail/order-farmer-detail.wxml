@@ -70,6 +70,7 @@
                             </view>
                         </view>
                         <view class="weui-form-preview__ft">
+                            <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" bindtap="cancle">取消订单</navigator>
                             <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" bindtap="call">联系商家</navigator>
                             <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" bindtap="doSent" wx:if="{{order.status =='new'}}">提交订单</navigator>
                             <navigator class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" bindtap="doDone" wx:if="{{order.status =='return'}}">确认完成</navigator>

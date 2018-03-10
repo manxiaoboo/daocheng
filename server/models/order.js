@@ -21,6 +21,9 @@ var Order = sequelize.define('order', {
     }, status: {
         type: Sequelize.STRING,
         field: 'status'
+    }, preStatus: {
+        type: Sequelize.STRING,
+        field: 'preStatus'
     }, count: {
         type: Sequelize.INTEGER,
         field: 'count'
@@ -33,6 +36,9 @@ var Order = sequelize.define('order', {
     }, note: {
         type: Sequelize.STRING,
         field: 'note'
+    }, deletedBy: {
+        type: Sequelize.UUID,
+        field: 'deletedBy'
     }, createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'
@@ -43,6 +49,10 @@ var Order = sequelize.define('order', {
         type: Sequelize.DATE,
         field: 'completedAt'
     },
+    deletedAt: {
+        type: Sequelize.DATE,
+        field: 'deletedAt'
+    }
 },
     {
         freezeTableName: true// Model 对应的表名将与model名相同
