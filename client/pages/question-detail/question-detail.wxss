@@ -1,0 +1,40 @@
+.weui-article__title{
+    color: gray;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.article_footer{
+    color: gray;
+    font-size: 12px;
+    margin-top:10px;
+}
+
+.article_alert {
+    background: #eee;
+    padding: 12px;
+    border-left: 3px solid #999;
+    font-size: 12px;
+}
+
+.reply_root_btn {
+    float: right;
+    margin-right: 8px;
+    color: #3cc51f;
+    font-size: 14px;
+}
+
+.reply_block {
+    position: fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+}
+
+.reply_alert {
+    background: #eee;
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-top:5px;
+}

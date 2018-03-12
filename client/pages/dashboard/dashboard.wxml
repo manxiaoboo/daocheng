@@ -13,29 +13,29 @@
                 <view class="fun_btn">
                     <navigator url="../goods-type-list/goods-type-list">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/fenlei.png" />
-                        <text>商品分类</text>
+                        <text class="p">商品分类</text>
                     </navigator>
                 </view>
                 <view class="fun_btn">
                     <navigator url="../goods-hot-list/goods-hot-list">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/remen.png" />
-                        <text>热门商品</text>
+                        <text class="p">热门商品</text>
                     </navigator>
                 </view>
                 <view class="fun_btn">
                     <navigator url="../goods-ad-list/goods-ad-list">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/guanggao.png" />
-                        <text>优质商品</text>
+                        <text class="p">优质商品</text>
                     </navigator>
                 </view>
                 <view class="fun_btn">
                     <navigator url="../order-farmer-list/order-farmer-list" wx:if="{{me.roleName == '农户'}}">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/dingdan.png" />
-                        <text>我的订单</text>
+                        <text class="p">我的订单</text>
                     </navigator>
                     <navigator url="../order-distributor-list/order-distributor-list" wx:if="{{me.roleName == '经销商'}}">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/dingdan.png" />
-                        <text>我的订单</text>
+                        <text class="p">我的订单</text>
                     </navigator>
                 </view>
             </view>

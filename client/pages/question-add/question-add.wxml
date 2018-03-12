@@ -1,0 +1,22 @@
+<form bindsubmit="createQuestion">
+<view class="weui-cells__title">请简要概括您想发布的问题，以便专家快速识别您的疑惑并给予解答（请输入1-100字）</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input {{input_title?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">提问标题</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputTitle" value="{{input_title}}" name="title" placeholder="请输入提问标题" maxlength="100"/>
+        </view>
+    </view>
+</view>
+<view class="weui-cells__title">请详细说明您的问题，便于医生更准确的分析和解答</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入提问内容" style="height: 3.3em" name="content" value="{{input_content}}" bindinput="doInputContent"/>
+                </view>
+            </view>
+</view>
+<button class="weui-btn" type="primary" formType="submit">发布提问</button>
+</form>

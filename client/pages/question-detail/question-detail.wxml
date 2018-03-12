@@ -1,0 +1,78 @@
+<view class="page__bd" style="background-color:#fff;margin-bottom:50px;">
+        <view class="weui-article">
+            <view class="weui-article__h1">{{question.title}}</view>
+            <view class="weui-article__section">
+                <view class="weui-article__title">
+                    {{question.createUser.nickName}} | {{question.createdDate}} | 状态：{{question.status}}
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__p">
+                        {{question.content}}
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__p article_footer">
+                        阅读量：{{question.totalView}} / 评论量：{{replys.length}} <text class="reply_root_btn" bindtap="replyRoot">回复</text>
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__p article_alert">
+                        免责声明：任何提问或者建议均为用户个人行为，其言论行为与稻成无关。
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-panel" style="margin-top:10px;">
+            <view class="weui-panel__hd">评论 {{replys.length}}</view>
+            <view class="weui-panel__bd">
+                <view class="weui-cells weui-cells_after-title" wx:for="{{replys}}" wx:for-item="r"  wx:for-index="id">
+                    <view class="weui-cell" wx:if="{{r.replyRole=='farmer' || r.replyRole=='admin'}}">
+                        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                            <image src="{{r.replyWith.picture}}" style="width: 50px; height: 50px; display: block;border-radius:50%;"/>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <view style="font-size: 13px;" wx:if="{{r.replyRole == 'farmer'}}">{{r.replyWith.nickName}} - 农户</view>
+                            <view style="font-size: 13px;" wx:if="{{r.replyRole == 'admin'}}">{{r.replyWith.nickName}} - 管理员</view>
+                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.nickName}}">回复</text>
+                            <view style="font-size: 11px;color: #888888;">{{r.createdDate}}</view>
+                            <view style="font-size: 14px;margin-top:5px;">
+                                {{r.content}}
+                            </view>
+                            <view wx:if="{{r.parent}}" class="reply_alert">
+                                {{r.parent.content}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="weui-cell" wx:if="{{r.replyRole=='expert'}}">
+                        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                            <image src="{{r.replyWith.user.picture}}" style="width: 50px; height: 50px; display: block;border-radius:50%;"/>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <view style="font-size: 13px;">{{r.replyWith.name}}</view>
+                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.name}}">回复</text>
+                            <view class="weui-badge" style="font-size:11px">{{r.replyWith.domain_ele.name}}</view>
+                            <view style="font-size: 11px;color: #888888;">{{r.createdDate}}</view>
+                            <view style="font-size: 14px;margin-top:5px;">
+                                {{r.content}}
+                            </view>
+                            <view wx:if="{{r.parent}}" class="reply_alert">
+                                {{r.parent.content}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+</view>
+
+
+<view class="weui-cells weui-cells_after-title reply_block">
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputReply" bindblur="replyBlur" focus="{{reply_focus}}" value="{{reply_content}}" name="content" maxlength="200" placeholder="{{reply_placeholder}}" />
+        </view>
+        <view class="weui-cell__ft">
+            <view class="weui-vcode-btn" bindtap="doReply">提交</view>
+        </view>
+    </view>
+</view>

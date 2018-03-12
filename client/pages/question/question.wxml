@@ -1,4 +1,48 @@
-<view class="empty_block">
-<image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
-<text class="p">知识问答即将上线，敬请期待</text>
+<view>
+    <view class="page__bd" style="padding-bottom:10px;" wx:if="{{me.roleName == '农户'}}">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <navigator url="../question-add/question-add" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">快速提问</view>
+                        <view class="weui-media-box__desc">相关领域专家在线为您提供解答</view>
+                    </view>
+                </navigator>
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">我的问题</view>
+                        <view class="weui-media-box__desc">查看我的提问列表</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-panel">
+            <view class="weui-panel__hd">最新咨询</view>
+            <view class="weui-panel__bd">
+                <navigator url="../question-detail/question-detail?id={{q.id}}" class="weui-media-box weui-media-box_text" wx:for="{{questions}}" wx:for-item="q"  wx:for-index="id">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">{{q.title}}</view>
+                    <view class="weui-media-box__desc">{{q.content}}</view>
+                    <view class="weui-media-box__info">
+                        <view class="weui-media-box__info__meta">{{q.createUser.nickName}}</view>
+                        <view class="weui-media-box__info__meta">{{q.createdDate}}</view>
+                        <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">阅读量：{{q.totalView}}</view>
+                    </view>
+                </navigator>
+            </view>
+            <view class="weui-panel__ft">
+                <view class="weui-cell weui-cell_access weui-cell_link">
+                    <view class="weui-cell__bd">查看更多</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

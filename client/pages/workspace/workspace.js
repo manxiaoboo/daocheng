@@ -60,6 +60,7 @@ Page({
         console.info(me);
     },
     refreshDeviceData: function () {
+        let that = this;
         let token = wx.getStorageSync('authToken');
         wx.request({
             url: config.service.host + '/devices/jzy-latest',
