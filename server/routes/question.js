@@ -26,8 +26,8 @@ router.get('/allQuestions', isAuthenticated(), async (req, res, next) => {
         order: [
             ['createdAt', 'DESC']
         ],
-        limit: 5,
-        offset: 5 * (page - 1)
+        limit: 10,
+        offset: 10 * (page - 1)
     });
     for (const q of questions) {
         aq = q.dataValues
@@ -37,6 +37,80 @@ router.get('/allQuestions', isAuthenticated(), async (req, res, next) => {
             }
         })
     }
+    res.json(questions);
+});
+
+
+/**
+ * 获取所有未解决问题列表
+ */
+router.get('/allOpenQuestions', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let questions = await Question.findAll({
+        where:{
+            status: 'open'
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 10,
+        offset: 10 * (page - 1)
+    });
+    for (const q of questions) {
+        aq = q.dataValues
+        aq.createUser = await User.findOne({
+            where: {
+                id: aq.createdBy
+            }
+        })
+    }
+    res.json(questions);
+});
+
+/**
+ * 获取所有被采纳问题列表
+ */
+router.get('/allAcceptedQuestions', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let id = req.query.id;
+    let questions = await Question.findAll({
+        where:{
+            status: 'close',
+            acceptUser: id
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 10,
+        offset: 10 * (page - 1)
+    });
+    for (const q of questions) {
+        aq = q.dataValues
+        aq.createUser = await User.findOne({
+            where: {
+                id: aq.createdBy
+            }
+        })
+    }
+    res.json(questions);
+});
+
+/**
+ * 获取我的问题列表
+ */
+router.get('/myQuestions', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let userId = req.query.id;
+    let questions = await Question.findAll({
+        where:{
+            createdBy:userId
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 10,
+        offset: 10 * (page - 1)
+    });
     res.json(questions);
 });
 
@@ -82,6 +156,52 @@ router.post('/create', isAuthenticated(), async (req, res, next) => {
     question.createdAt = new Date();
     question.updatedAt = new Date();
     let newquestion = await Question.create(question);
+    res.json(newquestion);
+});
+
+/**
+ * 删除一条提问
+ */
+router.get('/delete', isAuthenticated(), async (req, res, next) => {
+    let id = req.query.id;
+    await Reply.destroy({
+        where:{
+            rootId:id
+        }
+    });
+    await Question.destroy({
+        where:{
+            id:id
+        }
+    });
+    res.json({});
+});
+
+/**
+ * 采纳回复
+ */
+router.post('/accept', isAuthenticated(), async (req, res, next) => {
+    let question = req.body;
+    question.completedAt = new Date();
+    question.status = 'close';
+    let newquestion = await Question.update(question,{
+        where:{
+            id:question.id
+        }
+    });
+    let expert = await ExpertUser.findOne({
+        where:{
+            id: question.acceptUser
+        }
+    });
+    let ae = expert.dataValues;
+    ae.score = ae.score + 20;
+    ae.accept = ae.accept + 1;
+    await ExpertUser.update(ae,{
+        where:{
+            id: ae.id
+        }
+    });
     res.json(newquestion);
 });
 
@@ -170,6 +290,59 @@ router.get('/allReply', isAuthenticated(), async (req, res, next) => {
             })
         }
         if(ar.parentId != rootId){
+            ar.parent = await Reply.findOne({
+                where: {
+                    id: ar.parentId
+                }
+            })
+        }
+    }
+    res.json(replys);
+});
+
+
+/**
+ * 获取最近回答
+ */
+router.get('/recentReply', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let id = req.query.id;
+    let replys = await Reply.findAll({
+        where:{
+            replyUser:id
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 10,
+        offset: 10 * (page - 1)
+    });
+    for (const r of replys) {
+        ar = r.dataValues;
+        if(ar.replyRole == 'farmer' || ar.replyRole == 'admin'){
+            ar.replyWith = await User.findOne({
+                where: {
+                    id: ar.replyUser
+                }
+            })
+        }else if(ar.replyRole == 'expert'){
+            ar.replyWith = await ExpertUser.findOne({
+                where: {
+                    id: ar.replyUser
+                }
+            })
+            ar.replyWith.dataValues.user = await User.findOne({
+                where: {
+                    id: ar.replyWith.dataValues.userId
+                }
+            })
+            ar.replyWith.dataValues.domain_ele = await Domain.findOne({
+                where: {
+                    id: ar.replyWith.dataValues.domain
+                }
+            })
+        }
+        if(ar.parentId != id){
             ar.parent = await Reply.findOne({
                 where: {
                     id: ar.parentId

@@ -1,0 +1,26 @@
+<view>
+    <view class="page__bd">
+        <view class="weui-panel">
+            <view class="weui-panel__hd">我的提问</view>
+            <view class="weui-panel__bd">
+                <navigator url="../question-detail/question-detail?id={{q.id}}" class="weui-media-box weui-media-box_text" wx:for="{{questions}}" wx:for-item="q"  wx:for-index="id">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">{{q.title}}</view>
+                    <view class="weui-media-box__desc">{{q.content}}</view>
+                    <view class="weui-media-box__info">
+                        <view class="weui-media-box__info__meta">
+                            <text style="color:#e64340;" wx:if="{{q.status == 'open'}}">未解决</text>
+                            <text style="color:#3cc51f;" wx:if="{{q.status == 'close'}}">已解决</text>
+                        </view>
+                        <view class="weui-media-box__info__meta">{{q.createdDate}}</view>
+                        <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">阅读量：{{q.totalView}}</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>
+
+ <view class="weui-loadmore" hidden="{{!loading}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>

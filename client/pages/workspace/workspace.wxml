@@ -136,6 +136,54 @@
         <text class="p">请您先填写完整的店铺信息</text>
     </view>
 </view>
+<view wx:if="{{me.isValidate && me.roleName == '专家' && me.expert.domain}}">
+<view class="weui-cells__title">我的信息</view>
+    <view class="weui-cells weui-cells_after-title">
+            <navigator url="" bindtap="goEditExpert" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{me.expert.name?me.expert.name:'尚未设置名称'}}</view>
+                    <view style="font-size: 13px;color: #888888;">{{me.expert.domainName}}</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+            </navigator>
+    </view>
+<view class="page__bd" style="padding-bottom:10px;margin-top:20px;">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <navigator url="../question-expert-open-list/question-expert-open-list" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">未解决问题</view>
+                        <view class="weui-media-box__desc">查看所有最新未解决问题</view>
+                    </view>
+                </navigator>
+                <navigator url="../question-expert-accepted/question-expert-accepted" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">被采纳问题</view>
+                        <view class="weui-media-box__desc">查看我的被采纳列表</view>
+                    </view>
+                </navigator>
+                <navigator url="../question-expert-recent/question-expert-recent" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">最近回答</view>
+                        <view class="weui-media-box__desc">查看我的最近回答</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>
 <view wx:if="{{me.isValidate && me.roleName == '专家' && (!me.expert.domain || !me.expert.name)}}" class="empty_block">
 <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
 <text class="p">您尚未填写专业信息，请前往填写</text>

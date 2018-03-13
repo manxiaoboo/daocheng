@@ -18,8 +18,11 @@ var Question = sequelize.define('question', {
     }, content: {
         type: Sequelize.STRING,
         field: 'content'
+    }, acceptId: {
+        type: Sequelize.UUID,
+        field: 'acceptId'
     }, acceptUser: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         field: 'acceptUser'
     }, totalView: {
         type: Sequelize.INTEGER,

@@ -11,12 +11,12 @@
                         <view class="weui-media-box__desc">相关领域专家在线为您提供解答</view>
                     </view>
                 </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator url="../question-farmer-own/question-farmer-own" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                         <image class="weui-media-box__thumb" src="http://p0oy6nmva.bkt.clouddn.com/ask.png" />
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">我的问题</view>
+                        <view class="weui-media-box__title">我的提问</view>
                         <view class="weui-media-box__desc">查看我的提问列表</view>
                     </view>
                 </navigator>
@@ -31,17 +31,20 @@
                     <view class="weui-media-box__title weui-media-box__title_in-text">{{q.title}}</view>
                     <view class="weui-media-box__desc">{{q.content}}</view>
                     <view class="weui-media-box__info">
-                        <view class="weui-media-box__info__meta">{{q.createUser.nickName}}</view>
+                        <view class="weui-media-box__info__meta">
+                        <text style="color:#e64340;" wx:if="{{q.status == 'open'}}">未解决</text>
+                        <text style="color:#3cc51f;" wx:if="{{q.status == 'close'}}">已解决</text>
+                        </view>
                         <view class="weui-media-box__info__meta">{{q.createdDate}}</view>
                         <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">阅读量：{{q.totalView}}</view>
                     </view>
                 </navigator>
             </view>
             <view class="weui-panel__ft">
-                <view class="weui-cell weui-cell_access weui-cell_link">
+                <navigator url="../question-more-list/question-more-list" class="weui-cell weui-cell_access weui-cell_link">
                     <view class="weui-cell__bd">查看更多</view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </view>
+                </navigator>
             </view>
         </view>
     </view>

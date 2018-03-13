@@ -1,0 +1,21 @@
+<view>
+    <view class="page__bd">
+        <view class="weui-panel">
+            <view class="weui-panel__hd">我的最近回复</view>
+            <view class="weui-panel__bd">
+                <navigator url="../question-detail/question-detail?id={{q.rootId}}" class="weui-media-box weui-media-box_text" wx:for="{{questions}}" wx:for-item="q"  wx:for-index="id">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">{{q.content}}</view>
+                    <view class="weui-media-box__desc">{{q.replyWith.name}}</view>
+                    <view class="weui-media-box__info">
+                        <view class="weui-media-box__info__meta">回复时间： {{q.createdDate}}</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>
+
+ <view class="weui-loadmore" hidden="{{!loading}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>

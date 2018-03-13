@@ -44,6 +44,14 @@ Page({
                 me.roleName = r.cName;
             }
         });
+        if(me.roleName == '专家'){
+            let domains = wx.getStorageSync('domains');
+            domains.forEach(d => {
+                if(me.expert.domain == d.id){
+                    me.expert.domainName = d.name;
+                }
+            })
+        }
         that.setData({
             me: me,
             jzyUserToken: jzyUserToken.token
@@ -57,6 +65,7 @@ Page({
                 timmer: timmer
             });
         }
+
         console.info(me);
     },
     refreshDeviceData: function () {

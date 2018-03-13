@@ -109,3 +109,9 @@
 .clear{
     clear:both;
 }
+
+.weui-media-box__hd_in-appmsg {
+    width: 86px;
+    height: 72px;
+    line-height:72px;
+}

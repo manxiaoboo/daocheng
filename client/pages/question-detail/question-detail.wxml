@@ -1,9 +1,13 @@
 <view class="page__bd" style="background-color:#fff;margin-bottom:50px;">
         <view class="weui-article">
-            <view class="weui-article__h1">{{question.title}}</view>
+            <view class="weui-article__h1">{{question.title}}
+                <text class="reply_root_btn" style="color:#e64340" bindtap="deleteQuestion" wx:if="{{question.status == 'open' && me.id == question.createdBy}}">删除</text>
+            </view>
             <view class="weui-article__section">
                 <view class="weui-article__title">
-                    {{question.createUser.nickName}} | {{question.createdDate}} | 状态：{{question.status}}
+                    {{question.createUser.nickName}} | {{question.createdDate}} | 状态：
+                    <text class="weui-badge" wx:if="{{question.status == 'open'}}">未解决</text>
+                    <text class="weui-badge" style="background:#3cc51f;" wx:if="{{question.status == 'close'}}">已解决</text>
                 </view>
                 <view class="weui-article__section">
                     <view class="weui-article__p">
@@ -12,7 +16,7 @@
                 </view>
                 <view class="weui-article__section">
                     <view class="weui-article__p article_footer">
-                        阅读量：{{question.totalView}} / 评论量：{{replys.length}} <text class="reply_root_btn" bindtap="replyRoot">回复</text>
+                        阅读量：{{question.totalView}} / 评论量：{{replys.length}} <text class="reply_root_btn" bindtap="replyRoot" wx:if="{{question.status == 'open'}}">回复</text>
                     </view>
                 </view>
                 <view class="weui-article__section">
@@ -33,7 +37,7 @@
                         <view class="weui-cell__bd">
                             <view style="font-size: 13px;" wx:if="{{r.replyRole == 'farmer'}}">{{r.replyWith.nickName}} - 农户</view>
                             <view style="font-size: 13px;" wx:if="{{r.replyRole == 'admin'}}">{{r.replyWith.nickName}} - 管理员</view>
-                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.nickName}}">回复</text>
+                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.nickName}}" wx:if="{{question.status == 'open'}}">回复</text>
                             <view style="font-size: 11px;color: #888888;">{{r.createdDate}}</view>
                             <view style="font-size: 14px;margin-top:5px;">
                                 {{r.content}}
@@ -49,7 +53,8 @@
                         </view>
                         <view class="weui-cell__bd">
                             <view style="font-size: 13px;">{{r.replyWith.name}}</view>
-                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.name}}">回复</text>
+                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.name}}" wx:if="{{question.status == 'open'}}">回复</text>
+                            <text class="reply_root_btn" wx:if="{{question.status == 'close' && question.acceptId == r.id}}">已被采纳</text>
                             <view class="weui-badge" style="font-size:11px">{{r.replyWith.domain_ele.name}}</view>
                             <view style="font-size: 11px;color: #888888;">{{r.createdDate}}</view>
                             <view style="font-size: 14px;margin-top:5px;">
@@ -57,6 +62,9 @@
                             </view>
                             <view wx:if="{{r.parent}}" class="reply_alert">
                                 {{r.parent.content}}
+                            </view>
+                            <view wx:if="{{question.status == 'open'}}" style="margin-top:10px;">
+                                <button class="weui-btn mini-btn" type="primary" size="mini" plain="true" bindtap="accept" data-reply="{{r}}" data-expert="{{r.replyWith}}" wx:if="{{question.status == 'open' && me.id == question.createdBy}}">采纳此回答</button>
                             </view>
                         </view>
                     </view>
@@ -66,7 +74,7 @@
 </view>
 
 
-<view class="weui-cells weui-cells_after-title reply_block">
+<view class="weui-cells weui-cells_after-title reply_block" wx:if="{{question.status == 'open'}}">
     <view class="weui-cell weui-cell_input weui-cell_vcode">
         <view class="weui-cell__bd">
             <input class="weui-input" bindinput="doInputReply" bindblur="replyBlur" focus="{{reply_focus}}" value="{{reply_content}}" name="content" maxlength="200" placeholder="{{reply_placeholder}}" />

@@ -24,7 +24,12 @@
     "pages/order-distributor-list/order-distributor-list",
     "pages/order-distributor-detail/order-distributor-detail",
     "pages/question-add/question-add",
-    "pages/question-detail/question-detail"
+    "pages/question-detail/question-detail",
+    "pages/question-farmer-own/question-farmer-own",
+    "pages/question-more-list/question-more-list",
+    "pages/question-expert-open-list/question-expert-open-list",
+    "pages/question-expert-accepted/question-expert-accepted",
+    "pages/question-expert-recent/question-expert-recent"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",

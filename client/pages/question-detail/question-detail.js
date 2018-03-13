@@ -155,6 +155,73 @@ Page({
             }
         })
     },
+    accept: function(e){
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        let expert = e.currentTarget.dataset.expert;
+        let reply = e.currentTarget.dataset.reply;
+        let question = this.data.question;
+        question.acceptId = reply.id;
+        question.acceptUser = expert.id;
+        wx.showModal({
+            title: '采纳确认',
+            content: '您确定要采纳此条回复吗？',
+            confirmText: "采纳",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在处理");
+                    wx.request({
+                        url: config.service.host + '/question/accept',
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        method:'POST',
+                        data: question,
+                        success: (res_question) => {
+                            that.setData({
+                                    reply_placeholder:'添加回复...',
+                                    reply_parent: '',
+                                    reply_focus: false,
+                                    reply_content:''
+                                })
+                            that.onShow();
+                        },
+                        fail: function (err) {
+                        }
+                    })
+                }
+            }
+        });
+    },
+    deleteQuestion: function(){
+        let that = this;
+        let token = wx.getStorageSync('authToken');
+        wx.showModal({
+            title: '删除确认',
+            content: '您确定要删除此条提问吗？',
+            confirmText: "删除",
+            cancelText: "取消",
+            success: function (res) {
+                if (res.confirm) {
+                    util.showBusy("正在删除");
+                    wx.request({
+                        url: config.service.host + '/question/delete?id='+that.data.question.id,
+                        header: {
+                            'Authorization': 'Bearer ' + token
+                        },
+                        success: (res_question) => {
+                            wx.navigateBack({
+                                delta: 1
+                              })
+                        },
+                        fail: function (err) {
+                        }
+                    })
+                }
+            }
+        });
+    },
     doInputReply: function(e){
         this.setData({
             reply_content: e.detail.value

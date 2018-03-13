@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const QcloudSms = require("qcloudsms_js");
 const User = require('../models/user');
 const AuditUser = require('../models/audit_user');
 const AuditUserDone = require('../models/audit_user_done');
@@ -19,6 +20,19 @@ const {
     validation
     }
 } = require("../qcloud");
+
+
+
+/**
+ * 发送验证码
+ */
+router.post('/sendCode', async (req, res, next) => {
+    const appid = 122333333;
+    const appkey = "111111111112132312xx";
+    const phoneNumbers = ["21212313123", "12345678902", "12345678903"];
+    const templId = 7839;
+    const qcloudsms = QcloudSms(appid, appkey);
+});
 
 /**
  * 校验微信用户信息状态并返回
@@ -183,14 +197,14 @@ router.post('/register', isAuthenticated(), async (req, res, next) => {
     }
 
     //如果是经销商 为其创建专属身份
-    if(audit_user.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315'){
+    if (audit_user.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315') {
         let distributor = {
             id: UUID.v1(),
             userId: newUser.id,
             address: '',
             intro: '',
-            contact:'',
-            contactPhone:'',
+            contact: '',
+            contactPhone: '',
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -299,9 +313,9 @@ router.post('/create-domain', isAuthenticated(), async (req, res, next) => {
  */
 router.post('/edit-domain', isAuthenticated(), async (req, res, next) => {
     let domain = req.body;
-    await Domain.update(domain,{
-        where:{
-            id:domain.id
+    await Domain.update(domain, {
+        where: {
+            id: domain.id
         }
     });
     res.json({});
@@ -313,8 +327,8 @@ router.post('/edit-domain', isAuthenticated(), async (req, res, next) => {
 router.post('/delete-domain', isAuthenticated(), async (req, res, next) => {
     let domain = req.body;
     await Domain.destroy({
-        where:{
-            id:domain.id
+        where: {
+            id: domain.id
         }
     });
     res.json({});
