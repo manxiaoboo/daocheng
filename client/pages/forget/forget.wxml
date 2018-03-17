@@ -1,0 +1,58 @@
+<view>
+    <form bindsubmit="check" wx:if="{{!validated}}">
+        <view class="weui-cells__title">基本信息</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input {{input_userName?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户名</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputUsername" name="userName" placeholder="请输入用户名"/>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input weui-cell_vcode {{input_phone?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                        <view class="weui-label">手机号</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputPhone" name="phone" placeholder="请输入手机号" />
+                </view>
+                <view class="weui-cell__ft">
+                    <view bindtap="sendValidateCode" wx:if="{{!isSendding}}" class="weui-vcode-btn">获取验证码</view>
+                    <view wx:if="{{isSendding}}" class="weui-vcode-btn">{{time}}</view>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input weui-cell_vcode {{input_validateCode?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">验证码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputValidateCode" placeholder="请输入验证码" />
+                </view>
+            </view>
+        </view>
+        <button class="weui-btn" type="primary" formType="submit">确认账户</button>
+    </form>
+    <form bindsubmit="edit" wx:if="{{validated}}">
+        <view class="weui-cells__title">新密码</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input {{input_password && input_password.length >= 6 ?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">新密码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputPassword" name="password" type="password"/>
+                </view>
+            </view>
+            <view class="weui-cell weui-cell_input {{input_confirm && input_confirm === input_password ?'':'weui-cell_warn'}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">确认密码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput="doInputConfirm" type="password"/>
+                </view>
+            </view>
+        </view>
+        <button class="weui-btn" type="primary" formType="submit">修改密码</button>
+    </form>
+  </view>

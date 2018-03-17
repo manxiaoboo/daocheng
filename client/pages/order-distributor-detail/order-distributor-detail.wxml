@@ -57,8 +57,8 @@
                                 </view>
                             </view>
                         </view>
-                        <view class="weui-cells__title">报价</view>
-                        <view class="weui-cell weui-cell_input {{input_count?'':'weui-cell_warn'}}">
+                        <view class="weui-cells__title" wx:if="{{order.status =='sent'}}">报价</view>
+                        <view class="weui-cell weui-cell_input {{input_count?'':'weui-cell_warn'}}" wx:if="{{order.status =='sent'}}">
                             <view class="weui-cell__hd">
                                 <view class="weui-label">数量</view>
                             </view>
@@ -66,7 +66,7 @@
                                 <input class="weui-input" bindinput="doInputCount" value="{{input_count}}" name="count" placeholder="数量"/>
                             </view>
                         </view>
-                        <view class="weui-cell weui-cell_input {{input_price?'':'weui-cell_warn'}}">
+                        <view class="weui-cell weui-cell_input {{input_price?'':'weui-cell_warn'}}" wx:if="{{order.status =='sent'}}">
                             <view class="weui-cell__hd">
                                 <view class="weui-label">成交价</view>
                             </view>

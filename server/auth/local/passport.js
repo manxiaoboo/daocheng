@@ -20,7 +20,7 @@ function localAuthenticate(User, userName, password, done) {
       }
       let user_t = user.dataValues;
       encryptPassword(password, user_t.salt, (err, pwd) => {
-        if (user_t == pwd) {
+        if (user_t.password != pwd) {
           return done(null, false, {
             message: 'This password is not correct.'
           });

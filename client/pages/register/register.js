@@ -21,7 +21,8 @@ Page({
         input_confirm: '',
         input_roleId: '27ea4974-e6c4-11e7-b42e-060400ef5315',
         successd: false,
-        successdTime: 5
+        successdTime: 5,
+        passcode: ''
     },
     roleChange: function (e) {
         // var roles = this.data.roles;
@@ -42,6 +43,23 @@ Page({
     },
     sendValidateCode: function (e) {
         var that = this;
+        let code = '';
+        do {
+            code = Math.floor(Math.random() * 10000);
+        }
+        while (code < 1000) {
+            that.setData({
+                passcode: code
+            });
+            const myreg = /^(((1[0-9]{1}[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test(that.data.input_phone)) {
+                util.showModel("提示", "请输入有效的手机号码！");
+                return;
+            }
+            that.sendMessage(code,that.data.input_phone);
+        }
+
+
         clearInterval(that.data.timmer);
         that.setData({
             isSendding: true
@@ -61,6 +79,20 @@ Page({
             });
         }, 1000);
     },
+    sendMessage: function (code, phone) {
+        wx.request({
+            url: config.service.host + '/users/sendCode',
+            method: 'POST',
+            data: {
+                code: code,
+                phone: phone
+            },
+            header: {
+                'content-type': 'application/json'
+            },
+            success: function (res) {}
+        })
+    },
     register: function (e) {
         var that = this;
         let audit_user = e.detail.value;
@@ -72,7 +104,7 @@ Page({
         audit_user.area = this.data.region[2];
         audit_user.isValidate = 0;
         audit_user.roleId = this.data.input_roleId;
-        if (this.data.input_validateCode != '1234') {
+        if (this.data.input_validateCode != that.data.passcode) {
             util.showModel("提示", "验证码输入错误");
             return;
         }

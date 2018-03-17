@@ -262,7 +262,7 @@ Page({
         });
     },
     goEdit: function () {
-        wx.navigateTo({
+        wx.redirectTo({
             url: '../distributor-goods-edit/distributor-goods-edit?id=' + this.data.goodsId
         })
     },

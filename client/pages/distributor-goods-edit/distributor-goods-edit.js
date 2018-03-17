@@ -36,6 +36,7 @@ Page({
             }
         });
         let token = wx.getStorageSync('authToken');
+        util.showBusy("读取商品");
         wx.request({
             url: config.service.host + '/distributor/types',
             header: {
@@ -91,26 +92,27 @@ Page({
                                             input_intro: res_goods.data.intro,
                                             input_specDesc: res_goods.data.specDesc
                                         });
+                                        wx.hideToast();
                                         console.info(res_goods.data)
                                         console.info(that.data.goodsId)
                                     },
                                     fail: function (err) {
-
+                                        wx.hideToast();
                                     }
                                 })
                             },
                             fail: function (err) {
-
+                                wx.hideToast();
                             }
                         })
                     },
                     fail: function (err) {
-
+                        wx.hideToast();
                     }
                 })
             },
             fail: function (err) {
-
+                wx.hideToast();
             }
         })
     },
@@ -283,7 +285,7 @@ Page({
                             method: 'POST',
                             data: old_goods,
                             success: function (res) {
-                                wx.navigateTo({
+                                wx.redirectTo({
                                     url: '../distributor-goods-list/distributor-goods-list'
                                 })
                             }
@@ -315,7 +317,7 @@ Page({
                             success: (res) => {
                                 that.onShow();
                                 util.showSuccess("处理成功");
-                                wx.navigateTo({
+                                wx.redirectTo({
                                     url: '../distributor-goods-list/distributor-goods-list'
                                 })
                             },

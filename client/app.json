@@ -4,6 +4,7 @@
     "pages/addCgi/addCgi",
     "pages/index/index",
     "pages/login/login",
+    "pages/forget/forget",
     "pages/register/register",
     "pages/person-center/person-center",
     "pages/workspace/workspace",

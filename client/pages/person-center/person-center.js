@@ -42,7 +42,7 @@ Page({
                     wx.removeStorage({
                         key: 'authToken',
                         success: function(res) {
-                          wx.navigateTo({
+                          wx.redirectTo({
                             url: '../login/login'
                           })
                         } 

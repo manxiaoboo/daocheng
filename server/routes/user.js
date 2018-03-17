@@ -17,7 +17,7 @@ const {
 const {
     auth: {
         authorization,
-    validation
+        validation
     }
 } = require("../qcloud");
 
@@ -27,11 +27,21 @@ const {
  * 发送验证码
  */
 router.post('/sendCode', async (req, res, next) => {
-    const appid = 122333333;
-    const appkey = "111111111112132312xx";
-    const phoneNumbers = ["21212313123", "12345678902", "12345678903"];
-    const templId = 7839;
+    const appid = 1400056903;
+    const appkey = "4072f0e22d49df1d605dc1a4c2a2fd4c";
+    const templId = 94676;
     const qcloudsms = QcloudSms(appid, appkey);
+    const params = [req.body.code];
+    const ssender = qcloudsms.SmsSingleSender();
+    ssender.sendWithParam(86, req.body.phone, templId,
+        params, "", "", "", callback);
+
+    function callback(err, res_m, resData) {
+        if (err)
+            console.log("err: ", err);
+        else
+            res.json({});
+    }
 });
 
 /**
@@ -69,6 +79,39 @@ router.get('/getUser', isAuthenticated(), async (req, res, next) => {
 });
 
 /**
+ * 根据用户名和手机号获取用户
+ */
+router.get('/getUserByNameAndPhone', async (req, res, next) => {
+    let user = await User.findOne({
+        where: {
+            userName: req.query.userName,
+            phone:req.query.phone,
+            roleId:{
+                $ne: '2cf27ea0-e6c4-11e7-b42e-060400ef5315'
+            }
+        }
+    });
+    res.json(user);
+});
+
+/**
+ * 修改密码
+ */
+router.post('/changePassword', async (req, res, next) => {
+    let user = req.body.user;
+    let newpass = req.body.password;
+    encryptPassword(newpass, user.salt, async (err, pwd) => {
+        user.password = pwd;
+        await User.update(user,{
+            where:{
+                id: user.id
+            }
+        });
+        res.json(user);
+    });
+});
+
+/**
  * 获取当前登陆用户
  */
 router.get('/me', isAuthenticated(), async (req, res, next) => {
@@ -78,10 +121,12 @@ router.get('/me', isAuthenticated(), async (req, res, next) => {
     }
     let roleId = req.query.roleId;
     if (roleId && roleId != 'other') query.roleId = roleId;
-    if (roleId == 'other') query.roleId = { $ne: '2cf27ea0-e6c4-11e7-b42e-060400ef5315' };
+    if (roleId == 'other') query.roleId = {
+        $ne: '2cf27ea0-e6c4-11e7-b42e-060400ef5315'
+    };
     return User.findOne({
-        where: query
-    }, '-salt -password')
+            where: query
+        }, '-salt -password')
         .then(user => { // don't ever give out the password or salt
             if (!user) {
                 return res.status(401).end();
@@ -108,10 +153,10 @@ router.get('/roles', async (req, res, next) => {
  */
 router.post('/check-audit', (req, res, next) => {
     AuditUser.findOne({
-        where: {
-            "userName": req.body.userName
-        }
-    })
+            where: {
+                "userName": req.body.userName
+            }
+        })
         .then(user => {
             res.json(user);
         })

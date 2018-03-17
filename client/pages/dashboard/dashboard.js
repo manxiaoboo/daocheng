@@ -20,6 +20,8 @@ Page({
   },
   onLoad: function () {
     console.info("首页 => load");
+  },
+  onShow: function(){
     var that = this;
     wx.getStorage({
       key: 'authToken',

@@ -8,7 +8,7 @@ Page({
     },
     onLoad: function () {},
     goRegister: function () {
-        wx.redirectTo({
+        wx.navigateTo({
             url: '../register/register'
         })
     },

@@ -6,7 +6,7 @@
     <input type="text" bindinput="userNameInput" class="form-control"/>  
     <text class="label">密码：</text>
     <input type="text" bindinput="userPasswordInput" password="true" class="form-control"/>  
-    <navigator url="../dashboard/dashboard" class="foget">忘记密码？</navigator>
+    <navigator url="../forget/forget" class="foget">忘记密码？</navigator>
     <button bindtap="logIn" class="loginbtn">登录</button>
     <button bindtap="goRegister" class="registerbtn" url="../dashboard/dashboard">注册</button>  
   </view>  

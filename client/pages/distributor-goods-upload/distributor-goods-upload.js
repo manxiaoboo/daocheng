@@ -97,8 +97,8 @@ Page({
         });
     },
     finish:function(){
-        wx.navigateBack({
-            delta: 2
-          })
+        wx.redirectTo({
+            url: '../distributor-goods-list/distributor-goods-list'
+        })
     }
 })
