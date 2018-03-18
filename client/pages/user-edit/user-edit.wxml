@@ -1,0 +1,15 @@
+<form bindsubmit="editUser">
+<view class="weui-cells__title">个人信息</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input {{input_nickName?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">昵称</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputName" value="{{input_nickName}}" name="name" placeholder="请输入昵称"/>
+        </view>
+    </view>
+  </view>
+<button class="weui-btn" type="primary" bindtap="uploadImage" class="p" plain="true">修改头像图片</button>
+  <button class="weui-btn" type="primary" formType="submit">确认修改</button>
+</form>

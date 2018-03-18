@@ -31,6 +31,13 @@
                 </view>
             </view>
 </view>
+<view class="weui-cells__title">功能</view>
+<view class="weui-cells weui-cells_after-title">
+            <navigator url="../user-edit/user-edit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">个人信息</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+            </navigator>
+</view>
 <view class="weui-cells__title">我的信息</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">

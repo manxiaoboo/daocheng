@@ -8,6 +8,9 @@ const Role = require('../models/role');
 const ExpertUser = require('../models/expertUser');
 const Domain = require('../models/domain');
 const DistributorUser = require('../models/distributorUser');
+const DistributorGoods = require('../models/distributorGoods');
+const AuditGoods = require('../models/audit_goods');
+
 const UUID = require('uuid');
 const {
     makeSalt,
@@ -64,6 +67,39 @@ router.get('/', async (req, res, next) => {
             code: -1
         });
     }
+});
+
+
+/**
+ * platform端dashboard数据集合
+ */
+router.get('/dashboard', isAuthenticated(), async (req, res, next) => {
+    let result = {
+        counts:{},
+        distributors:[],
+        auditUsers:[],
+        auditGoods:[]
+    };
+    result.counts.expert = await ExpertUser.count();
+    result.counts.farmer = await User.count({where:{roleId:'27ea4974-e6c4-11e7-b42e-060400ef5315'}});
+    result.counts.distributor = await DistributorUser.count();
+    result.distributors = await DistributorUser.findAll({limit: 6,order: [['createdAt', 'DESC']]});
+    result.auditUsers = await AuditUser.findAll({limit: 3,order: [['createdAt', 'DESC']]});
+    result.auditGoods = await AuditGoods.findAll({limit: 3,order: [['createdAt', 'DESC']]});
+    for (const ag of result.auditGoods) {
+        let g = ag.dataValues;
+        g.goods = await DistributorGoods.findOne({
+            where:{
+                id:g.distributorGoodsId
+            }
+        });
+        g.goods.dataValues.distributor = await DistributorUser.findOne({
+            where:{
+                id:g.goods.dataValues.distributorId
+            }
+        });
+    }
+    res.json(result);
 });
 
 /**

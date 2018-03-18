@@ -7,6 +7,7 @@
     "pages/forget/forget",
     "pages/register/register",
     "pages/person-center/person-center",
+    "pages/user-edit/user-edit",
     "pages/workspace/workspace",
     "pages/edit-expert/edit-expert",
     "pages/question/question",
