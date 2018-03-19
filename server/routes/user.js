@@ -84,8 +84,8 @@ router.get('/dashboard', isAuthenticated(), async (req, res, next) => {
     result.counts.farmer = await User.count({where:{roleId:'27ea4974-e6c4-11e7-b42e-060400ef5315'}});
     result.counts.distributor = await DistributorUser.count();
     result.distributors = await DistributorUser.findAll({limit: 6,order: [['createdAt', 'DESC']]});
-    result.auditUsers = await AuditUser.findAll({limit: 3,order: [['createdAt', 'DESC']]});
-    result.auditGoods = await AuditGoods.findAll({limit: 3,order: [['createdAt', 'DESC']]});
+    result.auditUsers = await AuditUser.findAll({limit: 5,order: [['createdAt', 'DESC']]});
+    result.auditGoods = await AuditGoods.findAll({limit: 5,order: [['createdAt', 'DESC']]});
     for (const ag of result.auditGoods) {
         let g = ag.dataValues;
         g.goods = await DistributorGoods.findOne({
