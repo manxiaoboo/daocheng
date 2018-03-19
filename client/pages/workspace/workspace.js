@@ -30,9 +30,9 @@ Page({
             "gy_key": 0
         },
         timmer: null,
-        lock:false
+        lock: false
     },
-    onLoad: function () { },
+    onLoad: function () {},
     onShow: function () {
         console.info("工作台 => load");
         let that = this;
@@ -44,10 +44,10 @@ Page({
                 me.roleName = r.cName;
             }
         });
-        if(me.roleName == '专家'){
+        if (me.roleName == '专家') {
             let domains = wx.getStorageSync('domains');
             domains.forEach(d => {
-                if(me.expert.domain == d.id){
+                if (me.expert.domain == d.id) {
                     me.expert.domainName = d.name;
                 }
             })
@@ -86,23 +86,28 @@ Page({
             },
             success: (res_latest) => {
                 let attr = JSON.parse(res_latest.data);
-                let flag = false;
-                for(let a in attr){
-                    if(that.data.deviceData[a] != attr[a]){
-                        flag = true;
-                    }
-                }
-                if(flag){
-                    that.setData({
-                        lock: false
-                    })
-                    wx.hideToast();
-                }
+                let old_attr = that.data.deviceData;
+
                 if (JSON.stringify(attr.attr) != "{}") {
+                    attr.attr.cy_key = attr.attr.cy_led;
+                    attr.attr.jz_key = attr.attr.jz_led;
+                    attr.attr.gy_key = attr.attr.gy_led;
+                    attr.attr.sj_key = attr.attr.sj_led;
+                    attr.attr.zdjr_key = attr.attr.zdjr_led;
+                    attr.attr.sdjr_key = attr.attr.qdjr_led;
+                    attr.attr.zdxh_key = attr.attr.zdpl_led;
+                    attr.attr.sdxh_key = attr.attr.qdpl_led;
                     this.setData({
                         deviceData: attr.attr
                     });
                 }
+                // if (JSON.stringify(old_attr) != JSON.stringify(that.data.deviceData)) {
+                //     that.setData({
+                //         lock: false
+                //     })
+                //     wx.hideToast();
+                // }
+
             },
             fail: function (err) {
 
@@ -244,7 +249,6 @@ Page({
     },
     preControl: function (close_key, attrs, token) {
         let that = this
-        if(this.data.lock)return;
         util.showBusy('正在发送指令')
         that.setData({
             lock: true
@@ -264,13 +268,9 @@ Page({
                 password: this.data.me.id
             },
             success: (res_latest) => {
-                let inter = setInterval(()=>{
-                    if(!that.data.lock){
-                        that.control(attrs, token);
-                        clearInterval(inter)
-                    }
-                },200)
-                
+                setTimeout(()=>{
+                    that.control(attrs, token);
+                },10000)
             },
             fail: function (err) {
 
@@ -279,7 +279,6 @@ Page({
     },
     control: function (attrs, token) {
         let that = this
-        if(this.data.lock)return;
         util.showBusy('正在发送指令')
         that.setData({
             lock: true
@@ -298,11 +297,7 @@ Page({
                 username: this.data.me.id,
                 password: this.data.me.id
             },
-            success: (res_latest) => {
-                setTimeout(() => {
-                    this.refreshDeviceData();
-                }, 1000);
-            },
+            success: (res_latest) => {},
             fail: function (err) {
 
             }
