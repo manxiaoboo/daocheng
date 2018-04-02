@@ -1,5 +1,7 @@
 var config = require('../../config')
 var util = require('../../utils/util.js')
+
+var sliderWidth = 96;
 Page({
   data: {
     imgUrls: [
@@ -16,10 +18,23 @@ Page({
     interval: 5000,
     duration: 1000,
     canShow: false,
-    me:''
+    me:'',
+    tabs: ["热门商品", "优质商品", "最新问答"],
+    activeIndex: 0,
+    sliderOffset: 0,
+    sliderLeft: 0
   },
   onLoad: function () {
     console.info("首页 => load");
+    var that = this;
+        wx.getSystemInfo({
+            success: function(res) {
+                that.setData({
+                    sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+                    sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+                });
+            }
+        });
   },
   onShow: function(){
     var that = this;
@@ -54,6 +69,9 @@ Page({
                     if(g.photos){
                       g.photos_arr = g.photos.split(',')
                     }
+                    g.photos_arr.pop();
+                    g.photos_arr.pop();
+                    g.updatedDate = util.formatTime(new Date(g.updatedAt));
                   })
                   that.setData({
                     goods:goods
@@ -238,5 +256,11 @@ Page({
         })
       }
     })
-  }
+  },
+  tabClick: function (e) {
+    this.setData({
+        sliderOffset: e.currentTarget.offsetLeft,
+        activeIndex: e.currentTarget.id
+    });
+}
 })
