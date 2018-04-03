@@ -1,11 +1,11 @@
 <view wx:if="{{canShow}}">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <!-- <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
         <block wx:for="{{imgUrls}}">
             <swiper-item>
                 <image src="{{item}}" class="slide-image" width="375" height="250" />
             </swiper-item>
         </block>
-    </swiper>
+    </swiper> -->
     <view class="page__bd" style="padding-bottom:5px;">
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__bd" style="text-align:center;">
@@ -40,6 +40,9 @@
             </view>
         </view>
     </view>
+    <view class="page__banner">
+        <image class="banner" src="http://p0oy6nmva.bkt.clouddn.com/home_banner.jpg" />
+    </view>
     <view class="page__bd">
         <view class="weui-tab">
             <view class="weui-navbar">
@@ -54,7 +57,6 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
                     <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
                         <view class="weui-panel__bd">
-
                             <view class="home_item" wx:for="{{goods}}" wx:for-item="g" wx:for-index="id">
                                 <view class="weui-media-box weui-media-box_appmsg">
                                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
@@ -86,7 +88,7 @@
                                     </view>
                                     <view class="weui-article__p weui-media-box__desc">
                                         <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                        {{g.distributor.address}} 
+                                        {{g.distributor.address}}
                                     </view>
                                 </view>
                                 <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
@@ -99,8 +101,6 @@
                                 </view>
                                 <view class="driver"></view>
                             </view>
-
-
                         </view>
                         <view class="weui-panel__ft weui-media-box_appmsg">
                             <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
@@ -117,7 +117,7 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
                     <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
                         <view class="weui-panel__bd">
-                           <view class="home_item" wx:for="{{goods}}" wx:for-item="g" wx:for-index="id">
+                            <view class="home_item" wx:for="{{goods}}" wx:for-item="g" wx:for-index="id">
                                 <view class="weui-media-box weui-media-box_appmsg">
                                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                                         <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
@@ -148,7 +148,7 @@
                                     </view>
                                     <view class="weui-article__p weui-media-box__desc">
                                         <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                        {{g.distributor.address}} 
+                                        {{g.distributor.address}}
                                     </view>
                                 </view>
                                 <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
@@ -208,7 +208,7 @@
                                     </view>
                                     <view class="weui-article__p weui-media-box__desc">
                                         <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                        {{g.distributor.address}} 
+                                        {{g.distributor.address}}
                                     </view>
                                 </view>
                                 <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
