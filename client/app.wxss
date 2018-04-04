@@ -42,6 +42,10 @@ page{
     font-size: 14px;
 }
 
+.weui-panel:before {
+    border:none;
+}
+
 .weui-cells:before{
     transform:scaleY(.5);
     border-top:1rpx solid #e5e5e5;

@@ -13,30 +13,33 @@ Page({
       'http://p0oy6nmva.bkt.clouddn.com/6.jpg'
     ],
     goods: [],
+    types:[],
     indicatorDots: false,
     autoplay: true,
     interval: 5000,
     duration: 1000,
     canShow: false,
-    me:'',
+    me: '',
     tabs: ["热门商品", "优质商品", "最新问答"],
     activeIndex: 0,
     sliderOffset: 0,
-    sliderLeft: 0
+    sliderLeft: 0,
+    inputShowed: false,
+    inputVal: ""
   },
   onLoad: function () {
     console.info("首页 => load");
     var that = this;
-        wx.getSystemInfo({
-            success: function(res) {
-                that.setData({
-                    sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
-                    sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
-                });
-            }
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
         });
+      }
+    });
   },
-  onShow: function(){
+  onShow: function () {
     var that = this;
     wx.getStorage({
       key: 'authToken',
@@ -56,7 +59,7 @@ Page({
             } else {
               let me = res.data;
 
-              
+
               wx.request({
                 url: config.service.host + '/distributor/goodsSortByHot?page=1',
                 header: {
@@ -66,17 +69,32 @@ Page({
                 success: function (res_goods) {
                   let goods = res_goods.data;
                   goods.forEach(g => {
-                    if(g.photos){
+                    if (g.photos) {
                       g.photos_arr = g.photos.split(',')
                     }
                     g.photos_arr.pop();
                     g.photos_arr.pop();
-                    g.updatedDate = util.formatTime(new Date(g.updatedAt));
+                    g.updatedDate = util.formatTime2(new Date(g.updatedAt));
                   })
                   that.setData({
-                    goods:goods
+                    goods: goods
                   })
                   console.info(goods)
+                }
+              })
+
+              wx.request({
+                url: config.service.host + '/distributor/types',
+                header: {
+                  'content-type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                success: function (res_types) {
+                  let types = res_types.data;
+                  that.setData({
+                    types: types
+                  })
+                  console.info(types)
                 }
               })
 
@@ -94,7 +112,7 @@ Page({
                     }
                   });
                   that.setData({
-                    me:me
+                    me: me
                   })
                   wx.request({
                     url: config.service.host + '/qiniu',
@@ -259,8 +277,29 @@ Page({
   },
   tabClick: function (e) {
     this.setData({
-        sliderOffset: e.currentTarget.offsetLeft,
-        activeIndex: e.currentTarget.id
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
     });
-}
+  },
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
+  }
 })

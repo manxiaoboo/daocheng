@@ -9,6 +9,21 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
+const formatTime2 = date => {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const nowYear = new Date().getFullYear()
+    if(year == nowYear){
+        return [month, day].map(formatNumber).join('月') + '日 ' + [hour, minute].map(formatNumber).join(':')
+    }else{
+        return year + '年' + month +'月' + day +'日 ' + [hour, minute].map(formatNumber).join(':')
+    }
+    
+  }
+
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
@@ -39,4 +54,4 @@ var showModel = (title, content) => {
     })
 }
 
-module.exports = { formatTime, showBusy, showSuccess, showModel }
+module.exports = { formatTime,formatTime2, showBusy, showSuccess, showModel }

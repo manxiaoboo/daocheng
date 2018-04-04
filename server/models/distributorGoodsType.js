@@ -11,6 +11,10 @@ var DistributorGoodsType = sequelize.define('distributorGoodsType', {
         type: Sequelize.STRING,
         field: 'name'
     },
+    url: {
+        type: Sequelize.STRING,
+        field: 'url'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'
