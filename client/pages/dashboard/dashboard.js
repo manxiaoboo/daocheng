@@ -79,7 +79,6 @@ Page({
                   that.setData({
                     goods: goods
                   })
-                  console.info(goods)
                 }
               })
 
@@ -94,7 +93,6 @@ Page({
                   that.setData({
                     types: types
                   })
-                  console.info(types)
                 }
               })
 

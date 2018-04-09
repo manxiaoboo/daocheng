@@ -13,7 +13,12 @@ Page({
         screenArray: [], //左侧导航栏内容  
         screenId: "",  //后台查询需要的字段  
     },
-    onLoad: function () { },
+    onLoad: function (option) { 
+        var that = this;
+        this.setData({
+            screenId: option.id,
+        })
+    },
     onShow: function () {
         console.info("商品分类 => load");
         let that = this;
@@ -37,7 +42,7 @@ Page({
                 let types = res_types.data;
                 util.showBusy("读取商品");
                 wx.request({
-                    url: config.service.host + '/distributor/goodsSortByType?page=' + that.data.page + '&type=' + types[0].id,
+                    url: config.service.host + '/distributor/goodsSortByType?page=' + that.data.page + '&type=' + that.data.screenId,
                     header: {
                         'content-type': 'application/json',
                         'Authorization': 'Bearer ' + token
@@ -49,10 +54,11 @@ Page({
                                 g.photos_arr = g.photos.split(',')
                             }
                         })
+                        
                         that.setData({
+                            currentTab:types.findIndex(t => t.id === that.data.screenId),
                             types: types,
                             goods: goods,
-                            screenId: types[0].id,
                             canShow: true
                         })
                         wx.hideToast();

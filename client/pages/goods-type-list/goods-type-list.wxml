@@ -1,13 +1,14 @@
-<view class="classify">  
-  <scroll-view class='left-navbar' scroll-y="true">  
-    <view wx:for="{{types}}" class="{{ currentTab == index ? 'active' : '' }}" wx:key="id" bindtap="{{ currentTab != index ? 'navbarTap':'' }}" id="{{index}}" data-screenId="{{item.id}}">{{item.name}}  
-    </view>
-  </scroll-view>  
-  <scroll-view id="right" scroll-y="true" scroll-top="{{scrollTop}}">  
-    <view class="page__bd">
-            <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
+<view class="classify">
+    <scroll-view class="left-navbar" scroll-y="true">
+        <view wx:for="{{types}}" class="{{ currentTab == index ? 'active' : '' }}" wx:key="id" bindtap="{{ currentTab != index ? 'navbarTap':'' }}" id="{{index}}" data-screenId="{{item.id}}">
+            {{item.name}}
+        </view>
+    </scroll-view>
+    <scroll-view id="right" scroll-y="true" scroll-top="{{scrollTop}}">
+        <view class="page__bd">
+            <!-- <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
                 <view class="weui-panel__bd">
-                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods}}" wx:for-item="g"  wx:for-index="id">
+                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{goods}}" wx:for-item="g" wx:for-index="id">
                         <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                             <image class="weui-media-box__thumb" src="{{'http://' + g.photos_arr[0]}}" />
                         </view>
@@ -25,9 +26,69 @@
                 </view>
             </view>
             <view wx:if="{{goods.length<=0}}" class="empty_block">
-                <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
+                <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
                 <text class="p">该分类没有商品</text>
+            </view> -->
+            <view wx:if="{{goods.length>0}}">
+                <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g" wx:key="*this">
+                    <view class="weui-panel__bd">
+                        <view class="home_item">
+                            <view class="weui-media-box weui-media-box_appmsg">
+                                <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                    <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
+                                </view>
+                                <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                    <view class="weui-media-box__title">
+                                        {{g.distributor.name}}
+                                    </view>
+                                    <view class="weui-media-box__desc">{{g.updatedDate}}</view>
+                                </view>
+                                <view>
+                                    <button plain="true" type="warn" class="home_item_button">
+                                        联系Ta
+                                    </button>
+                                </view>
+                            </view>
+                            <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-article">
+                                <view class="weui-article__p">
+                                    <view style="color:#e64340;font-size:13px" class="home_item_content">
+                                        #{{g.type_ele.name}}#
+                                    </view>
+                                    <view class="home_item_content" style="font-size:12px">
+                                        {{g.name}}，{{g.intro}}
+                                    </view>
+                                    <view style="margin-top:10px">
+                                        <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p" wx:key="*this" />
+                                    </view>
+                                </view>
+                                <view class="weui-article__p weui-media-box__desc">
+                                    <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
+                                    {{g.distributor.address}}
+                                </view>
+                            </navigator>
+                            <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
+                                <view style="flex:1">
+                                    <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
+                                    浏览 {{g.totalView}}
+                                    <image src="/images/chengjiao.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
+                                    成交 {{g.totalDeal}}
+                                </view>
+                            </view>
+                            <view class="driver"></view>
+                        </view>
+                    </view>
+                    <!-- <view class="weui-panel__ft weui-media-box_appmsg">
+                                <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
+                                    <view class="weui-cell__bd">查看更多</view>
+                                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                                </navigator>
+                            </view> -->
+                </view>
             </view>
-    </view>
-  </scroll-view>  
-</view>  
+            <view wx:if="{{goods.length<=0}}" class="empty_block">
+                    <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
+                    <text class="p">该分类没有商品</text>
+                </view>
+        </view>
+    </scroll-view>
+</view>

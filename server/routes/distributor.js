@@ -296,7 +296,11 @@ router.get('/delete', isAuthenticated(), async(req, res, next) => {
  * 获取所有商品类型
  */
 router.get('/types', isAuthenticated(), async(req, res, next) => {
-    let types = await DistributorGoodsType.findAll();
+    let types = await DistributorGoodsType.findAll({
+        order: [
+            ['position', 'ASC']
+        ],
+    });
     res.json(types);
 });
 
