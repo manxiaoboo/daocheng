@@ -13,6 +13,8 @@ Page({
       'http://p0oy6nmva.bkt.clouddn.com/6.jpg'
     ],
     goods: [],
+    adGoods:[],
+    questions: [],
     types:[],
     indicatorDots: false,
     autoplay: true,
@@ -81,6 +83,49 @@ Page({
                   })
                 }
               })
+
+              wx.request({
+                url: config.service.host + '/distributor/goodsSortByAD?page=1',
+                header: {
+                  'content-type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                success: function (res_adgoods) {
+                  let goods = res_adgoods.data;
+                  goods.forEach(g => {
+                    if (g.photos) {
+                      g.photos_arr = g.photos.split(',')
+                    }
+                    g.photos_arr.pop();
+                    g.photos_arr.pop();
+                    g.updatedDate = util.formatTime2(new Date(g.updatedAt));
+                  })
+                  that.setData({
+                    adGoods: goods
+                  })
+                }
+              })
+
+              wx.request({
+                url: config.service.host + '/question/allQuestions?page=1',
+                header: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: (res_questions) => {
+                    console.info(res_questions.data)
+                    let questions = res_questions.data;
+                    questions.forEach(o => {
+                        o.createdDate = util.formatTime2(new Date(o.createdAt));
+                        if(o.completedAt)o.completedDate = util.formatTime2(new Date(o.completedAt));
+                    })
+                    that.setData({
+                        questions: questions
+                    })
+                },
+                fail: function (err) {
+    
+                }
+            })
 
               wx.request({
                 url: config.service.host + '/distributor/types',
@@ -299,5 +344,10 @@ Page({
     this.setData({
       inputVal: e.detail.value
     });
+  },
+  goQuestion: function(){
+    wx.switchTab({
+      url: '../question-more-list/question-more-list'
+    })
   }
 })

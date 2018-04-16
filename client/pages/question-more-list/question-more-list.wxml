@@ -1,4 +1,7 @@
 <view>
+    <view style="padding:6px">
+        <image src="http://p0oy6nmva.bkt.clouddn.com/question_banner.png" style="width:100%;height:144px;border-radius:6px;"/>
+    </view>
     <view class="page__bd">
         <view class="weui-panel">
             <view class="weui-panel__hd">更多咨询</view>

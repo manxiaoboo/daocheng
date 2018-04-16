@@ -19,7 +19,6 @@ swiper {
 
 .intro{
     font-size: 12px;
-    color: orange;
 }
 
 .dis_label{

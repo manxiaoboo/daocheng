@@ -17,6 +17,7 @@
     "pages/distributor-goods-upload/distributor-goods-upload",
     "pages/distributor-goods-view/distributor-goods-view",
     "pages/distributor-goods-edit/distributor-goods-edit",
+    "pages/distributor-shop/distributor-shop",
     "pages/goods-hot-list/goods-hot-list",
     "pages/goods-ad-list/goods-ad-list",
     "pages/goods-type-list/goods-type-list",
@@ -57,7 +58,7 @@
     }, {  
       "selectedIconPath": "images/ask-hover.png",  
       "iconPath": "images/ask-default.png",  
-      "pagePath": "pages/question/question", 
+      "pagePath": "pages/question-more-list/question-more-list", 
       "text": "知识问答"  
     }, {  
       "selectedIconPath": "images/me-hover.png",  

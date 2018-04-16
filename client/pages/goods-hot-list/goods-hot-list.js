@@ -6,7 +6,9 @@ Page({
         me: '',
         goods: [],
         page: 1,
-        loading:false
+        loading:false,
+        inputShowed: false,
+        inputVal: ""
     },
     onLoad: function () { },
     onShow: function () {
@@ -77,5 +79,26 @@ Page({
                 console.info(goods)
             }
         })
-    }
+    },
+    showInput: function () {
+        this.setData({
+          inputShowed: true
+        });
+      },
+      hideInput: function () {
+        this.setData({
+          inputVal: "",
+          inputShowed: false
+        });
+      },
+      clearInput: function () {
+        this.setData({
+          inputVal: ""
+        });
+      },
+      inputTyping: function (e) {
+        this.setData({
+          inputVal: e.detail.value
+        });
+      }
 })

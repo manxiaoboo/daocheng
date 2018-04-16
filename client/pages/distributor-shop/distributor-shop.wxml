@@ -1,0 +1,11 @@
+<view class="page">
+    <view class="shop-header"></view>
+    <view class="shop-header-info">
+        <image id="head" src="http://{{me.distributor.head}}" />
+    </view>
+    <view class="shop-content">
+        <view class="name">
+            {{me.distributor.name}}
+        </view>
+    </view>
+</view>

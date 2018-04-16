@@ -103,21 +103,21 @@
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
                     <view wx:if="{{goods.length>0}}">
                         <view style="height:0px;"></view>
-                        <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g" wx:key="*this">
+                        <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g">
                             <view class="weui-panel__bd">
                                 <view class="home_item">
                                     <view class="weui-media-box weui-media-box_appmsg">
-                                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                        <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop">
                                             <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
-                                        </view>
-                                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                        </navigator>
+                                        <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop">
                                             <view class="weui-media-box__title">
                                                 {{g.distributor.name}}
                                             </view>
                                             <view class="weui-media-box__desc">
                                                 {{g.updatedDate}}
                                             </view>
-                                        </view>
+                                        </navigator>
                                         <view>
                                             <button plain="true" type="warn" class="home_item_button">
                                                 联系Ta
@@ -133,7 +133,7 @@
                                                 {{g.name}}，{{g.intro}}
                                             </view>
                                             <view style="margin-top:10px">
-                                                <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p" wx:key="*this" />
+                                                <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p"/>
                                             </view>
                                         </view>
                                         <view class="weui-article__p weui-media-box__desc">
@@ -154,12 +154,14 @@
                                     <view class="driver"></view>
                                 </view>
                             </view>
-                            <!-- <view class="weui-panel__ft weui-media-box_appmsg">
-                                <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
-                                    <view class="weui-cell__bd">查看更多</view>
+                        </view>
+                        <view class="weui-panel weui-panel_access" wx:if="{{goods.length>0}}">
+                            <view class="weui-panel__ft">
+                                <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link weui-media-box_appmsg">
+                                    <view class="weui-cell__bd">查看更多热门商品</view>
                                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                                 </navigator>
-                            </view> -->
+                            </view>
                         </view>
                         <view wx:if="{{goods.length<=0}}" class="empty_block">
                             <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
@@ -168,21 +170,21 @@
                     </view>
                 </view>
                 <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-                    <view wx:if="{{goods.length>0}}">
+                    <view wx:if="{{adGoods.length>0}}">
                         <view style="height:0px;"></view>
-                        <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g" wx:key="*this">
+                        <view class="weui-panel weui-panel_access" wx:for="{{adGoods}}" wx:for-item="ag">
                             <view class="weui-panel__bd">
                                 <view class="home_item">
                                     <view class="weui-media-box weui-media-box_appmsg">
                                         <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                                            <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
+                                            <image class="weui-media-box__thumb" src="{{'http://' + ag.distributor.head}}" />
                                         </view>
                                         <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                                             <view class="weui-media-box__title">
-                                                {{g.distributor.name}}
+                                                {{ag.distributor.name}}
                                             </view>
                                             <view class="weui-media-box__desc">
-                                                {{g.updatedDate}}
+                                                {{ag.updatedDate}}
                                             </view>
                                         </view>
                                         <view>
@@ -191,114 +193,82 @@
                                             </button>
                                         </view>
                                     </view>
-                                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-article">
+                                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{ag.id}}" class="weui-article">
                                         <view class="weui-article__p">
                                             <view style="color:#e64340" class="home_item_content">
-                                                #{{g.type_ele.name}}#
+                                                #{{ag.type_ele.name}}#
                                             </view>
                                             <view class="home_item_content">
-                                                {{g.name}}，{{g.intro}}
+                                                {{ag.name}}，{{ag.intro}}
                                             </view>
                                             <view style="margin-top:10px">
-                                                <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p" wx:key="*this" />
+                                                <image class="home_item_image" src="{{'http://'+ap}}" wx:for="{{ag.photos_arr}}" wx:for-item="ap"/>
                                             </view>
                                         </view>
                                         <view class="weui-article__p weui-media-box__desc">
                                             <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                            {{g.distributor.address}}
+                                            {{ag.distributor.address}}
                                         </view>
                                     </navigator>
                                     <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
                                         <view style="flex:1">
                                             <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                            浏览量 {{g.totalView}}
+                                            浏览量 {{ag.totalView}}
                                             <image src="/images/chengjiao.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
-                                            成交量 {{g.totalDeal}}
+                                            成交量 {{ag.totalDeal}}
                                             <image src="/images/redu.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
-                                            热度 {{g.hot}}
+                                            热度 {{ag.hot}}
                                         </view>
                                     </view>
                                     <view class="driver"></view>
                                 </view>
                             </view>
-                            <!-- <view class="weui-panel__ft weui-media-box_appmsg">
-                                <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
-                                    <view class="weui-cell__bd">查看更多</view>
+                        </view>
+                        <view class="weui-panel weui-panel_access" wx:if="{{adGoods.length>0}}">
+                            <view class="weui-panel__ft">
+                                <navigator url="../goods-ad-list/goods-ad-list" class="weui-cell weui-cell_access weui-cell_link weui-media-box_appmsg">
+                                    <view class="weui-cell__bd">查看更多优质商品</view>
                                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                                 </navigator>
-                            </view> -->
+                            </view>
                         </view>
-                        <view wx:if="{{goods.length<=0}}" class="empty_block">
+                        <view wx:if="{{adGoods.length<=0}}" class="empty_block">
                             <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
-                            <text class="p">暂时没有商品上架哦</text>
+                            <text class="p">暂时未设置优质商品哦</text>
                         </view>
                     </view>
                 </view>
-                <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-                    <view wx:if="{{goods.length>0}}">
-                        <view style="height:0px;"></view>
-                        <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g" wx:key="*this">
-                            <view class="weui-panel__bd">
-                                <view class="home_item">
-                                    <view class="weui-media-box weui-media-box_appmsg">
-                                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                                            <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
-                                        </view>
-                                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                                            <view class="weui-media-box__title">
-                                                {{g.distributor.name}}
-                                            </view>
-                                            <view class="weui-media-box__desc">
-                                                {{g.updatedDate}}
-                                            </view>
-                                        </view>
-                                        <view>
-                                            <button plain="true" type="warn" class="home_item_button">
-                                                联系Ta
-                                            </button>
-                                        </view>
+                <view id="question" class="weui-tab__content" hidden="{{activeIndex != 2}}">
+                <view style="height:0px;"></view>
+                    <view class="weui-panel">
+                        <view class="weui-panel__bd">
+                            <navigator url="../question-detail/question-detail?id={{q.id}}" class="weui-media-box weui-media-box_text" wx:for="{{questions}}" wx:for-item="q" wx:for-index="id">
+                                <view class="weui-media-box__title weui-media-box__title_in-text">
+                                    {{q.title}}
+                                </view>
+                                <view class="weui-media-box__desc">{{q.content}}</view>
+                                <view class="weui-media-box__info">
+                                    <view class="weui-media-box__info__meta">
+                                        {{q.createdDate}}
                                     </view>
-                                    <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-article">
-                                        <view class="weui-article__p">
-                                            <view style="color:#e64340" class="home_item_content">
-                                                #{{g.type_ele.name}}#
-                                            </view>
-                                            <view class="home_item_content">
-                                                {{g.name}}，{{g.intro}}
-                                            </view>
-                                            <view style="margin-top:10px">
-                                                <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p" wx:key="*this" />
-                                            </view>
-                                        </view>
-                                        <view class="weui-article__p weui-media-box__desc">
-                                            <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                            {{g.distributor.address}}
-                                        </view>
-                                    </navigator>
-                                    <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
-                                        <view style="flex:1">
-                                            <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
-                                            浏览量 {{g.totalView}}
-                                            <image src="/images/chengjiao.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
-                                            成交量 {{g.totalDeal}}
-                                            <image src="/images/redu.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
-                                            热度 {{g.hot}}
-                                        </view>
+                                    <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                                        阅读量：{{q.totalView}}
                                     </view>
-                                    <view class="driver"></view>
+                                </view>
+                            </navigator>
+                        </view>
+                    </view>
+                    <view class="weui-panel weui-panel_access" wx:if="{{questions.length>0}}">
+                            <view class="weui-panel__ft">
+                                <view bindtap="goQuestion" class="weui-cell weui-cell_access weui-cell_link weui-media-box_appmsg">
+                                    <view class="weui-cell__bd">查看全部提问</view>
+                                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                                 </view>
                             </view>
-                            <!-- <view class="weui-panel__ft weui-media-box_appmsg">
-                                <navigator url="../goods-hot-list/goods-hot-list" class="weui-cell weui-cell_access weui-cell_link">
-                                    <view class="weui-cell__bd">查看更多</view>
-                                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                                </navigator>
-                            </view> -->
                         </view>
-                        <view wx:if="{{goods.length<=0}}" class="empty_block">
-                            <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
-                            <text class="p">暂时没有商品上架哦</text>
-                        </view>
+                    <view wx:if="{{questions.length<=0}}" class="empty_block">
+                        <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
+                        <text class="p">暂时没有提问哦</text>
                     </view>
                 </view>
             </view>

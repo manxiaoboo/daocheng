@@ -6,7 +6,9 @@ Page({
         me: '',
         goods: [],
         page: 1,
-        loading:false
+        loading: false,
+        inputShowed: false,
+        inputVal: ""
     },
     onLoad: function () { },
     onShow: function () {
@@ -52,7 +54,7 @@ Page({
         this.setData({
             page: page
         })
-        that.setData({loading:true})
+        that.setData({ loading: true })
         util.showBusy("读取商品");
         wx.request({
             url: config.service.host + '/distributor/goodsSortByAd?page=' + that.data.page,
@@ -71,11 +73,32 @@ Page({
                 })
                 that.setData({
                     goods: goods,
-                    loading:false
+                    loading: false
                 })
                 wx.hideToast();
                 console.info(goods)
             }
         })
+    },
+    showInput: function () {
+        this.setData({
+            inputShowed: true
+        });
+    },
+    hideInput: function () {
+        this.setData({
+            inputVal: "",
+            inputShowed: false
+        });
+    },
+    clearInput: function () {
+        this.setData({
+            inputVal: ""
+        });
+    },
+    inputTyping: function (e) {
+        this.setData({
+            inputVal: e.detail.value
+        });
     }
 })

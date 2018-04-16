@@ -104,6 +104,10 @@ swiper {
     border:none;
 }
 
+#question .weui-media-box__info {
+    font-size:12px;
+}
+
 .empty_block{
     text-align: center;
 }
@@ -116,4 +120,4 @@ swiper {
 
 .p{
     display: block;
-} 
+}

@@ -11,16 +11,14 @@
         <view class="weui-panel__bd name_panel">
             <view class="p">
                 <view class="weui-badge" style="margin-left: 5px;margin-right:5px;">{{goods.type_ele.name}}</view>
-                    {{goods.name}}（{{goods.unit}}）
-            </view>
-            <view class="p">
-                <text class="intro">{{goods.intro}}</text>
-            </view>
-            <view class="p">
+                    {{goods.name}}
                 <text class="price_label">￥</text><text class="price">{{goods.priceStart}}</text>
                 <text class="price_label"> ~ </text>
                 <text class="price">{{goods.priceEnd}}</text>
-                <text class="price_label">（价格随地区变化）</text>
+                <text class="price_label">{{goods.unit}}</text>
+            </view>
+            <view class="p">
+                <text class="intro">{{goods.intro}}</text>
             </view>
             <view class="p" wx:if="{{(me && me.roleName) == '经销商' && !isAuditing && goods.rejectReason}}">
                 <text class="reject_text">审核失败：{{goods.rejectReason}}</text>
@@ -33,17 +31,17 @@
 </view>
 <view class="page__bd">
     <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__hd">经销商 - {{goods.distributor.name}}</view>
+        <view class="weui-panel__hd">经销商 - {{goods.distributor.name}} ( {{goods.distributor.contact}} ) </view>
         <view class="weui-panel__bd dis_panel">
             <view class="p margin-top-mini">
-                <text class="dis_label">地址 </text><text>{{goods.distributor.address}}</text>
+                <text class="dis_label">地址  </text><text>{{goods.distributor.address}}</text>
             </view>
-            <view class="p margin-top-mini">
+            <!-- <view class="p margin-top-mini">
                 <text class="dis_label">联系人 </text><text>{{goods.distributor.contact}}</text>
-            </view>
-            <view class="p margin-top-mini">
+            </view> -->
+            <!-- <view class="p margin-top-mini">
                 <text class="dis_label">电话 </text><text class="phone" bindtap="call">{{goods.distributor.contactPhone}}</text>
-            </view>
+            </view> -->
              <view class="p margin-top-mini">
                 <text class="dis_label">简介 </text><text>{{goods.distributor.intro}}</text>
             </view>

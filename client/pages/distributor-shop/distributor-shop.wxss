@@ -1,0 +1,32 @@
+.page{
+    background-color:#F8F8F8;
+}
+.shop-header{
+    height:60px;
+    width:auto;
+    background-color:#333;
+}
+
+.shop-header-info{
+    height:50px;
+    line-height: 50px;
+    width:auto;
+    background-color: #fff;
+}
+
+.shop-header-info #head {
+    height:80px;
+    width:80px;
+    border-radius: 50%;
+    position: absolute;
+    top:20px;
+    left:20px;
+}
+
+.shop-content {
+    background-color: #fff;
+}
+
+.shop-content .name {
+    font-size: 15px
+}
