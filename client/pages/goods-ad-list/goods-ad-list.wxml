@@ -1,6 +1,6 @@
 <view wx:if="{{canShow}}">
     <view class="page__bd">
-         <view class="weui-search-bar">
+        <view class="weui-search-bar">
             <view class="weui-search-bar__form">
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -60,15 +60,15 @@
                 <view class="weui-panel__bd">
                     <view class="home_item">
                         <view class="weui-media-box weui-media-box_appmsg">
-                            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                            <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{g.distributor.id}}">
                                 <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
-                            </view>
-                            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                            </navigator>
+                            <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop?id={{g.distributor.id}}">
                                 <view class="weui-media-box__title">{{g.distributor.name}}</view>
                                 <view class="weui-media-box__desc">{{g.updatedDate}}</view>
-                            </view>
+                            </navigator>
                             <view>
-                                <button plain="true" type="warn" class="home_item_button">
+                                <button plain="true" type="warn" class="home_item_button" bindtap="call" data-phone="{{g.distributor.contactPhone}}">
                                     联系Ta
                                 </button>
                             </view>
@@ -104,13 +104,12 @@
             </view>
         </view>
         <view wx:if="{{goods.length<=0}}" class="empty_block">
-                    <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
-                    <text class="p">暂时没有设置优质商品哦</text>
-                </view>
+            <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
+            <text class="p">暂时没有设置优质商品哦</text>
         </view>
+    </view>
 </view>
-
- <view class="weui-loadmore" hidden="{{!loading}}">
+<view class="weui-loadmore" hidden="{{!loading}}">
     <view class="weui-loading"></view>
     <view class="weui-loadmore__tips">正在加载</view>
-  </view>
+</view>

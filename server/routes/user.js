@@ -9,6 +9,7 @@ const ExpertUser = require('../models/expertUser');
 const Domain = require('../models/domain');
 const DistributorUser = require('../models/distributorUser');
 const DistributorGoods = require('../models/distributorGoods');
+const DistributorGoodsType = require('../models/distributorGoodsType');
 const AuditGoods = require('../models/audit_goods');
 
 const UUID = require('uuid');
@@ -462,6 +463,44 @@ router.get('/distributorById', isAuthenticated(), async (req, res, next) => {
         }
     });
     res.json(distributor);
+});
+
+/**
+ * 根据id获取整合经销商信息
+ */
+router.get('/distributorPackById', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let distributor = await DistributorUser.findOne({
+        where: {
+            id: req.query.distributorId
+        }
+    });
+    let user = await User.findOne({
+        where: {
+            id: distributor.dataValues.userId
+        }
+    })
+    let goods = await DistributorGoods.findAll({
+        where: {
+            distributorId: req.query.distributorId,
+            isAudit: 1,
+            isRunning: 1
+        },
+        order: [
+            ['hot', 'DESC']
+        ],
+        limit:10,
+        offset: 10 * (page -1)
+    })
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json({distributor, user, goods});
 });
 
 /**

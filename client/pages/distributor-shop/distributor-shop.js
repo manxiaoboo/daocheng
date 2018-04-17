@@ -5,154 +5,93 @@ const qiniuUploader = require("../../utils/qiniuUploader-min.js");
 Page({
     data: {
         me: '',
-        input_name: '',
-        input_intro: '',
-        input_address: '',
-        input_contact: '',
-        input_contactPhone: ''
+        distributorId: '',
+        distributor: null,
+        page: 1,
     },
-    onLoad: function () { },
+    onLoad: function (option) {
+        this.setData({
+            distributorId: option.id
+        })
+    },
     onShow: function () {
-        console.info("修改经销商信息 => load");
+        console.info("店铺主页 => load");
         let that = this;
         let me = wx.getStorageSync('user');
         let roles = wx.getStorageSync('roles');
+        let token = wx.getStorageSync('authToken');
         roles.forEach(r => {
             if (r.id == me.roleId) {
                 me.roleName = r.cName;
             }
         });
-        that.setData({
-            me: me,
-            input_name: me.distributor.name,
-            input_intro: me.distributor.intro,
-            input_address: me.distributor.address,
-            input_contact: me.distributor.contact,
-            input_contactPhone: me.distributor.contactPhone
-        });
-    },
-    editDistributor: function (e) {
-        let that = this;
-        let me = this.data.me;
-        me.distributor.address = this.data.input_address;
-        me.distributor.intro = this.data.input_intro;
-        me.distributor.name = this.data.input_name;
-        me.distributor.contact = this.data.input_contact;
-        me.distributor.contactPhone = this.data.input_contactPhone;
-        let token = wx.getStorageSync('authToken');
-        wx.showModal({
-            title: '修改确认',
-            content: '您确定已经检查信息并修改吗？',
-            confirmText: "确认修改",
-            cancelText: "取消",
-            success: function (res) {
-                if (res.confirm) {
-                    util.showBusy("正在修改信息，请稍等");
-                    wx.request({
-                        url: config.service.host + '/users/distributor-edit',
-                        header: {
-                            'content-type': 'application/json',
-                            'Authorization': 'Bearer ' + token
-                        },
-                        method: 'POST',
-                        data: me.distributor,
-                        success: function (res_expert) {
-                            wx.setStorageSync('user', me);
-                            wx.reLaunch({
-                                url: '../dashboard/dashboard'
-                            })
-                        },
-                        fail: function (err) {
-                            wx.navigateBack({
-                                delta: 1
-                            })
-                        }
-                    })
-                }
+        wx.request({
+            url: config.service.host + '/users/distributorPackById?distributorId=' + that.data.distributorId + '&page=1',
+            header: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (res_distributor) {
+                let distributor = res_distributor.data;
+                distributor.goods.forEach(g => {
+                    if (g.photos) {
+                        g.photos_arr = g.photos.split(',')
+                    }
+                    g.photos_arr.pop();
+                    g.photos_arr.pop();
+                    g.updatedDate = util.formatTime2(new Date(g.updatedAt));
+                })
+                console.info(distributor)
+                that.setData({
+                    distributor: distributor,
+                    me: me
+                });
             }
-        });
+        })
     },
-    uploadImage: function (e) {
+    onReachBottom: function () {
         let that = this;
-        let uploadToken = wx.getStorageSync('uploadToken');
+        let page = this.data.page;
+        page++;
         let token = wx.getStorageSync('authToken');
-        wx.chooseImage({
-            count: 1,
-            success: function (res) {
-                var filePath = res.tempFilePaths[0];
-                let oldhead = that.data.me.distributor.head;
-                qiniuUploader.upload(filePath, (res) => {
-                    console.info("manxiaoboo", res.imageURL);
-                    let me = that.data.me;
-                    me.distributor.head = res.imageURL;
-                    util.showBusy('正在上传图片');
-                    wx.request({
-                        url: config.service.host + '/users/distributor-edit',
-                        header: {
-                            'content-type': 'application/json',
-                            'Authorization': 'Bearer ' + token
-                        },
-                        method: 'POST',
-                        data: me.distributor,
-                        success: function (res_distributor) {
-                            wx.setStorageSync('user', me);
-                            that.setData({
-                                me: me
-                            });
-                            util.showSuccess("图片上传成功");
-                            if (oldhead) {
-                                wx.request({
-                                    url: config.service.host + '/qiniu/delete?entry=' + oldhead.split('/')[1],
-                                    header: {
-                                        'content-type': 'application/json',
-                                        'Authorization': 'Bearer ' + token
-                                    },
-                                    success: function (res) { },
-                                    fail: function (err) { }
-                                })
-                            }
-                        },
-                        fail: function (err) {
-                            util.showModel("失败", "图片上传失败");
-                        }
-                    })
-                }, (error) => {
-                    console.log('error: ' + error);
-                }, {
-                        region: 'ECN',
-                        uploadURL: 'https://up.qbox.me',
-                        domain: 'p2nrs4i3e.bkt.clouddn.com',
-                        uptoken: uploadToken,
-                        shouldUseQiniuFileName: true
-                    })
+        this.setData({
+            page: page
+        })
+        that.setData({ loading: true })
+        wx.request({
+            url: config.service.host + '/users/distributorPackById?distributorId=' + that.data.distributorId + '&page=' + that.data.page,
+            header: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (res_distributor) {
+                let current_goods = res_distributor.data.goods;
+                let distributor = that.data.distributor;
+                current_goods.forEach(g => {
+                    if (g.photos) {
+                        g.photos_arr = g.photos.split(',')
+                    }
+                    g.photos_arr.pop();
+                    g.photos_arr.pop();
+                    g.updatedDate = util.formatTime2(new Date(g.updatedAt));
+                    distributor.goods.push(g)
+                })
+                that.setData({
+                    distributor: distributor,
+                    loading: false
+                })
             }
-        });
-
-    },
-    doInputName: function (e) {
-        this.setData({
-            input_name: e.detail.value
         })
     },
-    doInputIntro: function (e) {
-        this.setData({
-            input_intro: e.detail.value
+    call: function (e) {
+        wx.makePhoneCall({
+            phoneNumber: e.currentTarget.dataset.phone,
+            success: function () {
+                console.log("拨打电话成功！")
+            },
+            fail: function () {
+                console.log("拨打电话失败！")
+            }
         })
-    },
-    doInputAddress: function (e) {
-        this.setData({
-            input_address: e.detail.value
-        })
-    },
-    doInputContact: function (e) {
-        this.setData({
-            input_contact: e.detail.value
-        })
-    },
-    doInputContactPhone: function (e) {
-        this.setData({
-            input_contactPhone: e.detail.value
-        })
-    },
-
+    }
 })

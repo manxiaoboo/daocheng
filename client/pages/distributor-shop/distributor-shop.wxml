@@ -1,11 +1,76 @@
 <view class="page">
     <view class="shop-header"></view>
     <view class="shop-header-info">
-        <image id="head" src="http://{{me.distributor.head}}" />
-    </view>
-    <view class="shop-content">
-        <view class="name">
-            {{me.distributor.name}}
+        <image id="head" src="http://{{distributor.distributor.head}}" />
+        <view class="head_tip">
+            <text>经</text>
         </view>
     </view>
+    <view class="shop-content">
+        <view class="name">{{distributor.distributor.name}}</view>
+        <view class="count">
+            <text style="color:#000;">{{distributor.goods.length}}</text>
+            上架 | 经销商 | {{distributor.distributor.address}}
+        </view>
+        <view class="intro">{{distributor.distributor.intro}}</view>
+    </view>
+    <view class="shop-goods">
+        <view wx:if="{{distributor.goods.length>0}}">
+            <view style="height:0px;"></view>
+            <view class="weui-panel weui-panel_access" wx:for="{{distributor.goods}}" wx:for-item="g">
+                <view class="weui-panel__bd">
+                    <view class="home_item">
+                        <view class="weui-media-box weui-media-box_appmsg">
+                            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                <image class="weui-media-box__thumb" src="{{'http://' + distributor.distributor.head}}" />
+                            </view>
+                            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                <view class="weui-media-box__title">{{g.name}}</view>
+                                <view class="weui-media-box__desc">{{g.updatedDate}}</view>
+                            </view>
+                            <view>
+                                <button plain="true" type="warn" class="home_item_button" bindtap="call" data-phone="{{distributor.distributor.contactPhone}}">
+                                    联系Ta
+                                </button>
+                            </view>
+                        </view>
+                        <navigator url="../distributor-goods-view/distributor-goods-view?id={{g.id}}" class="weui-article">
+                            <view class="weui-article__p">
+                                <view style="color:#e64340" class="home_item_content">
+                                    #{{g.type_ele.name}}#
+                                </view>
+                                <view class="home_item_content">{{g.name}}，{{g.intro}}</view>
+                                <view style="margin-top:10px">
+                                    <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p" />
+                                </view>
+                            </view>
+                            <view class="weui-article__p weui-media-box__desc">
+                                <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
+                                {{distributor.distributor.address}}
+                            </view>
+                        </navigator>
+                        <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
+                            <view style="flex:1">
+                                <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
+                                浏览量 {{g.totalView}}
+                                <image src="/images/chengjiao.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
+                                成交量 {{g.totalDeal}}
+                                <image src="/images/redu.png" style="width:16px;height:16px;margin-left:20px;margin-right:5px;position:relative;top:3px;" />
+                                热度 {{g.hot}}
+                            </view>
+                        </view>
+                        <view class="driver"></view>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{goods.length<=0}}" class="empty_block">
+                <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img" />
+                <text class="p">暂时没有商品上架哦</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="weui-loadmore" hidden="{{!loading}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
 </view>

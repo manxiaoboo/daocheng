@@ -27,22 +27,12 @@
     <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
         <navigator url="" class="weui-cell" hover-class="weui-cell_active">
             <view class="weui-cell__bd">
-                <view>实时搜索文本</view>
+                <view>搜索结果</view>
             </view>
         </navigator>
         <navigator url="" class="weui-cell" hover-class="weui-cell_active">
             <view class="weui-cell__bd">
-                <view>实时搜索文本</view>
-            </view>
-        </navigator>
-        <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-            <view class="weui-cell__bd">
-                <view>实时搜索文本</view>
-            </view>
-        </navigator>
-        <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-            <view class="weui-cell__bd">
-                <view>实时搜索文本</view>
+                <view>功能暂未开通</view>
             </view>
         </navigator>
     </view>
@@ -107,10 +97,10 @@
                             <view class="weui-panel__bd">
                                 <view class="home_item">
                                     <view class="weui-media-box weui-media-box_appmsg">
-                                        <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop">
+                                        <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{g.distributor.id}}">
                                             <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
                                         </navigator>
-                                        <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop">
+                                        <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop?id={{g.distributor.id}}">
                                             <view class="weui-media-box__title">
                                                 {{g.distributor.name}}
                                             </view>
@@ -119,7 +109,7 @@
                                             </view>
                                         </navigator>
                                         <view>
-                                            <button plain="true" type="warn" class="home_item_button">
+                                            <button plain="true" type="warn" class="home_item_button" bindtap="call" data-phone="{{g.distributor.contactPhone}}">
                                                 联系Ta
                                             </button>
                                         </view>
@@ -176,19 +166,19 @@
                             <view class="weui-panel__bd">
                                 <view class="home_item">
                                     <view class="weui-media-box weui-media-box_appmsg">
-                                        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                                        <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{ag.distributor.id}}">
                                             <image class="weui-media-box__thumb" src="{{'http://' + ag.distributor.head}}" />
-                                        </view>
-                                        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                                        </navigator>
+                                        <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop?id={{ag.distributor.id}}">
                                             <view class="weui-media-box__title">
                                                 {{ag.distributor.name}}
                                             </view>
                                             <view class="weui-media-box__desc">
                                                 {{ag.updatedDate}}
                                             </view>
-                                        </view>
+                                        </navigator>
                                         <view>
-                                            <button plain="true" type="warn" class="home_item_button">
+                                            <button plain="true" type="warn" class="home_item_button" bindtap="call" data-phone="{{ag.distributor.contactPhone}}">
                                                 联系Ta
                                             </button>
                                         </view>

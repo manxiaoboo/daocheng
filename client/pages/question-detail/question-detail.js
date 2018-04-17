@@ -133,6 +133,7 @@ Page({
             case '农户': reply.replyRole = 'farmer';break;
             case '专家': reply.replyRole = 'expert';break;
             case '系统管理员': reply.replyRole = 'admin';break;
+            default: reply.replyRole = 'farmer';
         }
         wx.request({
             url: config.service.host + '/question/reply',

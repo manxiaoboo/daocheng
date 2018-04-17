@@ -349,5 +349,16 @@ Page({
     wx.switchTab({
       url: '../question-more-list/question-more-list'
     })
-  }
+  },
+  call: function (e) {
+    wx.makePhoneCall({
+        phoneNumber: e.currentTarget.dataset.phone,
+        success: function () {
+            console.log("拨打电话成功！")
+        },
+        fail: function () {
+            console.log("拨打电话失败！")
+        }
+    })
+},
 })

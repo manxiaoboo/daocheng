@@ -78,7 +78,7 @@
 </view>
 
 
-<view class="weui-cells weui-cells_after-title reply_block" wx:if="{{question.status == 'open'}}">
+<view class="weui-cells weui-cells_after-title reply_block" wx:if="{{question.status == 'open' && (me.roleName != '经销商' && me.roleName != '厂商')}}">
     <view class="weui-cell weui-cell_input weui-cell_vcode">
         <view class="weui-cell__bd">
             <input class="weui-input" bindinput="doInputReply" bindblur="replyBlur" focus="{{reply_focus}}" value="{{reply_content}}" name="content" maxlength="200" placeholder="{{reply_placeholder}}" />
