@@ -11,6 +11,7 @@ const DistributorUser = require('../models/distributorUser');
 const DistributorGoods = require('../models/distributorGoods');
 const DistributorGoodsType = require('../models/distributorGoodsType');
 const AuditGoods = require('../models/audit_goods');
+const ManufacturerUser = require('../models/manufacturerUser');
 
 const UUID = require('uuid');
 const {
@@ -291,6 +292,21 @@ router.post('/register', isAuthenticated(), async (req, res, next) => {
             updatedAt: new Date()
         }
         await DistributorUser.create(distributor);
+    }
+    
+    //如果是厂商 为其创建专属身份 
+    if (audit_user.roleId == '2191c46c-e6c4-11e7-b42e-060400ef5315') {
+        let manufacturer = {
+            id: UUID.v1(),
+            userId: newUser.id,
+            address: '',
+            intro: '',
+            contact: '',
+            contactPhone: '',
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+        await ManufacturerUser.create(manufacturer);
     }
 
     res.json(newUser);
