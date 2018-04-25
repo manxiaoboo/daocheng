@@ -286,6 +286,35 @@ Page({
                             })
                           }
                         })
+                      } else if (me.roleName == '厂商') {
+                        wx.request({
+                          url: config.service.host + '/users/manufacturerByUserId?userId=' + me.id,
+                          header: {
+                            'content-type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                          },
+                          success: function (res_manufacturer) {
+                            let manufacturer = res_manufacturer.data;
+                            me.manufacturer = manufacturer;
+                            console.info(me.manufacturer)
+                            wx.setStorage({
+                              key: "user",
+                              data: me
+                            })
+                            wx.setStorage({
+                              key: "roles",
+                              data: roles
+                            })
+                            that.setData({
+                              canShow: true
+                            });
+                          },
+                          fail: function (err) {
+                            wx.redirectTo({
+                              url: '../login/login'
+                            })
+                          }
+                        })
                       } else {
                         wx.setStorageSync('user', me);
                         wx.setStorageSync('roles', roles);

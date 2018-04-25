@@ -151,9 +151,11 @@ Page({
                 if (res.confirm) {
                     util.showBusy("正在处理");
                     let files = [];
-                    that.data.goods.photos_arr.forEach(pa => {
-                        files.push(pa.split('/')[1]);
-                    })
+                    if(that.data.goods.photos_arr){
+                        that.data.goods.photos_arr.forEach(pa => {
+                            files.push(pa.split('/')[1]);
+                        })
+                    }
                     wx.request({
                         url: config.service.host + '/qiniu/deleteBatch',
                         header: {
@@ -221,7 +223,7 @@ Page({
         let token = wx.getStorageSync('authToken');
         wx.showModal({
             title: '上架确认',
-            content: '您确定要将此重新商品上架吗？',
+            content: '您确定要将此商品重新上架吗？',
             confirmText: "上架",
             cancelText: "取消",
             success: function (res) {

@@ -32,7 +32,16 @@
     "pages/question-more-list/question-more-list",
     "pages/question-expert-open-list/question-expert-open-list",
     "pages/question-expert-accepted/question-expert-accepted",
-    "pages/question-expert-recent/question-expert-recent"
+    "pages/question-expert-recent/question-expert-recent",
+    "pages/edit-manufacturer/edit-manufacturer",
+    "pages/manufacturer-goods-list/manufacturer-goods-list",
+    "pages/manufacturer-goods-add/manufacturer-goods-add",
+    "pages/manufacturer-goods-upload/manufacturer-goods-upload",
+    "pages/manufacturer-goods-view/manufacturer-goods-view",
+    "pages/manufacturer-goods-edit/manufacturer-goods-edit",
+    "pages/manufacturer-shop/manufacturer-shop",
+    "pages/manufacturer-list/manufacturer-list"
+    
   ],
   "window":{
     "backgroundColor":"#F6F6F6",
@@ -49,8 +58,13 @@
       "selectedIconPath": "images/home-hover.png",
       "iconPath": "images/home-default.png",
       "pagePath": "pages/dashboard/dashboard",
-      "text": "首页"
-    }, {  
+      "text": "广场"
+    },{  
+      "selectedIconPath": "images/changshang-hover.png",  
+      "iconPath": "images/changshang-default.png",  
+      "pagePath": "pages/manufacturer-list/manufacturer-list",
+      "text": "厂商"
+    } ,{  
       "selectedIconPath": "images/wifi-hover.png",  
       "iconPath": "images/wifi-default.png",  
       "pagePath": "pages/workspace/workspace",
@@ -60,11 +74,11 @@
       "iconPath": "images/ask-default.png",  
       "pagePath": "pages/question-more-list/question-more-list", 
       "text": "知识问答"  
-    }, {  
+    }, {
       "selectedIconPath": "images/me-hover.png",  
       "iconPath": "images/me-default.png",  
       "pagePath": "pages/person-center/person-center",
       "text": "我的"  
-    }]  
+    }]
   }
 }

@@ -1,0 +1,66 @@
+.weui-navbar{
+    background: #fff;
+    border-bottom: none;
+}
+
+.weui-media-box__hd_in-appmsg {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.weui-media-box__hd_in-appmsg image{
+    border-radius:50%;
+}
+
+.weui-media-box {
+    padding: 10px;
+}
+
+.weui-media-box__title {
+    font-weight: bold;
+    font-size: 12px;
+}
+.weui-media-box__desc {
+    font-size: 10px;
+}
+.home_item{
+    margin-top:10px;
+}
+
+.home_item_button{
+    width: 60px;
+    font-size: 11px;
+    padding: 0 10px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.weui-article {
+    padding: 0 15px;
+}
+
+.weui-article__p{
+    margin:0;
+}
+
+.home_item_content{
+    display: inline;
+}
+
+.home_item_image{
+    width:120px;
+    height:120px;
+    margin-right:5px;
+}
+
+.home_item_footer{
+    height:30px;
+    line-height:30px;
+    padding:0 15px;
+}
+
+.driver {
+    border-bottom:1px solid #ccc;
+    margin: 5px 18px 0 18px;
+}

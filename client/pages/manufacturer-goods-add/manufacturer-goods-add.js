@@ -6,17 +6,13 @@ Page({
         types: [],
         pickerTypes: [],
         input_name: '',
-        input_unit: '',
-        input_priceStart: '',
-        input_priceEnd: '',
         input_Type: '',
         input_intro: '',
-        input_specDesc: '',
         typeIndex: 0
     },
     onLoad: function () { },
     onShow: function () {
-        console.info("创建商品 => load");
+        console.info("创建产品 => load");
         let that = this;
         let me = wx.getStorageSync('user');
         let roles = wx.getStorageSync('roles');
@@ -63,23 +59,11 @@ Page({
     },
     createGoods: function (e) {
         let goods = e.detail.value;
-        goods.distributorId = this.data.me.distributor.id;
+        goods.manufacturerId = this.data.me.manufacturer.id;
         let token = wx.getStorageSync('authToken');
         goods.type = this.data.input_Type;
         if(!goods.name){
             util.showModel("提示", "请填写商品名称");
-            return;
-        }
-        if(!goods.unit){
-            util.showModel("提示", "请填写商品单位");
-            return;
-        }
-        if(!goods.priceStart){
-            util.showModel("提示", "请填写最低报价");
-            return;
-        }
-        if(!goods.priceEnd){
-            util.showModel("提示", "请填写最高报价");
             return;
         }
         if(!goods.type){
@@ -87,17 +71,17 @@ Page({
             return;
         }
         wx.request({
-            url: config.service.host + '/distributor/create',
+            url: config.service.host + '/manufacturer/create',
             header: {
                 'content-type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
             method: 'POST',
             data: goods,
-            success: function (res_distributor) {
-                let newGoods = res_distributor.data;
+            success: function (res_manufacturer) {
+                let newGoods = res_manufacturer.data;
                 wx.navigateTo({
-                    url: '../distributor-goods-upload/distributor-goods-upload?id=' + newGoods.id
+                    url: '../manufacturer-goods-upload/manufacturer-goods-upload?id=' + newGoods.id
                 })
             }
         })
@@ -106,29 +90,15 @@ Page({
         this.setData({
             input_name: e.detail.value
         })
-    }, doInputUnit: function (e) {
-        this.setData({
-            input_unit: e.detail.value
-        })
-    }, doInputPriceStart: function (e) {
-        this.setData({
-            input_priceStart: e.detail.value
-        })
-    }, doInputPriceEnd: function (e) {
-        this.setData({
-            input_priceEnd: e.detail.value
-        })
-    }, doInputType: function (e) {
+    }, 
+    doInputType: function (e) {
         this.setData({
             input_Type: e.detail.value
         })
-    }, doInputIntro: function (e) {
+    }, 
+    doInputIntro: function (e) {
         this.setData({
             input_intro: e.detail.value
-        })
-    }, doInputSpecDesc: function (e) {
-        this.setData({
-            input_specDesc: e.detail.value
         })
     }
 })

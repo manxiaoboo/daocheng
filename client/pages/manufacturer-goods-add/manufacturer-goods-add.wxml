@@ -1,0 +1,34 @@
+<form bindsubmit="createGoods">
+    <view class="weui-cells__title">创建产品信息</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input {{input_name?'':'weui-cell_warn'}}">
+            <view class="weui-cell__hd">
+                <view class="weui-label">产品名称</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" bindinput="doInputName" value="{{input_name}}" name="name" placeholder="请输入产品名称" />
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input {{input_Type?'':'weui-cell_warn'}}">
+            <view class="weui-cell__hd">
+                <view class="weui-label">产品类别</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="typeChange" value="{{typeIndex}}" range="{{pickerTypes}}" name="type">
+                    <view class="weui-select">{{pickerTypes[typeIndex]}}</view>
+                </picker>
+            </view>
+        </view>
+    </view>
+    <view class="weui-cells__title">产品介绍</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="请输入产品简介" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro" />
+            </view>
+        </view>
+    </view>
+    <view class="p" style="width:60%;margin:10px auto;">
+        <button class="weui-btn" size="mini" type="primary" style="width:100%" formType="submit">下一步，上传图片</button>
+    </view>
+</form>

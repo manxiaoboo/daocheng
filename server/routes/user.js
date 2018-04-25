@@ -12,6 +12,8 @@ const DistributorGoods = require('../models/distributorGoods');
 const DistributorGoodsType = require('../models/distributorGoodsType');
 const AuditGoods = require('../models/audit_goods');
 const ManufacturerUser = require('../models/manufacturerUser');
+const ManufacturerGoods = require('../models/manufacturerGoods');
+
 
 const UUID = require('uuid');
 const {
@@ -449,6 +451,80 @@ router.get('/expertByUserId', isAuthenticated(), async (req, res, next) => {
  */
 router.post('/expert-edit', isAuthenticated(), (req, res, next) => {
     ExpertUser.update(req.body, {
+        where: {
+            id: req.body.id
+        }
+    }).then((result) => {
+        res.json(result);
+    });
+});
+
+/**
+ * 根据userId获取厂商信息
+ */
+router.get('/manufacturerByUserId', isAuthenticated(), async (req, res, next) => {
+    let manufacturer = await ManufacturerUser.findOne({
+        where: {
+            userId: req.query.userId
+        }
+    });
+    res.json(manufacturer);
+});
+
+/**
+ * 根据id获取厂商信息
+ */
+router.get('/manufacturerById', isAuthenticated(), async (req, res, next) => {
+    let manufacturer = await ManufacturerUser.findOne({
+        where: {
+            id: req.query.manufacturerId
+        }
+    });
+    res.json(manufacturer);
+});
+
+/**
+ * 根据id获取整合厂商信息
+ */
+router.get('/manufacturerPackById', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
+    let manufacturer = await ManufacturerUser.findOne({
+        where: {
+            id: req.query.manufacturerId
+        }
+    });
+    let user = await User.findOne({
+        where: {
+            id: manufacturer.dataValues.userId
+        }
+    })
+    let goods = await ManufacturerGoods.findAll({
+        where: {
+            manufacturerId: req.query.manufacturerId,
+            isDelete: 0,
+        },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        limit:10,
+        offset: 10 * (page -1)
+    })
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json({manufacturer, user, goods});
+});
+
+/**
+ * 修改经销商信息
+ */
+router.post('/manufacturer-edit', isAuthenticated(), (req, res, next) => {
+    ManufacturerUser.update(req.body, {
         where: {
             id: req.body.id
         }

@@ -1,0 +1,38 @@
+<view class="page__bd">
+    <view class="weui-panel weui-panel_access">
+        <view class="weui-panel__bd">
+            <view class="p home_item">
+                <view class="weui-media-box weui-media-box_appmsg">
+                    <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{goods.manufacturer.id}}">
+                        <image class="weui-media-box__thumb" src="{{'http://' + goods.manufacturer.head}}" />
+                    </navigator>
+                    <navigator class="weui-media-box__bd weui-media-box__bd_in-appmsg" url="../distributor-shop/distributor-shop?id={{goods.manufacturer.id}}">
+                        <view class="weui-media-box__title">{{goods.manufacturer.name}}</view>
+                        <view class="weui-media-box__desc">
+                            <image src="/images/dingwei.png" style="width:16px;height:16px;position:relative;top:3px;" />
+                            {{goods.manufacturer.address}}
+                        </view>
+                    </navigator>
+                    <view>
+                        <button plain="true" type="warn" class="home_item_button" bindtap="call">
+                            联系Ta
+                        </button>
+                    </view>
+                </view>
+            </view>
+            <view class="p margin-top-mini" style="width:60%;margin:10px auto;">
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">删除商品</button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="closeGoods" plain="true" type="danger" wx:if="{{!goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">放入回收站</button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="openGoods" plain="true" type="primary" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">恢复产品</button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="goEdit" plain="true" type="primary" wx:if="{{(me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">修改产品信息</button>
+            </view>
+            <view class="p" style="padding:0 12px">
+                <view style="color:#e64340;margin-right:5px;" class="home_item_content">#{{goods.type_ele.name}}#</view>
+                <view class="home_item_content">{{goods.name}}，{{goods.intro}}</view>
+                <view style="margin-top:10px">
+                    <image src="{{'http://'+p}}" wx:for="{{goods.photos_arr}}" wx:for-item="p" wx:key="*this" style="width:100%;"/>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

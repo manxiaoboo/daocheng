@@ -78,9 +78,9 @@
                         </view>
                     </view>
                 </view>
-                <view class="weui-tab__content" hidden="{{activeIndex != 1}}" style="text-align:center">
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}" style="text-align:center;padding:0 10px;">
                     <view wx:for="{{goods.photos_arr}}">
-                        <image src="http://{{item}}" style="height:500px;" bindtap="preview" data-current-image="{{item}}"/>
+                        <image src="http://{{item}}" style="width:100%;" bindtap="preview" data-current-image="{{item}}"/>
                     </view>
                 </view>
                 <view class="weui-tab__content" hidden="{{activeIndex != 2}}">

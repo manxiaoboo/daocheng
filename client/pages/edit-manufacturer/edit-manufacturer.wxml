@@ -1,0 +1,58 @@
+<view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{me.manufacturer.head?'http://'+me.manufacturer.head:'../../images/pic_160.png'}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{me.manufacturer.name?me.manufacturer.name:'尚未绑定厂商名称'}}</view>
+                    <view style="font-size: 13px;color: #888888;">厂商</view>
+                </view>
+            </view>
+</view>
+<form bindsubmit="editManufacturer">
+<view class="weui-cells__title">厂商信息</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input {{input_name?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">厂商名称</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputName" value="{{input_name}}" name="name" placeholder="请输入厂商名称"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_address?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">厂商地址</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputAddress" value="{{input_address}}" name="address" placeholder="请输入详细地址"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_contact?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">联系人</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputContact" value="{{input_contact}}" name="contact" placeholder="请输入联系人"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input {{input_contactPhone?'':'weui-cell_warn'}}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">联系人电话</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="doInputContactPhone" value="{{input_contactPhone}}" name="contactPhone" placeholder="请输入联系人电话"/>
+        </view>
+    </view>
+</view>
+<view class="weui-cells__title">厂商简介</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入简介" style="height: 3.3em" name="intro" value="{{input_intro}}" bindinput="doInputIntro"/>
+                </view>
+            </view>
+        </view>
+        <button class="weui-btn" type="primary" bindtap="uploadImage" class="p" plain="true">上传厂商图片</button>
+  <button class="weui-btn" type="primary" formType="submit">确认修改</button>
+</form>

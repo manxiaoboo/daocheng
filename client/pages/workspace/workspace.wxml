@@ -136,6 +136,43 @@
         <text class="p">请您先填写完整的店铺信息</text>
     </view>
 </view>
+<view wx:if="{{me.isValidate && me.roleName == '厂商' && me.manufacturer}}">
+    <view class="weui-cells__title">厂商信息</view>
+    <view class="weui-cells weui-cells_after-title">
+            <navigator url="../edit-manufacturer/edit-manufacturer" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{me.manufacturer.head?'http://'+me.manufacturer.head:'../../images/pic_160.png'}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{me.manufacturer.name?me.manufacturer.name:'尚未设置名称'}}</view>
+                    <view style="font-size: 13px;color: #888888;"> 我的厂商</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+            </navigator>
+    </view>
+    <view class="weui-cells__title" wx:if="{{me.manufacturer.name && me.manufacturer.address && me.manufacturer.contactPhone}}">产品</view>
+    <view wx:if="{{me.manufacturer.name && me.manufacturer.address && me.manufacturer.contactPhone}}">
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="../manufacturer-goods-list/manufacturer-goods-list" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">我的产品</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
+                </navigator>
+        </view>
+    </view>
+    <view class="weui-cells__title" wx:if="{{me.manufacturer.name && me.manufacturer.address && me.manufacturer.contactPhone}}">预览</view>
+    <view wx:if="{{me.manufacturer.name && me.manufacturer.address && me.manufacturer.contactPhone}}">
+        <view class="weui-cells weui-cells_after-title">
+            <navigator url="../manufacturer-shop/manufacturer-shop?id={{me.manufacturer.id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">我的主页</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
+                </navigator>
+        </view>
+    </view>
+    <view wx:if="{{!me.manufacturer.name || !me.manufacturer.address || !me.manufacturer.contactPhone}}" class="empty_block">
+        <image src="http://p0oy6nmva.bkt.clouddn.com/empty.png" class="empty_img"/>
+        <text class="p">请您先填写完整的厂商信息</text>
+    </view>
+</view>
 <view wx:if="{{me.isValidate && me.roleName == '专家' && me.expert.domain}}">
 <view class="weui-cells__title">我的信息</view>
     <view class="weui-cells weui-cells_after-title">
