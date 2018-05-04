@@ -76,7 +76,7 @@
             </view>
         </view>
     </view>
-    <view class="page__banner">
+    <view class="page__banner" wx:if="{{me.userName != 'nonghu1'}}">
         <image class="banner" src="http://p0oy6nmva.bkt.clouddn.com/home_banner.jpg" />
     </view>
     <view class="page__bd">
@@ -96,7 +96,7 @@
                         <view class="weui-panel weui-panel_access" wx:for="{{goods}}" wx:for-item="g">
                             <view class="weui-panel__bd">
                                 <view class="home_item">
-                                    <view class="weui-media-box weui-media-box_appmsg">
+                                    <view class="weui-media-box weui-media-box_appmsg" wx:if="{{me.userName != 'nonghu1'}}">
                                         <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{g.distributor.id}}">
                                             <image class="weui-media-box__thumb" src="{{'http://' + g.distributor.head}}" />
                                         </navigator>
@@ -126,12 +126,12 @@
                                                 <image class="home_item_image" src="{{'http://'+p}}" wx:for="{{g.photos_arr}}" wx:for-item="p"/>
                                             </view>
                                         </view>
-                                        <view class="weui-article__p weui-media-box__desc">
+                                        <view class="weui-article__p weui-media-box__desc" wx:if="{{me.userName != 'nonghu1'}}">
                                             <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
                                             {{g.distributor.address}}
                                         </view>
                                     </navigator>
-                                    <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
+                                    <view style="margin-top:10px" class="home_item_footer weui-media-box__desc" wx:if="{{me.userName != 'nonghu1'}}">
                                         <view style="flex:1">
                                             <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
                                             浏览量 {{g.totalView}}
@@ -165,7 +165,7 @@
                         <view class="weui-panel weui-panel_access" wx:for="{{adGoods}}" wx:for-item="ag">
                             <view class="weui-panel__bd">
                                 <view class="home_item">
-                                    <view class="weui-media-box weui-media-box_appmsg">
+                                    <view class="weui-media-box weui-media-box_appmsg" wx:if="{{me.userName != 'nonghu1'}}">
                                         <navigator class="weui-media-box__hd weui-media-box__hd_in-appmsg" url="../distributor-shop/distributor-shop?id={{ag.distributor.id}}">
                                             <image class="weui-media-box__thumb" src="{{'http://' + ag.distributor.head}}" />
                                         </navigator>
@@ -195,12 +195,12 @@
                                                 <image class="home_item_image" src="{{'http://'+ap}}" wx:for="{{ag.photos_arr}}" wx:for-item="ap"/>
                                             </view>
                                         </view>
-                                        <view class="weui-article__p weui-media-box__desc">
+                                        <view class="weui-article__p weui-media-box__desc" wx:if="{{me.userName != 'nonghu1'}}">
                                             <image src="/images/dingwei.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
                                             {{ag.distributor.address}}
                                         </view>
                                     </navigator>
-                                    <view style="margin-top:10px" class="home_item_footer weui-media-box__desc">
+                                    <view style="margin-top:10px" class="home_item_footer weui-media-box__desc" wx:if="{{me.userName != 'nonghu1'}}">
                                         <view style="flex:1">
                                             <image src="/images/chakan.png" style="width:16px;height:16px;margin-right:5px;position:relative;top:3px;" />
                                             浏览量 {{ag.totalView}}

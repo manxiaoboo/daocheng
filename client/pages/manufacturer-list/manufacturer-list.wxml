@@ -1,4 +1,4 @@
-<view style="padding:6px">
+<view style="padding:6px" wx:if="{{me.userName != 'nonghu1'}}">
         <image src="http://p0oy6nmva.bkt.clouddn.com/home_banner.jpg" style="width:100%;height:110px;border-radius:6px;"/>
     </view>
 <view wx:if="{{manufacturers.length<=0}}" class="empty_block">

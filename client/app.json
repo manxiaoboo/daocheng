@@ -69,11 +69,6 @@
       "iconPath": "images/wifi-default.png",  
       "pagePath": "pages/workspace/workspace",
       "text": "工作台"  
-    }, {  
-      "selectedIconPath": "images/ask-hover.png",  
-      "iconPath": "images/ask-default.png",  
-      "pagePath": "pages/question-more-list/question-more-list", 
-      "text": "知识问答"  
     }, {
       "selectedIconPath": "images/me-hover.png",  
       "iconPath": "images/me-default.png",  

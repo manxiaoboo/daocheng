@@ -60,7 +60,14 @@ Page({
               })
             } else {
               let me = res.data;
-
+              console.info(me)
+              if(me.userName == 'nonghu1'){
+                that.setData({
+                  tabs: ["热门商品", "优质商品"]
+                })
+              } else{
+                tabs: ["热门商品", "优质商品",'最新问答']
+              }
 
               wx.request({
                 url: config.service.host + '/distributor/goodsSortByHot?page=1',

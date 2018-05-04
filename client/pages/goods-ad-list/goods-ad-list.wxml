@@ -21,22 +21,7 @@
         <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
             <navigator url="" class="weui-cell" hover-class="weui-cell_active">
                 <view class="weui-cell__bd">
-                    <view>实时搜索文本</view>
-                </view>
-            </navigator>
-            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">
-                    <view>实时搜索文本</view>
-                </view>
-            </navigator>
-            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">
-                    <view>实时搜索文本</view>
-                </view>
-            </navigator>
-            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">
-                    <view>实时搜索文本</view>
+                    <view>暂未开通</view>
                 </view>
             </navigator>
         </view>
