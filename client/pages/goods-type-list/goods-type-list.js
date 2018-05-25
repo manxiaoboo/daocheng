@@ -13,7 +13,7 @@ Page({
         screenArray: [], //左侧导航栏内容  
         screenId: "",  //后台查询需要的字段  
     },
-    onLoad: function (option) { 
+    onLoad: function (option) {
         var that = this;
         this.setData({
             screenId: option.id,
@@ -52,11 +52,14 @@ Page({
                         goods.forEach(g => {
                             if (g.photos) {
                                 g.photos_arr = g.photos.split(',')
+                                if (g.photos_arr.length > 2) {
+                                    g.photos_arr = g.photos_arr.slice(0, 2)
+                                }
                             }
                         })
-                        
+
                         that.setData({
-                            currentTab:types.findIndex(t => t.id === that.data.screenId),
+                            currentTab: types.findIndex(t => t.id === that.data.screenId),
                             types: types,
                             goods: goods,
                             canShow: true
@@ -93,6 +96,9 @@ Page({
                 goods.forEach(g => {
                     if (g.photos) {
                         g.photos_arr = g.photos.split(',')
+                        if (g.photos_arr.length > 2) {
+                            g.photos_arr = g.photos_arr.slice(0, 2)
+                        }
                     }
                 })
                 that.setData({

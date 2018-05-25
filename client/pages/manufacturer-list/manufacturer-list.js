@@ -5,7 +5,11 @@ Page({
     data: {
         canShow: false,
         me: '',
-        manufacturers:[]
+        manufacturers:[],
+        page: 1,
+        loading:false,
+        inputShowed: false,
+        inputVal: ""
     },
     onLoad: function () {
     },
@@ -24,7 +28,7 @@ Page({
         });
         let token = wx.getStorageSync('authToken');
         wx.request({
-            url: config.service.host + '/manufacturer/validateManufacturerUser',
+            url: config.service.host + '/manufacturer/validateManufacturerUser?page=1',
             header: {
                 'Authorization': 'Bearer ' + token
             },
@@ -39,5 +43,34 @@ Page({
 
             }
         })
-    }
+    },
+    onReachBottom: function () {
+        let that = this;
+        let page = this.data.page;
+        page++;
+        let token = wx.getStorageSync('authToken');
+        this.setData({
+            page: page
+        })
+        that.setData({loading:true})
+        wx.request({
+            url: config.service.host + '/manufacturer/validateManufacturerUser?page=' + that.data.page,
+            header: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (res_manufacturer) {
+                let current_manufacturer = res_manufacturer.data;
+                let manufacturers = that.data.manufacturers;
+                current_manufacturer.forEach(cm => {
+                    manufacturers.push(cm)
+                })
+                that.setData({
+                    manufacturers: manufacturers,
+                    loading:false
+                })
+                console.info(goods)
+            }
+        })
+    },
 })

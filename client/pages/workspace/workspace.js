@@ -115,6 +115,7 @@ Page({
         })
     },
     controlDevice: function (e) {
+        return;
         console.info(e);
         let type = e.currentTarget.dataset.type;
         let attrs;

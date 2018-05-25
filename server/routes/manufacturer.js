@@ -15,11 +15,14 @@ const {
  * 获取所有已开通的厂商
  */
 router.get('/validateManufacturerUser', isAuthenticated(), async (req, res, next) => {
+    let page = req.query.page;
     let users = await User.findAll({
         where: {
             roleId: '2191c46c-e6c4-11e7-b42e-060400ef5315',
             isValidate: true
-        }
+        },
+        limit:10,
+        offset: 10 * (page -1)
     });
     for (const u of users) {
         u.dataValues.manufacturer = await ManufacturerUser.findOne({

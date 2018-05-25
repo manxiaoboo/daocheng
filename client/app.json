@@ -59,16 +59,16 @@
       "iconPath": "images/home-default.png",
       "pagePath": "pages/dashboard/dashboard",
       "text": "广场"
-    },{  
-      "selectedIconPath": "images/changshang-hover.png",  
-      "iconPath": "images/changshang-default.png",  
-      "pagePath": "pages/manufacturer-list/manufacturer-list",
-      "text": "厂商"
     } ,{  
       "selectedIconPath": "images/wifi-hover.png",  
       "iconPath": "images/wifi-default.png",  
       "pagePath": "pages/workspace/workspace",
       "text": "工作台"  
+    }, {  
+      "selectedIconPath": "images/changshang-hover.png",  
+      "iconPath": "images/changshang-default.png",  
+      "pagePath": "pages/manufacturer-list/manufacturer-list",
+      "text": "厂商"  
     }, {
       "selectedIconPath": "images/me-hover.png",  
       "iconPath": "images/me-default.png",  

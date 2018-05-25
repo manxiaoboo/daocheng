@@ -13,9 +13,10 @@ Page({
       'http://p0oy6nmva.bkt.clouddn.com/6.jpg'
     ],
     goods: [],
-    adGoods:[],
+    adGoods: [],
     questions: [],
-    types:[],
+    types: [],
+    manufacturers: [],
     indicatorDots: false,
     autoplay: true,
     interval: 5000,
@@ -32,14 +33,7 @@ Page({
   onLoad: function () {
     console.info("首页 => load");
     var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
-          sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
-        });
-      }
-    });
+
   },
   onShow: function () {
     var that = this;
@@ -61,13 +55,29 @@ Page({
             } else {
               let me = res.data;
               console.info(me)
-              if(me.userName == 'nonghu1'){
+              if (me.userName == 'nonghu1') {
                 that.setData({
                   tabs: ["热门商品", "优质商品"]
                 })
-              } else{
-                tabs: ["热门商品", "优质商品",'最新问答']
+              } else {
+                that.setData({
+                  tabs: ["热门商品", "优质商品", '最新问答']
+                })
               }
+
+              if (me.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315') {
+                that.setData({
+                  tabs: ["热门商品", "优质商品", '最新问答', '厂商']
+                })
+              }
+              wx.getSystemInfo({
+                success: function (res) {
+                  that.setData({
+                    sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 2,
+                    sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
+                  });
+                }
+              });
 
               wx.request({
                 url: config.service.host + '/distributor/goodsSortByHot?page=1',
@@ -116,23 +126,23 @@ Page({
               wx.request({
                 url: config.service.host + '/question/allQuestions?page=1',
                 header: {
-                    'Authorization': 'Bearer ' + token
+                  'Authorization': 'Bearer ' + token
                 },
                 success: (res_questions) => {
-                    console.info(res_questions.data)
-                    let questions = res_questions.data;
-                    questions.forEach(o => {
-                        o.createdDate = util.formatTime2(new Date(o.createdAt));
-                        if(o.completedAt)o.completedDate = util.formatTime2(new Date(o.completedAt));
-                    })
-                    that.setData({
-                        questions: questions
-                    })
+                  console.info(res_questions.data)
+                  let questions = res_questions.data;
+                  questions.forEach(o => {
+                    o.createdDate = util.formatTime2(new Date(o.createdAt));
+                    if (o.completedAt) o.completedDate = util.formatTime2(new Date(o.completedAt));
+                  })
+                  that.setData({
+                    questions: questions
+                  })
                 },
                 fail: function (err) {
-    
+
                 }
-            })
+              })
 
               wx.request({
                 url: config.service.host + '/distributor/types',
@@ -275,17 +285,29 @@ Page({
                           success: function (res_distributor) {
                             let distributor = res_distributor.data;
                             me.distributor = distributor;
-                            wx.setStorage({
-                              key: "user",
-                              data: me
+                            wx.request({
+                              url: config.service.host + '/manufacturer/validateManufacturerUser?page=1',
+                              header: {
+                                'Authorization': 'Bearer ' + token
+                              },
+                              success: (res_manufacturer) => {
+                                console.info(res_manufacturer.data)
+                                that.setData({
+                                  canShow: true,
+                                  manufacturers: res_manufacturer.data
+                                })
+                                wx.setStorage({
+                                  key: "user",
+                                  data: me
+                                })
+                                wx.setStorage({
+                                  key: "roles",
+                                  data: roles
+                                })
+                              },
+                              fail: function (err) {
+                              }
                             })
-                            wx.setStorage({
-                              key: "roles",
-                              data: roles
-                            })
-                            that.setData({
-                              canShow: true
-                            });
                           },
                           fail: function (err) {
                             wx.redirectTo({
@@ -381,20 +403,25 @@ Page({
       inputVal: e.detail.value
     });
   },
-  goQuestion: function(){
-    wx.switchTab({
+  goQuestion: function () {
+    wx.navigateTo({
       url: '../question-more-list/question-more-list'
+    })
+  },
+  goManufacturers: function() {
+    wx.switchTab({
+      url: '../manufacturer-list/manufacturer-list'
     })
   },
   call: function (e) {
     wx.makePhoneCall({
-        phoneNumber: e.currentTarget.dataset.phone,
-        success: function () {
-            console.log("拨打电话成功！")
-        },
-        fail: function () {
-            console.log("拨打电话失败！")
-        }
+      phoneNumber: e.currentTarget.dataset.phone,
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
     })
-},
+  },
 })

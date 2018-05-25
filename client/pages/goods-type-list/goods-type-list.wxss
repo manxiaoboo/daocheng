@@ -10,9 +10,9 @@
 
 .weui-media-box__hd_in-appmsg {
     margin-right: .5em;
-    width:40px;
-    height:40px;
-    line-height:40px;
+    width:30px;
+    height:30px;
+    line-height:30px;
 }
 
 .weui-media-box__title {
@@ -61,8 +61,9 @@
   left:0;  
   width:20%;  
   height:100%;
-  background-color:#eee;  
+  background-color:#fff;  
   font-size:12px;
+  border-right: 1px solid #eee;
 }  
 .left-navbar view{  
   height:80rpx;  
@@ -70,14 +71,14 @@
   text-align:center;
 }  
 .active{  
-  background-color:#FFF;  
-  color:red; 
+  background-color:#e64340;  
+  color:#fff; 
   font-size:14px;  
 }  
 #right{  
   position:absolute;  
-  right:0;  
-  width:80%;  
+  right:1%;  
+  width:78%;  
   height:90%;  
 }  
 .img-banner{  
@@ -118,7 +119,7 @@
 }
 
 .weui-media-box {
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .weui-media-box__title {
@@ -141,9 +142,8 @@
 .home_item_button{
   width: 60px;
   font-size: 11px;
-  padding: 0 10px;
-  height: 25px;
-  line-height: 25px;
+  height: 22px;
+  line-height: 22px;
 }
 
 .weui-article {
@@ -157,7 +157,7 @@
 .home_item_content{
   display: inline;
 }
-
+ 
 .home_item_image{
   width:100px;
   height:100px;
