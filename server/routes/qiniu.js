@@ -10,7 +10,7 @@ const {
 /**
  * 获取七牛token
  */
-router.get('/', isAuthenticated(), async(req, res, next) => {
+router.get('/', async(req, res, next) => {
     let accessKey = '8vfLR9ldMXbIUUlDm39FjKuAtCrbeLjl9GZeBufQ';
     let secretKey = '42beooQFa_D9yjZPNr3YYJMzLXHQOqzJYJQnryk5';
     let bucket = 'daocheng-images'

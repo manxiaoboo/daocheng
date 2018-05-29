@@ -29,7 +29,7 @@ Page({
             }
         })
     },
-    logout:function(){
+    logout: function () {
         var that = this;
         wx.showModal({
             title: '退出确认',
@@ -41,14 +41,19 @@ Page({
                 if (res.confirm) {
                     wx.removeStorage({
                         key: 'authToken',
-                        success: function(res) {
-                          wx.redirectTo({
-                            url: '../login/login'
-                          })
-                        } 
-                      })
+                        success: function (res) {
+                            wx.redirectTo({
+                                url: '../login/login'
+                            })
+                        }
+                    })
                 }
             }
         });
+    },
+    goLogin: function () {
+        wx.redirectTo({
+            url: '../login/login'
+        })
     }
 })

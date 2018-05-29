@@ -13,7 +13,7 @@ const {
 /**
  * 获取当前店铺所有商品
  */
-router.get('/', isAuthenticated(), async(req, res, next) => {
+router.get('/', async(req, res, next) => {
     let goods = await DistributorGoods.findAll({
         where: {
             distributorId: req.query.distributorId
@@ -25,7 +25,7 @@ router.get('/', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有上架商品 按热度排序
  */
-router.get('/goodsSortByHot', isAuthenticated(), async(req, res, next) => {
+router.get('/goodsSortByHot', async(req, res, next) => {
     let page = req.query.page;
     let goods;
     goods = await DistributorGoods.findAll({
@@ -58,7 +58,7 @@ router.get('/goodsSortByHot', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有广告商品 按热度排序
  */
-router.get('/goodsSortByAd', isAuthenticated(), async(req, res, next) => {
+router.get('/goodsSortByAd', async(req, res, next) => {
     let page = req.query.page;
     let goods;
     goods = await DistributorGoods.findAll({
@@ -92,7 +92,7 @@ router.get('/goodsSortByAd', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有类型商品 按热度排序
  */
-router.get('/goodsSortByType', isAuthenticated(), async(req, res, next) => {
+router.get('/goodsSortByType', async(req, res, next) => {
     let page = req.query.page;
     let goods;
     goods = await DistributorGoods.findAll({
@@ -126,7 +126,7 @@ router.get('/goodsSortByType', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有通过审核并且上架的商品
  */
-router.get('/allAuditedGoods', isAuthenticated(), async(req, res, next) => {
+router.get('/allAuditedGoods', async(req, res, next) => {
     let goods = await DistributorGoods.findAll({
         where: {
             isAudit: 1,
@@ -152,7 +152,7 @@ router.get('/allAuditedGoods', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有通过审核并且上架并且是广告的商品
  */
-router.get('/allAdGoods', isAuthenticated(), async(req, res, next) => {
+router.get('/allAdGoods', async(req, res, next) => {
     let goods = await DistributorGoods.findAll({
         where: {
             isAudit: 1,
@@ -180,7 +180,7 @@ router.get('/allAdGoods', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取商品
  */
-router.get('/getGoodsById', isAuthenticated(), async(req, res, next) => {
+router.get('/getGoodsById', async(req, res, next) => {
     let goods = await DistributorGoods.findOne({
         where: {
             id: req.query.id
@@ -295,7 +295,7 @@ router.get('/delete', isAuthenticated(), async(req, res, next) => {
 /**
  * 获取所有商品类型
  */
-router.get('/types', isAuthenticated(), async(req, res, next) => {
+router.get('/types', async(req, res, next) => {
     let types = await DistributorGoodsType.findAll({
         order: [
             ['position', 'ASC']
@@ -345,7 +345,7 @@ router.post('/deleteType', isAuthenticated(), async(req, res, next) => {
 /**
  * 根据goodsId查找audit_goods
  */
-router.get('/auditGoodsByGoodsId', isAuthenticated(), async(req, res, next) => {
+router.get('/auditGoodsByGoodsId', async(req, res, next) => {
     let audit_goods = await AuditGoods.findAll({
         where: {
             distributorGoodsId: req.query.id
@@ -357,7 +357,7 @@ router.get('/auditGoodsByGoodsId', isAuthenticated(), async(req, res, next) => {
 /**
  * 查找所有audit_goods
  */
-router.get('/auditGoods', isAuthenticated(), async(req, res, next) => {
+router.get('/auditGoods', async(req, res, next) => {
     let audit_goods = await AuditGoods.findAll();
     for (const ag of audit_goods) {
         agd = ag.dataValues

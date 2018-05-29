@@ -462,7 +462,7 @@ router.post('/expert-edit', isAuthenticated(), (req, res, next) => {
 /**
  * 根据userId获取厂商信息
  */
-router.get('/manufacturerByUserId', isAuthenticated(), async (req, res, next) => {
+router.get('/manufacturerByUserId', async (req, res, next) => {
     let manufacturer = await ManufacturerUser.findOne({
         where: {
             userId: req.query.userId
@@ -474,7 +474,7 @@ router.get('/manufacturerByUserId', isAuthenticated(), async (req, res, next) =>
 /**
  * 根据id获取厂商信息
  */
-router.get('/manufacturerById', isAuthenticated(), async (req, res, next) => {
+router.get('/manufacturerById', async (req, res, next) => {
     let manufacturer = await ManufacturerUser.findOne({
         where: {
             id: req.query.manufacturerId
@@ -486,7 +486,7 @@ router.get('/manufacturerById', isAuthenticated(), async (req, res, next) => {
 /**
  * 根据id获取整合厂商信息
  */
-router.get('/manufacturerPackById', isAuthenticated(), async (req, res, next) => {
+router.get('/manufacturerPackById', async (req, res, next) => {
     let page = req.query.page;
     let manufacturer = await ManufacturerUser.findOne({
         where: {
@@ -536,7 +536,7 @@ router.post('/manufacturer-edit', isAuthenticated(), (req, res, next) => {
 /**
  * 根据userId获取经销商信息
  */
-router.get('/distributorByUserId', isAuthenticated(), async (req, res, next) => {
+router.get('/distributorByUserId', async (req, res, next) => {
     let distributor = await DistributorUser.findOne({
         where: {
             userId: req.query.userId
@@ -548,7 +548,7 @@ router.get('/distributorByUserId', isAuthenticated(), async (req, res, next) => 
 /**
  * 根据id获取经销商信息
  */
-router.get('/distributorById', isAuthenticated(), async (req, res, next) => {
+router.get('/distributorById', async (req, res, next) => {
     let distributor = await DistributorUser.findOne({
         where: {
             id: req.query.distributorId
@@ -560,7 +560,7 @@ router.get('/distributorById', isAuthenticated(), async (req, res, next) => {
 /**
  * 根据id获取整合经销商信息
  */
-router.get('/distributorPackById', isAuthenticated(), async (req, res, next) => {
+router.get('/distributorPackById', async (req, res, next) => {
     let page = req.query.page;
     let distributor = await DistributorUser.findOne({
         where: {
