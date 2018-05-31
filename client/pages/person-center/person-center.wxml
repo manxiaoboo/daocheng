@@ -32,13 +32,21 @@
             </view>
 </view>
 
-<view class="person_head">
+<view class="person_head" wx:if="{{me.role != 'visitor'}}">
     <view>
         <image src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;"/>
     </view>
     <view class="person_name">{{me.nickName}}</view>
 </view>
 
+<view class="person_head" wx:if="{{me.role == 'visitor'}}">
+    <view>
+        <image src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;"/>
+    </view>
+    <view class="person_name">未登录</view>
+</view>
+
+<view wx:if="{{me.role != 'visitor'}}">
 <view class="weui-cells__title">功能</view>
 <view class="weui-cells weui-cells_after-title">
             <navigator url="../user-edit/user-edit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -92,3 +100,8 @@
             </navigator>
 </view>
 <button class="weui-btn" type="warn" bindtap="logout">退出登录</button>
+</view>
+
+<view wx:if="{{me.role == 'visitor'}}" style="margin-top:50px;padding:0 20px;">
+    <button class="weui-btn" type="primary" bindtap="goLogin">点击登录</button>
+</view>

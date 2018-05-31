@@ -14,7 +14,7 @@ const {
 /**
  * 获取所有已开通的厂商
  */
-router.get('/validateManufacturerUser', isAuthenticated(), async (req, res, next) => {
+router.get('/validateManufacturerUser', async (req, res, next) => {
     let page = req.query.page;
     let users = await User.findAll({
         where: {
@@ -37,7 +37,7 @@ router.get('/validateManufacturerUser', isAuthenticated(), async (req, res, next
 /**
  * 获取当前厂商所有产品
  */
-router.get('/', isAuthenticated(), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     let manufacturers = await ManufacturerGoods.findAll({
         where: {
             manufacturerId: req.query.manufacturerId
@@ -49,7 +49,7 @@ router.get('/', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取商品
  */
-router.get('/getGoodsById', isAuthenticated(), async (req, res, next) => {
+router.get('/getGoodsById', async (req, res, next) => {
     let goods = await ManufacturerGoods.findOne({
         where: {
             id: req.query.id

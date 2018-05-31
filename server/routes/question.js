@@ -20,7 +20,7 @@ const {
 /**
  * 获取所有问题列表
  */
-router.get('/allQuestions', isAuthenticated(), async (req, res, next) => {
+router.get('/allQuestions', async (req, res, next) => {
     let page = req.query.page;
     let questions = await Question.findAll({
         order: [
@@ -44,7 +44,7 @@ router.get('/allQuestions', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取所有未解决问题列表
  */
-router.get('/allOpenQuestions', isAuthenticated(), async (req, res, next) => {
+router.get('/allOpenQuestions', async (req, res, next) => {
     let page = req.query.page;
     let questions = await Question.findAll({
         where:{
@@ -70,7 +70,7 @@ router.get('/allOpenQuestions', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取所有被采纳问题列表
  */
-router.get('/allAcceptedQuestions', isAuthenticated(), async (req, res, next) => {
+router.get('/allAcceptedQuestions', async (req, res, next) => {
     let page = req.query.page;
     let id = req.query.id;
     let questions = await Question.findAll({
@@ -117,7 +117,7 @@ router.get('/myQuestions', isAuthenticated(), async (req, res, next) => {
 /**
  * 根据id获取问题
  */
-router.get('/question', isAuthenticated(), async (req, res, next) => {
+router.get('/question', async (req, res, next) => {
     let id = req.query.id;
     let question = await Question.findOne({
         where: {
@@ -208,7 +208,7 @@ router.post('/accept', isAuthenticated(), async (req, res, next) => {
 /**
  * 为提问增加浏览量
  */
-router.get('/addView', isAuthenticated(), async (req, res, next) => {
+router.get('/addView', async (req, res, next) => {
     let id = req.query.id;
     let question = await Question.findOne({
         where: {
@@ -254,7 +254,7 @@ router.post('/reply', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取某一问题的所有回答
  */
-router.get('/allReply', isAuthenticated(), async (req, res, next) => {
+router.get('/allReply', async (req, res, next) => {
     let rootId = req.query.id;
     let replys = await Reply.findAll({
         where:{
@@ -304,7 +304,7 @@ router.get('/allReply', isAuthenticated(), async (req, res, next) => {
 /**
  * 获取最近回答
  */
-router.get('/recentReply', isAuthenticated(), async (req, res, next) => {
+router.get('/recentReply', async (req, res, next) => {
     let page = req.query.page;
     let id = req.query.id;
     let replys = await Reply.findAll({

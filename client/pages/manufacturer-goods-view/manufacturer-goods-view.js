@@ -177,6 +177,22 @@ Page({
         })
     },
     call: function () {
+        if (this.data.me.role == 'visitor') {
+            wx.showModal({
+              title: '游客提示',
+              content: '您尚未登录，是否立即登录？',
+              confirmText: "登录",
+              cancelText: "取消",
+              success: function (res) {
+                if (res.confirm) {
+                  wx.redirectTo({
+                    url: '../login/login'
+                  })
+                }
+              }
+            });
+            return;
+          }
         wx.makePhoneCall({
             phoneNumber: this.data.goods.manufacturer.contactPhone,
             success: function () {
