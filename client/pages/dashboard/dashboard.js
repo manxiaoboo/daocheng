@@ -23,7 +23,7 @@ Page({
     duration: 1000,
     canShow: false,
     me: '',
-    tabs: ["热门商品", "优质商品", "最新问答"],
+    tabs: ["热门商品", "最新问答"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -57,17 +57,17 @@ Page({
               console.info(me)
               if (me.userName == 'nonghu1') {
                 that.setData({
-                  tabs: ["热门商品", "优质商品"]
+                  tabs: ["热门商品"]
                 })
               } else {
                 that.setData({
-                  tabs: ["热门商品", "优质商品", '最新问答']
+                  tabs: ["热门商品",  '最新问答']
                 })
               }
 
               if (me.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315') {
                 that.setData({
-                  tabs: ["热门商品", "优质商品", '最新问答', '厂商']
+                  tabs: ["热门商品", '最新问答', '厂商列表']
                 })
               }
               wx.getSystemInfo({
@@ -91,8 +91,10 @@ Page({
                     if (g.photos) {
                       g.photos_arr = g.photos.split(',')
                     }
-                    g.photos_arr.pop();
-                    g.photos_arr.pop();
+                    if (g.photos_arr.length > 2) {
+                      g.photos_arr.pop();
+                      g.photos_arr.pop();
+                    }
                     g.updatedDate = util.formatTime2(new Date(g.updatedAt));
                   })
                   that.setData({
@@ -408,7 +410,7 @@ Page({
       url: '../question-more-list/question-more-list'
     })
   },
-  goManufacturers: function() {
+  goManufacturers: function () {
     wx.switchTab({
       url: '../manufacturer-list/manufacturer-list'
     })
