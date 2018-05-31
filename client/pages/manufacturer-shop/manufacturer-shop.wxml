@@ -36,8 +36,15 @@
                         </view>
                         <navigator url="../manufacturer-goods-view/manufacturer-goods-view?id={{g.id}}" class="weui-article">
                             <view class="weui-article__p">
-                                <view style="color:#e64340" class="home_item_content">
-                                    #{{g.type_ele.name}}#
+                                <view class="p" style="font-size:12px">
+                                    <view style="color:#1aad19;margin-right:10px" class="home_item_content" wx:if="{{g.isAd}}">
+                                        <image src="/images/good.png" style="width:16px;height:16px;position:relative;top:3px;" />
+                                        优质
+                                    </view>
+                                    <view style="color:#e64340;" class="home_item_content">
+                                        <image src="/images/label.png" style="width:16px;height:16px;position:relative;top:3px;" />
+                                        {{g.type_ele.name}}
+                                    </view>
                                 </view>
                                 <view class="home_item_content">{{g.name}}，{{g.intro}}</view>
                                 <view style="margin-top:10px">

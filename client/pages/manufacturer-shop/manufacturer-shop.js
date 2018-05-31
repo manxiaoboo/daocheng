@@ -37,10 +37,12 @@ Page({
                     if (g.photos) {
                         g.photos_arr = g.photos.split(',')
                     }
-                    g.photos_arr.pop();
-                    g.photos_arr.pop();
+                    if (g.photos_arr.length > 2) {
+                        g.photos_arr.pop();
+                        g.photos_arr.pop();
+                    }
                     g.updatedDate = util.formatTime2(new Date(g.updatedAt));
-                    g.intro = g.intro.slice(1,20) + '...';
+                    g.intro = g.intro.slice(1, 20) + '...';
                 })
                 console.info(manufacturer)
                 that.setData({
@@ -72,10 +74,12 @@ Page({
                     if (g.photos) {
                         g.photos_arr = g.photos.split(',')
                     }
-                    g.photos_arr.pop();
-                    g.photos_arr.pop();
+                    if (g.photos_arr.length > 2) {
+                        g.photos_arr.pop();
+                        g.photos_arr.pop();
+                    }
                     g.updatedDate = util.formatTime2(new Date(g.updatedAt));
-                    g.intro = g.intro.slice(1,20) + '...';
+                    g.intro = g.intro.slice(1, 20) + '...';
                     manufacturer.goods.push(g)
                 })
                 that.setData({
@@ -88,20 +92,20 @@ Page({
     call: function (e) {
         if (this.data.me.role == 'visitor') {
             wx.showModal({
-              title: '游客提示',
-              content: '您尚未登录，是否立即登录？',
-              confirmText: "登录",
-              cancelText: "取消",
-              success: function (res) {
-                if (res.confirm) {
-                  wx.navigateTo({
-                    url: '../login/login'
-                  })
+                title: '游客提示',
+                content: '您尚未登录，是否立即登录？',
+                confirmText: "登录",
+                cancelText: "取消",
+                success: function (res) {
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url: '../login/login'
+                        })
+                    }
                 }
-              }
             });
             return;
-          }
+        }
         wx.makePhoneCall({
             phoneNumber: e.currentTarget.dataset.phone,
             success: function () {

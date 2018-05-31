@@ -21,16 +21,33 @@
                 </view>
             </view>
             <view class="p margin-top-mini" style="width:60%;margin:10px auto;">
-                <button class="weui-btn" style="width:100%" size="mini" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">删除商品</button>
-                <button class="weui-btn" style="width:100%" size="mini" bindtap="closeGoods" plain="true" type="danger" wx:if="{{!goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">放入回收站</button>
-                <button class="weui-btn" style="width:100%" size="mini" bindtap="openGoods" plain="true" type="primary" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">恢复产品</button>
-                <button class="weui-btn" style="width:100%" size="mini" bindtap="goEdit" plain="true" type="primary" wx:if="{{(me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">修改产品信息</button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="deleteGoods" plain="true" type="danger" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">
+                    删除商品
+                </button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="closeGoods" plain="true" type="danger" wx:if="{{!goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">
+                    放入回收站
+                </button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="openGoods" plain="true" type="primary" wx:if="{{goods.isDelete && (me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">
+                    恢复产品
+                </button>
+                <button class="weui-btn" style="width:100%" size="mini" bindtap="goEdit" plain="true" type="primary" wx:if="{{(me && me.roleName) == '厂商' && goods.manufacturerId == me.manufacturer.id}}">
+                    修改产品信息
+                </button>
             </view>
             <view class="p" style="padding:0 12px">
-                <view style="color:#e64340;margin-right:5px;" class="home_item_content">#{{goods.type_ele.name}}#</view>
+                <view class="p" style="font-size:12px">
+                    <view style="color:#1aad19;margin-right:10px" class="home_item_content" wx:if="{{goods.isAd}}">
+                        <image src="/images/good.png" style="width:16px;height:16px;position:relative;top:3px;" />
+                        优质
+                    </view>
+                    <view style="color:#e64340;" class="home_item_content">
+                        <image src="/images/label.png" style="width:16px;height:16px;position:relative;top:3px;" />
+                        {{goods.type_ele.name}}
+                    </view>
+                </view>
                 <view class="home_item_content">{{goods.name}}，{{goods.intro}}</view>
                 <view style="margin-top:10px">
-                    <image src="{{'http://'+p}}" wx:for="{{goods.photos_arr}}" wx:for-item="p" wx:key="*this" style="width:100%;"/>
+                    <image src="{{'http://'+p}}" wx:for="{{goods.photos_arr}}" wx:for-item="p" wx:key="*this" style="width:100%;" />
                 </view>
             </view>
         </view>
