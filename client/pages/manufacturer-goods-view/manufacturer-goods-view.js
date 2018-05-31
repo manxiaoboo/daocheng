@@ -185,7 +185,7 @@ Page({
               cancelText: "取消",
               success: function (res) {
                 if (res.confirm) {
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../login/login'
                   })
                 }

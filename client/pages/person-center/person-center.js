@@ -42,8 +42,8 @@ Page({
                     wx.removeStorage({
                         key: 'authToken',
                         success: function (res) {
-                            wx.redirectTo({
-                                url: '../login/login'
+                            wx.switchTab({
+                                url: '../dashboard/dashboard'
                             })
                         }
                     })
@@ -52,7 +52,7 @@ Page({
         });
     },
     goLogin: function () {
-        wx.redirectTo({
+        wx.navigateTo({
             url: '../login/login'
         })
     }

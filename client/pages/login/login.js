@@ -74,6 +74,11 @@ Page({
             }
         })
     },
+    goDashboard: function(){
+        wx.switchTab({
+            url: '../dashboard/dashboard'
+        })
+    },
     userNameInput: function (e) {
         this.setData({
             userName: e.detail.value

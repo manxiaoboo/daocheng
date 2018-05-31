@@ -75,17 +75,17 @@ Page({
     let token = wx.getStorageSync('authToken');
     if (me.userName == 'nonghu1') {
       that.setData({
-        tabs: ["热门商品", "优质商品"]
+        tabs: ["热门商品"]
       })
     } else {
       that.setData({
-        tabs: ["热门商品", "优质商品", '最新问答']
+        tabs: ["热门商品", '最新问答']
       })
     }
 
     if (me.roleId == '304414ba-e6c4-11e7-b42e-060400ef5315') {
       that.setData({
-        tabs: ["热门商品", "优质商品", '最新问答', '厂商']
+        tabs: ["热门商品", '最新问答', '厂商']
       })
     }
     wx.getSystemInfo({
@@ -108,8 +108,10 @@ Page({
           if (g.photos) {
             g.photos_arr = g.photos.split(',')
           }
-          g.photos_arr.pop();
-          g.photos_arr.pop();
+          if (g.photos_arr.length > 2) {
+            g.photos_arr.pop();
+            g.photos_arr.pop();
+          }
           g.updatedDate = util.formatTime2(new Date(g.updatedAt));
         })
         that.setData({
@@ -118,26 +120,26 @@ Page({
       }
     })
 
-    wx.request({
-      url: config.service.host + '/distributor/goodsSortByAD?page=1',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res_adgoods) {
-        let goods = res_adgoods.data;
-        goods.forEach(g => {
-          if (g.photos) {
-            g.photos_arr = g.photos.split(',')
-          }
-          g.photos_arr.pop();
-          g.photos_arr.pop();
-          g.updatedDate = util.formatTime2(new Date(g.updatedAt));
-        })
-        that.setData({
-          adGoods: goods
-        })
-      }
-    })
+    // wx.request({
+    //   url: config.service.host + '/distributor/goodsSortByAD?page=1',
+    //   header: {
+    //     'content-type': 'application/json'
+    //   },
+    //   success: function (res_adgoods) {
+    //     let goods = res_adgoods.data;
+    //     goods.forEach(g => {
+    //       if (g.photos) {
+    //         g.photos_arr = g.photos.split(',')
+    //       }
+    //       g.photos_arr.pop();
+    //       g.photos_arr.pop();
+    //       g.updatedDate = util.formatTime2(new Date(g.updatedAt));
+    //     })
+    //     that.setData({
+    //       adGoods: goods
+    //     })
+    //   }
+    // })
 
     wx.request({
       url: config.service.host + '/question/allQuestions?page=1',
@@ -229,14 +231,14 @@ Page({
                       });
                     },
                     fail: function (err) {
-                      wx.redirectTo({
+                      wx.navigateTo({
                         url: '../login/login'
                       })
                     }
                   })
                 },
                 fail: function (err) {
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../login/login'
                   })
                 }
@@ -321,7 +323,7 @@ Page({
                   })
                 },
                 fail: function (err) {
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../login/login'
                   })
                 }
@@ -350,7 +352,7 @@ Page({
                   });
                 },
                 fail: function (err) {
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../login/login'
                   })
                 }
@@ -366,7 +368,7 @@ Page({
         });
       },
       fail: function (err) {
-        wx.redirectTo({
+        wx.navigateTo({
           url: '../login/login'
         })
       }
@@ -418,7 +420,7 @@ Page({
         cancelText: "取消",
         success: function (res) {
           if (res.confirm) {
-            wx.redirectTo({
+            wx.navigateTo({
               url: '../login/login'
             })
           }
