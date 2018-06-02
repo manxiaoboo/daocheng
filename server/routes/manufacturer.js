@@ -5,6 +5,8 @@ const DistributorGoodsType = require('../models/distributorGoodsType');
 const ManufacturerGoods = require('../models/manufacturerGoods');
 const ManufacturerUser = require('../models/manufacturerUser');
 const User = require('../models/user');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const {
     isAuthenticated
@@ -16,20 +18,24 @@ const {
  */
 router.get('/validateManufacturerUser', async (req, res, next) => {
     let page = req.query.page;
+    let type = req.query.type;
     let users = await User.findAll({
         where: {
             roleId: '2191c46c-e6c4-11e7-b42e-060400ef5315',
-            isValidate: true
+            isValidate: true,
+            label: {
+                [Op.like]: '%' + type + '%'
+            }
         },
-        limit:10,
-        offset: 10 * (page -1)
+        limit: 10,
+        offset: 10 * (page - 1)
     });
     for (const u of users) {
         u.dataValues.manufacturer = await ManufacturerUser.findOne({
             where: {
                 userId: u.dataValues.id
-        }
-    })
+            }
+        })
     }
     res.json(users);
 });
@@ -72,6 +78,34 @@ router.post('/create', isAuthenticated(), async (req, res, next) => {
     goods.createdAt = new Date();
     goods.updatedAt = new Date();
     let newgoods = await ManufacturerGoods.create(goods);
+    let manufacturerUser = await ManufacturerUser.findOne({
+        where: {
+            id: goods.manufacturerId
+        }
+    })
+    let user = await User.findOne({
+        where: {
+            id: manufacturerUser.dataValues.userId
+        }
+    })
+    let allGoods = await ManufacturerGoods.findAll({
+        where: {
+            manufacturerId: manufacturerUser.dataValues.id
+        }
+    })
+    const labels = []
+    for (const g of allGoods) {
+        let labelCount = labels.findIndex(l => l === g.dataValues.type)
+        if (labelCount === -1) {
+            labels.push(g.dataValues.type)
+        }
+    }
+    user.dataValues.label = labels.join('|')
+    await User.update(user.dataValues, {
+        where: {
+            id: user.dataValues.id
+        }
+    });
     res.json(newgoods);
 });
 
@@ -84,6 +118,34 @@ router.post('/update', isAuthenticated(), async (req, res, next) => {
     let newgoods = await ManufacturerGoods.update(goods, {
         where: {
             id: goods.id
+        }
+    });
+    let manufacturerUser = await ManufacturerUser.findOne({
+        where: {
+            id: goods.manufacturerId
+        }
+    })
+    let user = await User.findOne({
+        where: {
+            id: manufacturerUser.dataValues.userId
+        }
+    })
+    let allGoods = await ManufacturerGoods.findAll({
+        where: {
+            manufacturerId: manufacturerUser.dataValues.id
+        }
+    })
+    const labels = []
+    for (const g of allGoods) {
+        let labelCount = labels.findIndex(l => l === g.dataValues.type)
+        if (labelCount === -1) {
+            labels.push(g.dataValues.type)
+        }
+    }
+    user.dataValues.label = labels.join('|')
+    await User.update(user.dataValues, {
+        where: {
+            id: user.dataValues.id
         }
     });
     res.json(newgoods);
@@ -100,6 +162,34 @@ router.post('/recovery', isAuthenticated(), async (req, res, next) => {
             id: goods.id
         }
     });
+    let manufacturerUser = await ManufacturerUser.findOne({
+        where: {
+            id: goods.manufacturerId
+        }
+    })
+    let user = await User.findOne({
+        where: {
+            id: manufacturerUser.dataValues.userId
+        }
+    })
+    let allGoods = await ManufacturerGoods.findAll({
+        where: {
+            manufacturerId: manufacturerUser.dataValues.id
+        }
+    })
+    const labels = []
+    for (const g of allGoods) {
+        let labelCount = labels.findIndex(l => l === g.dataValues.type)
+        if (labelCount === -1) {
+            labels.push(g.dataValues.type)
+        }
+    }
+    user.dataValues.label = labels.join('|')
+    await User.update(user.dataValues, {
+        where: {
+            id: user.dataValues.id
+        }
+    });
     res.json(newgoods);
 });
 
@@ -112,6 +202,34 @@ router.post('/reRecovery', isAuthenticated(), async (req, res, next) => {
     let newgoods = await ManufacturerGoods.update(goods, {
         where: {
             id: goods.id
+        }
+    });
+    let manufacturerUser = await ManufacturerUser.findOne({
+        where: {
+            id: goods.manufacturerId
+        }
+    })
+    let user = await User.findOne({
+        where: {
+            id: manufacturerUser.dataValues.userId
+        }
+    })
+    let allGoods = await ManufacturerGoods.findAll({
+        where: {
+            manufacturerId: manufacturerUser.dataValues.id
+        }
+    })
+    const labels = []
+    for (const g of allGoods) {
+        let labelCount = labels.findIndex(l => l === g.dataValues.type)
+        if (labelCount === -1) {
+            labels.push(g.dataValues.type)
+        }
+    }
+    user.dataValues.label = labels.join('|')
+    await User.update(user.dataValues, {
+        where: {
+            id: user.dataValues.id
         }
     });
     res.json(newgoods);

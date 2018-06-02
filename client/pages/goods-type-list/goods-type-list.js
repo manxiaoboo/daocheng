@@ -8,10 +8,10 @@ Page({
         types: [],
         page: 1,
         loading: false,
-        currentTab: 0,  //对应样式变化  
-        scrollTop: 0,  //用作跳转后右侧视图回到顶部  
-        screenArray: [], //左侧导航栏内容  
-        screenId: "",  //后台查询需要的字段  
+        currentTab: 0,  //对应样式变化
+        scrollTop: 0,  //用作跳转后右侧视图回到顶部
+        screenArray: [], //左侧导航栏内容
+        screenId: "",  //后台查询需要的字段
     },
     onLoad: function (option) {
         var that = this;

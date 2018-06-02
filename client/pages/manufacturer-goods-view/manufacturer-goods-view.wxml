@@ -47,7 +47,7 @@
                 </view>
                 <view class="home_item_content">{{goods.name}}，{{goods.intro}}</view>
                 <view style="margin-top:10px">
-                    <image src="{{'http://'+p}}" wx:for="{{goods.photos_arr}}" wx:for-item="p" wx:key="*this" style="width:100%;" />
+                    <image src="{{'http://'+p}}" wx:for="{{goods.photos_arr}}" mode="widthFix" wx:for-item="p" wx:key="*this" style="width:100%;" />
                 </view>
             </view>
         </view>

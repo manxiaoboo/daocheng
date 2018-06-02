@@ -52,6 +52,10 @@ var User = sequelize.define('user', {
         type: Sequelize.STRING,
         field: 'salt'
     },
+    label: {
+        type: Sequelize.STRING,
+        field: 'label'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'

@@ -5,6 +5,9 @@ Page({
         me: ''
     },
     onLoad: function () {
+
+    },
+    onShow: function () {
         console.info("我的 => load");
         var that = this;
         wx.getStorage({
@@ -42,6 +45,11 @@ Page({
                     wx.removeStorage({
                         key: 'authToken',
                         success: function (res) {
+                            let me = { role: 'visitor' }
+                            that.setData({
+                                me: me,
+                                canShow: true
+                            })
                             wx.switchTab({
                                 url: '../dashboard/dashboard'
                             })
