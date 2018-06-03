@@ -15,7 +15,7 @@
         <view class="intro">{{manufacturer.manufacturer.intro}}</view>
     </view>
     <view class="shop-goods">
-        <view wx:if="{{manufacturer.goods.length>0}}">
+        <view wx:if="{{manufacturer.goods && manufacturer.goods.length>0}}">
             <view style="height:0px;"></view>
             <view class="weui-panel weui-panel_access" wx:for="{{manufacturer.goods}}" wx:for-item="g">
                 <view class="weui-panel__bd">

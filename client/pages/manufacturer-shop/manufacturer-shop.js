@@ -36,10 +36,10 @@ Page({
                 manufacturer.goods.forEach(g => {
                     if (g.photos) {
                         g.photos_arr = g.photos.split(',')
-                    }
-                    if (g.photos_arr.length > 2) {
-                        g.photos_arr.pop();
-                        g.photos_arr.pop();
+                        if (g.photos_arr.length > 2) {
+                            g.photos_arr.pop();
+                            g.photos_arr.pop();
+                        }
                     }
                     g.updatedDate = util.formatTime2(new Date(g.updatedAt));
                     g.intro = g.intro.slice(1, 20) + '...';
@@ -73,10 +73,10 @@ Page({
                 current_goods.forEach(g => {
                     if (g.photos) {
                         g.photos_arr = g.photos.split(',')
-                    }
-                    if (g.photos_arr.length > 2) {
-                        g.photos_arr.pop();
-                        g.photos_arr.pop();
+                        if (g.photos_arr.length > 2) {
+                            g.photos_arr.pop();
+                            g.photos_arr.pop();
+                        }
                     }
                     g.updatedDate = util.formatTime2(new Date(g.updatedAt));
                     g.intro = g.intro.slice(1, 20) + '...';

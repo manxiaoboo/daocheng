@@ -45,7 +45,7 @@
                             <view class="weui-form-preview__bd">
                                 <view class="weui-form-preview__item">
                                     <view class="weui-form-preview__label">名字</view>
-                                    <view class="weui-form-preview__value">{{order.farmer.nickName}}</view>
+                                    <view class="weui-form-preview__value">{{order.farmer.userName}}</view>
                                 </view>
                                 <view class="weui-form-preview__item">
                                     <view class="weui-form-preview__label">省/市/区</view>

@@ -1,13 +1,15 @@
 <view id="register_form">
 <form bindsubmit="register">  
 <view class="userinfo">
-        <image
+        <!-- <image
             class="userinfo-avatar"
             src="{{logged ? userInfo.avatarUrl : './user-unlogin.png'}}"
             background-size="cover"
-        />
+        /> -->
+        <open-data type="userAvatarUrl" class="userinfo-avatar"></open-data>
         <view>
-            <text class="userinfo-nickname">昵称：{{logged ? userInfo.nickName : '未填入'}}</text>
+            <!-- <text class="userinfo-nickname">昵称：{{logged ? userInfo.nickName : '未填入'}}</text> -->
+            <open-data type="userNickName" class="userinfo-nickname"></open-data>
         </view>
     </view>
 <view class="weui-cells__title">基本信息</view>

@@ -165,40 +165,39 @@ Page({
     },
     onLoad: function () {
         var that = this;
-        util.showBusy('拉取信息')
-        qcloud.login({
-            success(result) {
-                if (result) {
-                    util.showSuccess('填入成功')
-                    that.setData({
-                        userInfo: result,
-                        logged: true
-                    })
-                } else {
-                    // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-                    qcloud.request({
-                        url: config.service.requestUrl,
-                        login: true,
-                        success(result) {
-                            util.showSuccess('填入成功')
-                            console.info(result);
-                            that.setData({
-                                userInfo: result.data.data.userinfo,
-                                logged: true
-                            })
-                        },
-                        fail(error) {
-                            util.showModel('请求失败', error)
-                            console.log('request fail', error)
-                        }
-                    })
-                }
-            },
-            fail(error) {
-                util.showModel('登录失败', error)
-                console.log('登录失败', error)
-            }
-        })
+        // util.showBusy('拉取信息')
+        // qcloud.login({
+        //     success(result) {
+        //         if (result) {
+        //             util.showSuccess('填入成功')
+        //             that.setData({
+        //                 userInfo: result,
+        //                 logged: true
+        //             })
+        //         } else {
+        //             qcloud.request({
+        //                 url: config.service.requestUrl,
+        //                 login: true,
+        //                 success(result) {
+        //                     util.showSuccess('填入成功')
+        //                     console.info(result);
+        //                     that.setData({
+        //                         userInfo: result.data.data.userinfo,
+        //                         logged: true
+        //                     })
+        //                 },
+        //                 fail(error) {
+        //                     util.showModel('请求失败', error)
+        //                     console.log('request fail', error)
+        //                 }
+        //             })
+        //         }
+        //     },
+        //     fail(error) {
+        //         util.showModel('登录失败', error)
+        //         console.log('登录失败', error)
+        //     }
+        // })
         wx.request({
             url: config.service.host + '/users/roles',
             header: {

@@ -10,7 +10,7 @@
                     <view class="weui-form-preview" wx:for="{{orders}}" wx:for-item="o"  wx:for-index="id">
                         <view class="weui-form-preview__hd">
                             <view class="weui-form-preview__item">
-                                <view class="weui-form-preview__label">买家：{{o.farmer.nickName}}</view>
+                                <view class="weui-form-preview__label">买家：{{o.farmer.userName}}</view>
                                 <view class="weui-form-preview__value_in-hd">
                                 <view class="weui-badge">{{screenArray[currentTab].name}}</view>
                                 </view>

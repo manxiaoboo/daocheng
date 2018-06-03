@@ -10,8 +10,7 @@ Page({
         input_intro: '',
         typeIndex: 0
     },
-    onLoad: function () { },
-    onShow: function () {
+    onLoad: function () {
         console.info("创建产品 => load");
         let that = this;
         let me = wx.getStorageSync('user');
@@ -44,6 +43,8 @@ Page({
             }
         })
     },
+    onShow: function () {
+    },
     typeChange: function (e) {
         let name = this.data.pickerTypes[e.detail.value];
         this.data.types.forEach(t => {
@@ -62,11 +63,11 @@ Page({
         goods.manufacturerId = this.data.me.manufacturer.id;
         let token = wx.getStorageSync('authToken');
         goods.type = this.data.input_Type;
-        if(!goods.name){
+        if (!goods.name) {
             util.showModel("提示", "请填写商品名称");
             return;
         }
-        if(!goods.type){
+        if (!goods.type) {
             util.showModel("提示", "请选择商品类型");
             return;
         }
@@ -90,12 +91,12 @@ Page({
         this.setData({
             input_name: e.detail.value
         })
-    }, 
+    },
     doInputType: function (e) {
         this.setData({
             input_Type: e.detail.value
         })
-    }, 
+    },
     doInputIntro: function (e) {
         this.setData({
             input_intro: e.detail.value

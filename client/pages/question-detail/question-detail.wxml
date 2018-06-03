@@ -5,7 +5,7 @@
             </view>
             <view class="weui-article__section">
                 <view class="weui-article__title">
-                    {{question.createUser.nickName}} | {{question.createdDate}} | 状态：
+                    {{question.createUser.userName}} | {{question.createdDate}} | 状态：
                     <text class="weui-badge" wx:if="{{question.status == 'open'}}">未解决</text>
                     <text class="weui-badge" style="background:#3cc51f;" wx:if="{{question.status == 'close'}}">已解决</text>
                 </view>
@@ -39,8 +39,8 @@
                             <view class="weui-badge" wx:if="{{r.replyRole == 'admin'}}" style="font-size:11px;position:absolute;right:0;bottom:0;background-color:green;">管理员</view>
                         </view>
                         <view class="weui-cell__bd">
-                            <view style="font-size: 13px;">{{r.replyWith.nickName}}</view>
-                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.nickName}}" wx:if="{{question.status == 'open'}}">回复</text>
+                            <view style="font-size: 13px;">{{r.replyWith.userName}}</view>
+                            <text class="reply_root_btn" bindtap="replyOther" data-id="{{r.id}}" data-name="{{r.replyWith.userName}}" wx:if="{{question.status == 'open'}}">回复</text>
                             <view style="font-size: 11px;color: #888888;">{{r.createdDate}}</view>
                             <view style="font-size: 14px;margin-top:5px;">
                                 {{r.content}}

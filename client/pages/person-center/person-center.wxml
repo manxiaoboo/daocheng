@@ -1,107 +1,107 @@
 <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '农户' && false}}">
-            <view class="weui-cell">
-                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
-                </view>
-                <view class="weui-cell__bd">
-                    <view>{{me.nickName}}</view>
-                    <view style="font-size: 13px;color: #888888;">{{me.userName}}</view>
-                </view>
-            </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+            <view>{{me.nickName}}</view>
+            <view style="font-size: 13px;color: #888888;">{{me.userName}}</view>
+        </view>
+    </view>
 </view>
 <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '专家' && false}}">
-            <view class="weui-cell">
-                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
-                </view>
-                <view class="weui-cell__bd">
-                    <view>{{me.nickName}}({{me.userName}})</view>
-                    <view style="font-size: 13px;color: #888888;"> 级别：高级 / 积分：{{me.expert.score}}</view>
-                </view>
-            </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+            <view>{{me.nickName}}({{me.userName}})</view>
+            <view style="font-size: 13px;color: #888888;">级别：高级 / 积分：{{me.expert.score}}</view>
+        </view>
+    </view>
 </view>
 <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '经销商' && false}}">
-            <view class="weui-cell">
-                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                    <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block"/>
-                </view>
-                <view class="weui-cell__bd">
-                    <view>{{me.nickName}}({{me.userName}})</view>
-                    <view style="font-size: 13px;color: #888888;"> 经销商</view>
-                </view>
-            </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image src="{{me.picture}}" style="width: 50px; height: 50px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+            <view>{{me.nickName}}({{me.userName}})</view>
+            <view style="font-size: 13px;color: #888888;">经销商</view>
+        </view>
+    </view>
 </view>
-
 <view class="person_head" wx:if="{{me.role != 'visitor'}}">
     <view>
-        <image src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;"/>
+        <image wx:if="{{me.picture}}" src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;" />
+        <view wx:if="{{!me.picture}}" style="width: 70px; height: 70px; display: block;margin:0 auto;border: 2px solid #fff;">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
     </view>
-    <view class="person_name">{{me.nickName}}</view>
+    <view class="person_name" wx:if="{{me.nickName}}">{{me.nickName}}</view>
+    <view class="person_name" wx:if="{{!me.nickName}}"><open-data type="userNickName" class="userinfo-nickname"></open-data></view>
 </view>
-
 <view class="person_head" wx:if="{{me.role == 'visitor'}}">
     <view>
-        <image src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;"/>
+        <!-- <image src="{{me.picture}}" style="width: 70px; height: 70px; display: block;border-radius:50%;margin:0 auto;border: 2px solid #fff;"/> -->
+        <view style="width: 70px; height: 70px; display: block;margin:0 auto;border: 2px solid #fff;">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
     </view>
     <view class="person_name">未登录</view>
 </view>
-
 <view wx:if="{{me.role != 'visitor'}}">
-<view class="weui-cells__title">功能</view>
-<view class="weui-cells weui-cells_after-title">
-            <navigator url="../user-edit/user-edit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">个人信息</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
-            </navigator>
-</view>
-
-<view class="weui-cells weui-cells_after-title" wx:if="{{me.userName != 'nonghu1'}}">
-            <navigator url="../question-more-list/question-more-list" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">知识问答</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
-            </navigator>
-</view>
-
-<view class="weui-cells__title">我的信息</view>
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell">
-                <view class="weui-cell__bd">电话</view>
-                <view class="weui-cell__ft">{{me.phone}}</view>
-            </view>
-            <view class="weui-cell">
-                <view class="weui-cell__bd">所在省</view>
-                <view class="weui-cell__ft">{{me.province}}</view>
-            </view>
-            <view class="weui-cell">
-                <view class="weui-cell__bd">所在市/区</view>
-                <view class="weui-cell__ft">{{me.city}} / {{me.area}}</view>
-            </view>
+    <view class="weui-cells__title">功能</view>
+    <view class="weui-cells weui-cells_after-title">
+        <navigator url="../user-edit/user-edit" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">个人信息</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+        </navigator>
+    </view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{me.userName != 'nonghu1'}}">
+        <navigator url="../question-more-list/question-more-list" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">知识问答</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
+        </navigator>
+    </view>
+    <view class="weui-cells__title">我的信息</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">电话</view>
+            <view class="weui-cell__ft">{{me.phone}}</view>
         </view>
-<view class="weui-cells__title" wx:if="{{me.roleName == '农户'}}">设备信息</view>
-<view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '农户'}}">
-            <view class="weui-cell">
-                <view class="weui-cell__bd">是否绑定设备</view>
-                <view class="weui-cell__ft">{{me.deviceId?'已绑定设备':'未绑定设备'}}</view>
-            </view>
+        <view class="weui-cell">
+            <view class="weui-cell__bd">所在省</view>
+            <view class="weui-cell__ft">{{me.province}}</view>
+        </view>
+        <view class="weui-cell">
+            <view class="weui-cell__bd">所在市/区</view>
+            <view class="weui-cell__ft">{{me.city}} / {{me.area}}</view>
+        </view>
+    </view>
+    <view class="weui-cells__title" wx:if="{{me.roleName == '农户'}}">设备信息</view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '农户'}}">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">是否绑定设备</view>
+            <view class="weui-cell__ft">{{me.deviceId?'已绑定设备':'未绑定设备'}}</view>
+        </view>
+    </view>
+    <view class="weui-cells__title" wx:if="{{me.roleName == '农户'}}">订单信息</view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '农户'}}">
+        <navigator url="../order-farmer-list/order-farmer-list" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">我的订单</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
+        </navigator>
+    </view>
+    <view class="weui-cells__title" wx:if="{{me.roleName == '专家'}}">专家信息</view>
+    <view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '专家'}}">
+        <navigator url="../edit-expert/edit-expert" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class="weui-cell__bd">我的专业信息</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+        </navigator>
+    </view>
+    <button class="weui-btn" type="warn" bindtap="logout">退出登录</button>
 </view>
-<view class="weui-cells__title" wx:if="{{me.roleName == '农户'}}">订单信息</view>
-<view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '农户'}}">
-            <navigator url="../order-farmer-list/order-farmer-list" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">我的订单</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">查看</view>
-            </navigator>
-</view>
-
-<view class="weui-cells__title" wx:if="{{me.roleName == '专家'}}">专家信息</view>
-<view class="weui-cells weui-cells_after-title" wx:if="{{me.roleName == '专家'}}">
-            <navigator url="../edit-expert/edit-expert" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd">我的专业信息</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
-            </navigator>
-</view>
-<button class="weui-btn" type="warn" bindtap="logout">退出登录</button>
-</view>
-
 <view wx:if="{{me.role == 'visitor'}}" style="margin-top:50px;padding:0 20px;">
     <button class="weui-btn" type="primary" bindtap="goLogin">点击登录</button>
 </view>
