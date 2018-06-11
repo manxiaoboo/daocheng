@@ -9,5 +9,5 @@
     <navigator url="../forget/forget" class="foget">忘记密码？</navigator>
     <button bindtap="logIn" class="loginbtn">登录</button>
     <button bindtap="goRegister" class="registerbtn" url="../dashboard/dashboard">注册</button>  
-  </view>  
-</view>  
+  </view>
+</view>
