@@ -437,7 +437,7 @@ router.post('/delete-domain', isAuthenticated(), async (req, res, next) => {
 /**
  * 根据userId获取专家信息
  */
-router.get('/expertByUserId', isAuthenticated(), async (req, res, next) => {
+router.get('/expertByUserId', async (req, res, next) => {
     let expert = await ExpertUser.findOne({
         where: {
             userId: req.query.userId
