@@ -155,57 +155,118 @@ Page({
         });
     },
     uploadImage: function () {
-        if (this.data.goods.photos_arr && this.data.goods.photos_arr.length >= 4) {
-            util.showModel("提示", "最多只能上传4张图片");
+        let that = this;
+        if (this.data.goods.photos_arr && this.data.goods.photos_arr.length >= 9) {
+            util.showModel("提示", "最多只能上传9张图片");
             return;
         }
-        let that = this;
-        let uploadToken = wx.getStorageSync('uploadToken');
-        let token = wx.getStorageSync('authToken');
         wx.chooseImage({
-            count: 1,
+            count: 9 - (that.data.goods.photos_arr ? that.data.goods.photos_arr.length : 0),
             success: function (res) {
-                var filePath = res.tempFilePaths[0];
-                qiniuUploader.upload(filePath, (res) => {
-                    let goods = that.data.goods;
-                    goods.photos_arr.push(res.imageURL);
-                    let result = goods.photos_arr.join(',');
-                    util.showBusy('正在上传图片');
-                    wx.request({
-                        url: config.service.host + '/manufacturer/updateImage',
-                        header: {
-                            'Authorization': 'Bearer ' + token
-                        },
-                        method: 'POST',
-                        data: { images: result, id: that.data.goodsId },
-                        success: (res) => {
-                            util.showSuccess("处理成功");
-                            goods.photos = res.data.photos;
-                            if (goods.photos) {
-                                goods.photos_arr = goods.photos.split(',')
-                            }
-                            that.setData({
-                                goods: goods
-                            })
-                        },
-                        fail: function (err) {
-
-                        }
-                    })
-
-                }, (error) => {
-                    console.log('error: ' + error);
-                }, {
-                        region: 'ECN',
-                        uploadURL: 'https://up.qbox.me',
-                        domain: 'p2nrs4i3e.bkt.clouddn.com',
-                        uptoken: uploadToken,
-                        fileHead: 'image',
-                        imgName: new Date().getTime()
-                    })
+                that.doUpdate(res, 0)
             }
         });
     },
+    doUpdate(chooseRes, index) {
+        let that = this;
+        let uploadToken = wx.getStorageSync('uploadToken');
+        let token = wx.getStorageSync('authToken');
+        const filePath = chooseRes.tempFilePaths[index];
+        qiniuUploader.upload(filePath, (res) => {
+            let goods = that.data.goods;
+            goods.photos_arr.push(res.imageURL);
+            let result = goods.photos_arr.join(',');
+            util.showBusy('正在上传图片');
+            wx.request({
+                url: config.service.host + '/manufacturer/updateImage',
+                header: {
+                    'Authorization': 'Bearer ' + token
+                },
+                method: 'POST',
+                data: { images: result, id: that.data.goodsId },
+                success: (res) => {
+                    goods.photos = res.data.photos;
+                    if (goods.photos) {
+                        goods.photos_arr = goods.photos.split(',')
+                    }
+                    that.setData({
+                        goods: goods
+                    })
+                    if (index < chooseRes.tempFilePaths.length - 1) {
+                        that.doUpdate(chooseRes, index + 1);
+                    } else {
+                        util.showSuccess("处理成功");
+                    }
+
+                },
+                fail: function (err) {
+
+                }
+            })
+
+        }, (error) => {
+            console.log('error: ' + error);
+        }, {
+                region: 'ECN',
+                uploadURL: 'https://up.qbox.me',
+                domain: 'p2nrs4i3e.bkt.clouddn.com',
+                uptoken: uploadToken,
+                fileHead: 'image',
+                imgName: new Date().getTime()
+            })
+    },
+    // uploadImage: function () {
+    //     if (this.data.goods.photos_arr && this.data.goods.photos_arr.length >= 4) {
+    //         util.showModel("提示", "最多只能上传4张图片");
+    //         return;
+    //     }
+    //     let that = this;
+    //     let uploadToken = wx.getStorageSync('uploadToken');
+    //     let token = wx.getStorageSync('authToken');
+    //     wx.chooseImage({
+    //         count: 1,
+    //         success: function (res) {
+    //             var filePath = res.tempFilePaths[0];
+    //             qiniuUploader.upload(filePath, (res) => {
+    //                 let goods = that.data.goods;
+    //                 goods.photos_arr.push(res.imageURL);
+    //                 let result = goods.photos_arr.join(',');
+    //                 util.showBusy('正在上传图片');
+    //                 wx.request({
+    //                     url: config.service.host + '/manufacturer/updateImage',
+    //                     header: {
+    //                         'Authorization': 'Bearer ' + token
+    //                     },
+    //                     method: 'POST',
+    //                     data: { images: result, id: that.data.goodsId },
+    //                     success: (res) => {
+    //                         util.showSuccess("处理成功");
+    //                         goods.photos = res.data.photos;
+    //                         if (goods.photos) {
+    //                             goods.photos_arr = goods.photos.split(',')
+    //                         }
+    //                         that.setData({
+    //                             goods: goods
+    //                         })
+    //                     },
+    //                     fail: function (err) {
+
+    //                     }
+    //                 })
+
+    //             }, (error) => {
+    //                 console.log('error: ' + error);
+    //             }, {
+    //                     region: 'ECN',
+    //                     uploadURL: 'https://up.qbox.me',
+    //                     domain: 'p2nrs4i3e.bkt.clouddn.com',
+    //                     uptoken: uploadToken,
+    //                     fileHead: 'image',
+    //                     imgName: new Date().getTime()
+    //                 })
+    //         }
+    //     });
+    // },
     typeChange: function (e) {
         let name = this.data.pickerTypes[e.detail.value];
         this.data.types.forEach(t => {

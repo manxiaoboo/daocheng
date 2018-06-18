@@ -2,7 +2,7 @@ var config = require('../../config')
 var util = require('../../utils/util.js')
 Page({
     data: {
-        motto: '稻成一体化平台',
+        motto: '稻城农业一体化平台',
         userName: '',
         password: ''
     },

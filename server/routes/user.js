@@ -79,27 +79,27 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/dashboard', isAuthenticated(), async (req, res, next) => {
     let result = {
-        counts:{},
-        distributors:[],
-        auditUsers:[],
-        auditGoods:[]
+        counts: {},
+        distributors: [],
+        auditUsers: [],
+        auditGoods: []
     };
     result.counts.expert = await ExpertUser.count();
-    result.counts.farmer = await User.count({where:{roleId:'27ea4974-e6c4-11e7-b42e-060400ef5315'}});
+    result.counts.farmer = await User.count({ where: { roleId: '27ea4974-e6c4-11e7-b42e-060400ef5315' } });
     result.counts.distributor = await DistributorUser.count();
-    result.distributors = await DistributorUser.findAll({limit: 6,order: [['createdAt', 'DESC']]});
-    result.auditUsers = await AuditUser.findAll({limit: 5,order: [['createdAt', 'DESC']]});
-    result.auditGoods = await AuditGoods.findAll({limit: 5,order: [['createdAt', 'DESC']]});
+    result.distributors = await DistributorUser.findAll({ limit: 6, order: [['createdAt', 'DESC']] });
+    result.auditUsers = await AuditUser.findAll({ limit: 5, order: [['createdAt', 'DESC']] });
+    result.auditGoods = await AuditGoods.findAll({ limit: 5, order: [['createdAt', 'DESC']] });
     for (const ag of result.auditGoods) {
         let g = ag.dataValues;
         g.goods = await DistributorGoods.findOne({
-            where:{
-                id:g.distributorGoodsId
+            where: {
+                id: g.distributorGoodsId
             }
         });
         g.goods.dataValues.distributor = await DistributorUser.findOne({
-            where:{
-                id:g.goods.dataValues.distributorId
+            where: {
+                id: g.goods.dataValues.distributorId
             }
         });
     }
@@ -125,10 +125,31 @@ router.get('/getUserByNameAndPhone', async (req, res, next) => {
     let user = await User.findOne({
         where: {
             userName: req.query.userName,
-            phone:req.query.phone,
-            roleId:{
+            phone: req.query.phone,
+            roleId: {
                 $ne: '2cf27ea0-e6c4-11e7-b42e-060400ef5315'
             }
+        }
+    });
+    res.json(user);
+});
+
+/**
+ * 检查用户名或电话是否已经存在
+ */
+router.post('/checkUserNameAndPhone', async (req, res, next) => {
+    let phone = req.body.phone;
+    let userName = req.body.userName;
+    let user = await User.findAll({
+        where: {
+            $or:[
+                {
+                    userName
+                },
+                {
+                    phone
+                }
+            ]
         }
     });
     res.json(user);
@@ -142,8 +163,8 @@ router.post('/changePassword', async (req, res, next) => {
     let newpass = req.body.password;
     encryptPassword(newpass, user.salt, async (err, pwd) => {
         user.password = pwd;
-        await User.update(user,{
-            where:{
+        await User.update(user, {
+            where: {
                 id: user.id
             }
         });
@@ -165,8 +186,8 @@ router.get('/me', isAuthenticated(), async (req, res, next) => {
         $ne: '2cf27ea0-e6c4-11e7-b42e-060400ef5315'
     };
     return User.findOne({
-            where: query
-        }, '-salt -password')
+        where: query
+    }, '-salt -password')
         .then(user => { // don't ever give out the password or salt
             if (!user) {
                 return res.status(401).end();
@@ -193,10 +214,10 @@ router.get('/roles', async (req, res, next) => {
  */
 router.post('/check-audit', (req, res, next) => {
     AuditUser.findOne({
-            where: {
-                "userName": req.body.userName
-            }
-        })
+        where: {
+            "userName": req.body.userName
+        }
+    })
         .then(user => {
             res.json(user);
         })
@@ -295,7 +316,7 @@ router.post('/register', isAuthenticated(), async (req, res, next) => {
         }
         await DistributorUser.create(distributor);
     }
-    
+
     //如果是厂商 为其创建专属身份 
     if (audit_user.roleId == '2191c46c-e6c4-11e7-b42e-060400ef5315') {
         let manufacturer = {
@@ -327,7 +348,56 @@ router.post('/audit-user', (req, res, next) => {
     encryptPassword(user.password, user.salt, async (err, pwd) => {
         user.password = pwd;
         await AuditUser.create(user);
-        res.json(user);
+        if (user.roleId == '27ea4974-e6c4-11e7-b42e-060400ef5315') {
+            const audit_user = user;
+            let tempuser = {
+                id: UUID.v1(),
+                nickName: audit_user.nickName,
+                password: audit_user.password,
+                userName: audit_user.userName,
+                roleId: audit_user.roleId,
+                role: "local",
+                province: audit_user.province,
+                city: audit_user.city,
+                area: audit_user.area,
+                isValidate: 1,
+                picture: audit_user.picture,
+                phone: audit_user.phone,
+                openId: audit_user.openId,
+                salt: audit_user.salt,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            let newUser = await User.create(tempuser);
+            let audit_user_done = {
+                id: UUID.v1(),
+                nickName: audit_user.nickName,
+                password: audit_user.password,
+                userName: audit_user.userName,
+                roleId: audit_user.roleId,
+                role: "local",
+                province: audit_user.province,
+                city: audit_user.city,
+                area: audit_user.area,
+                isValidate: 0,
+                picture: audit_user.picture,
+                phone: audit_user.phone,
+                openId: audit_user.openId,
+                salt: audit_user.salt,
+                auditUserId: req.query.userId,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            await AuditUserDone.create(audit_user_done);
+            await AuditUser.destroy({
+                where: {
+                    id: audit_user.id
+                }
+            });
+            res.json(newUser)
+        } else {
+            res.json(user);
+        }
     });
 });
 
@@ -506,8 +576,8 @@ router.get('/manufacturerPackById', async (req, res, next) => {
         order: [
             ['updatedAt', 'DESC']
         ],
-        limit:10,
-        offset: 10 * (page -1)
+        limit: 10,
+        offset: 10 * (page - 1)
     })
     for (const g of goods) {
         ag = g.dataValues
@@ -517,7 +587,7 @@ router.get('/manufacturerPackById', async (req, res, next) => {
             }
         })
     }
-    res.json({manufacturer, user, goods});
+    res.json({ manufacturer, user, goods });
 });
 
 /**
@@ -581,8 +651,8 @@ router.get('/distributorPackById', async (req, res, next) => {
         order: [
             ['hot', 'DESC']
         ],
-        limit:10,
-        offset: 10 * (page -1)
+        limit: 10,
+        offset: 10 * (page - 1)
     })
     for (const g of goods) {
         ag = g.dataValues
@@ -592,7 +662,33 @@ router.get('/distributorPackById', async (req, res, next) => {
             }
         })
     }
-    res.json({distributor, user, goods});
+    res.json({ distributor, user, goods });
+});
+
+/**
+ * 根据id获取经销商所有商品
+ */
+router.get('/distributorGoodsById', async (req, res, next) => {
+    let distributorId = req.query.distributorId;
+    let goods = await DistributorGoods.findAll({
+        where: {
+            distributorId: distributorId,
+            isAudit: 1,
+            isRunning: 1
+        },
+        order: [
+            ['hot', 'DESC']
+        ]
+    })
+    for (const g of goods) {
+        ag = g.dataValues
+        ag.type_ele = await DistributorGoodsType.findOne({
+            where: {
+                id: ag.type
+            }
+        })
+    }
+    res.json(goods);
 });
 
 /**

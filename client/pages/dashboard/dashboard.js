@@ -33,7 +33,7 @@ Page({
   onLoad: function () {
     console.info("首页 => load");
     var that = this;
-
+    // wx.hideShareMenu()
   },
   onShow: function () {
     var that = this;
@@ -120,26 +120,29 @@ Page({
       }
     })
 
-    // wx.request({
-    //   url: config.service.host + '/distributor/goodsSortByAD?page=1',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   success: function (res_adgoods) {
-    //     let goods = res_adgoods.data;
-    //     goods.forEach(g => {
-    //       if (g.photos) {
-    //         g.photos_arr = g.photos.split(',')
-    //       }
-    //       g.photos_arr.pop();
-    //       g.photos_arr.pop();
-    //       g.updatedDate = util.formatTime2(new Date(g.updatedAt));
-    //     })
-    //     that.setData({
-    //       adGoods: goods
-    //     })
-    //   }
-    // })
+    if (me.canShare) {
+      const shareDate = new Date(me.shareDate);
+      const today = new Date();
+      if ((today.getTime() - shareDate.getTime()) > 365 * 24 * 60 * 60 * 1000) {
+        me.shareDate = null;
+        me.canShare = false;
+        wx.request({
+          url: config.service.host + '/users/user-edit',
+          header: {
+            'Authorization': 'Bearer ' + token
+          },
+          method: 'POST',
+          data: me,
+          success: (res) => {
+            that.setData({
+              me: me
+            })
+          },
+          fail: function (err) {
+          }
+        })
+      }
+    }
 
     wx.request({
       url: config.service.host + '/question/allQuestions?page=1',
@@ -438,4 +441,23 @@ Page({
       }
     })
   },
+  onShareAppMessage: function (res) {
+    if (!this.data.me.canShare) {
+      wx.showModal({
+        title: '分享提示',
+        content: '您尚未开通分享功能，请联系平台开通此功能。',
+        confirmText: "知道了",
+        cancelText: "取消",
+        success: function (res) {
+          if (res.confirm) {
+          }
+        }
+      });
+      return;
+    }
+    return {
+      title: '稻城农业',
+      path: '/pages/dashboard/dashboard'
+    }
+  }
 })

@@ -94,16 +94,16 @@ Page({
 
             }
         })
-        setTimeout(()=>{
-            if(that.data.me.roleName == '农户'){
+        setTimeout(() => {
+            if (that.data.me.roleName == '农户') {
                 wx.request({
-                    url: config.service.host + '/distributor/farmerlook?id='+that.data.goodsId,
+                    url: config.service.host + '/distributor/farmerlook?id=' + that.data.goodsId,
                     header: {
                         'Authorization': 'Bearer ' + token
                     }
                 })
             }
-        },20000)
+        }, 20000)
     },
     doAudit: function () {
         let that = this;
@@ -151,7 +151,7 @@ Page({
                 if (res.confirm) {
                     util.showBusy("正在处理");
                     let files = [];
-                    if(that.data.goods.photos_arr){
+                    if (that.data.goods.photos_arr) {
                         that.data.goods.photos_arr.forEach(pa => {
                             files.push(pa.split('/')[1]);
                         })
@@ -277,20 +277,20 @@ Page({
     call: function () {
         if (this.data.me.role == 'visitor') {
             wx.showModal({
-              title: '游客提示',
-              content: '您尚未登录，是否立即登录？',
-              confirmText: "登录",
-              cancelText: "取消",
-              success: function (res) {
-                if (res.confirm) {
-                  wx.navigateTo({
-                    url: '../login/login'
-                  })
+                title: '游客提示',
+                content: '您尚未登录，是否立即登录？',
+                confirmText: "登录",
+                cancelText: "取消",
+                success: function (res) {
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url: '../login/login'
+                        })
+                    }
                 }
-              }
             });
             return;
-          }
+        }
         wx.makePhoneCall({
             phoneNumber: this.data.goods.distributor.contactPhone,
             success: function () {
@@ -347,5 +347,25 @@ Page({
                 }
             }
         });
+    },
+    onShareAppMessage: function (res) {
+        if (!this.data.me.canShare) {
+            wx.showModal({
+                title: '分享提示',
+                content: '您尚未开通分享功能，请联系平台开通此功能。',
+                confirmText: "知道了",
+                cancelText: "取消",
+                success: function (res) {
+                    if (res.confirm) {
+                    }
+                }
+            });
+            return;
+        }
+        return {
+            title: this.data.goods ? this.data.goods.name : '稻城农业',
+            path: '/pages/distributor-goods-view/distributor-goods-view?id=' + this.data.goodsId,
+            imageUrl: this.data.goods.photos_arr && this.data.goods.photos_arr.length > 0 ? 'http://' + this.data.goods.photos_arr[0] : null
+        }
     }
 })

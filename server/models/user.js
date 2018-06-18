@@ -56,6 +56,14 @@ var User = sequelize.define('user', {
         type: Sequelize.STRING,
         field: 'label'
     },
+    canShare: {
+        type: Sequelize.BOOLEAN,
+        field: 'canShare'
+    },
+    shareDate: {
+        type: Sequelize.DATE,
+        field: 'shareDate'
+    },
     createdAt: {
         type: Sequelize.DATE,
         field: 'createdAt'

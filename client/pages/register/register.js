@@ -56,7 +56,7 @@ Page({
                 util.showModel("提示", "请输入有效的手机号码！");
                 return;
             }
-            that.sendMessage(code,that.data.input_phone);
+            that.sendMessage(code, that.data.input_phone);
         }
 
 
@@ -90,7 +90,7 @@ Page({
             header: {
                 'content-type': 'application/json'
             },
-            success: function (res) {}
+            success: function (res) { }
         })
     },
     register: function (e) {
@@ -130,32 +130,46 @@ Page({
             confirmText: "注册",
             cancelText: "取消",
             success: function (res) {
-                console.log(res);
                 if (res.confirm) {
-                    util.showBusy("正在注册用户，请稍等");
+                    util.showBusy("检查账号中");
                     wx.request({
-                        url: config.service.host + '/users/audit-user',
+                        url: config.service.host + '/users/checkUserNameAndPhone',
                         method: 'POST',
-                        data: audit_user,
+                        data: { userName: audit_user.userName, phone: audit_user.phone },
                         header: {
                             'content-type': 'application/json'
                         },
-                        success: function (res) {
-                            util.showModel("提示", "注册成功，5秒后自动跳转到登陆页面");
-                            that.setData({
-                                successd: true
-                            });
-                            let timmer = setInterval(function () {
-                                that.setData({
-                                    successdTime: that.data.successdTime - 1
-                                });
-                                if (that.data.successdTime <= 0) {
-                                    clearInterval(timmer);
-                                    wx.redirectTo({
-                                        url: '../login/login'
-                                    })
-                                }
-                            }, 1000);
+                        success: function (res_check) {
+                            if (res_check.data.length > 0) {
+                                util.showModel("提示", "用户名或手机号已经被注册");
+                            } else {
+                                util.showBusy("正在注册用户，请稍等");
+                                wx.request({
+                                    url: config.service.host + '/users/audit-user',
+                                    method: 'POST',
+                                    data: audit_user,
+                                    header: {
+                                        'content-type': 'application/json'
+                                    },
+                                    success: function (res) {
+                                        util.showModel("提示", "注册成功，5秒后自动跳转到登陆页面");
+                                        that.setData({
+                                            successd: true
+                                        });
+                                        let timmer = setInterval(function () {
+                                            that.setData({
+                                                successdTime: that.data.successdTime - 1
+                                            });
+                                            if (that.data.successdTime <= 0) {
+                                                clearInterval(timmer);
+                                                wx.redirectTo({
+                                                    url: '../login/login'
+                                                })
+                                            }
+                                        }, 1000);
+                                    }
+                                })
+                            }
                         }
                     })
                 }

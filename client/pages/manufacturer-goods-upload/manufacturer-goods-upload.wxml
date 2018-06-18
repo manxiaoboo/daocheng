@@ -1,4 +1,4 @@
-<view wx:if="{{goods}}">
+<!-- <view wx:if="{{goods}}">
     <view class="weui-cells__title">图片预览</view>
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
@@ -11,4 +11,31 @@
     <button class="weui-btn" size="mini" style="width:100%" type="primary" bindtap="uploadImage" class="p" plain="true">上传产品图片</button>
     <button class="weui-btn" size="mini" style="width:100%" type="primary" bindtap="finish">完成上传</button>
     </view>
+</view> -->
+<view class="page__bd" wx:if="{{goods}}">
+    <view class="weui-cells">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                    <view class="weui-uploader__hd">
+                        <view class="weui-uploader__title">图片</view>
+                        <view class="weui-uploader__info">{{goods.photos.length}}/9</view>
+                    </view>
+                    <view class="weui-uploader__bd">
+                        <view class="weui-uploader__files" id="uploaderFiles">
+                            <block wx:for="{{goods.photos}}" wx:for-item="url">
+                                <view class="weui-uploader__file" bindtap="deleteImage" id="{{url}}">
+                                    <image class="weui-uploader__img" src="{{'http://'+url}}" mode="aspectFill" />
+                                </view>
+                            </block>
+                        </view>
+                        <view class="weui-uploader__input-box">
+                            <view class="weui-uploader__input" bindtap="uploadImage"></view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <button class="weui-btn" size="mini" style="width:100%" type="primary" bindtap="finish">完成上传</button>
 </view>

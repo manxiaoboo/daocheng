@@ -36,11 +36,11 @@
                     <view class="weui-uploader">
                         <view class="weui-uploader__hd">
                             <view class="weui-uploader__title">图片</view>
-                            <view class="weui-uploader__info">{{goods.photos_arr.length}}/4</view>
+                            <view class="weui-uploader__info">{{goods.photos_arr.length}}/9</view>
                         </view>
                         <view class="weui-uploader__bd">
                             <view class="weui-uploader__files" id="uploaderFiles">
-                                <block wx:for="{{goods.photos_arr}}" wx:key="*this">
+                                <block wx:for="{{goods.photos_arr}}">
                                     <view class="weui-uploader__file" bindtap="deleteImage" id="{{item}}">
                                         <image class="weui-uploader__img" src="{{'http://'+item}}" mode="aspectFill" />
                                     </view>

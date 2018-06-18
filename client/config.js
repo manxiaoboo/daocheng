@@ -3,8 +3,8 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = 'https://302354561.dcpingtai.xyz';
-// var host = 'https://tbsbpisy.qcloud.la';
+// var host = 'https://302354561.dcpingtai.xyz';
+var host = 'https://tbsbpisy.qcloud.la';
 
 var config = {
 
